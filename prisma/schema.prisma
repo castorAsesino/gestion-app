@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+//aca se crean los modelos
+
+
+model Usuario {
+  id Int @id @default(autoincrement())
+  nombre String
+  apellido String
+  rol Rol @relation(fields: [rolId], references: [id]) 
+  rolId Int
+  tareas Tarea[] 
+}
+
+model Rol {
+  id Int @id @default(autoincrement())
+  nombre String
+  usuarioId Int // relation scalar field (used in the `@relation` attribute above)
+  usuarios Usuario[]
+  proyectos RolProyecto[]
+}
+
+model Proyecto {
+  id Int @id @default(autoincrement())
+  nombre String
+  presupuesto Int 
+  procesos ProyectoProceso[]
+  roles RolProyecto[]
+  backlog Backlog?
+  sprint Sprint[]
+}
+
+model Proceso {
+  id Int @id @default(autoincrement())
+  nombre String
+  proyectos ProyectoProceso[]
+}
+
+model ProyectoProceso {
+  id Int @id @default(autoincrement())
+  proyecto       Proyecto     @relation(fields: [proyectoId], references: [id])
+  proyectoId     Int // relation scalar field (used in the `@relation` attribute above)
+  proceso   Proceso @relation(fields: [procesoId], references: [id])
+  procesoId Int // relation scalar field (used in the `@relation` attribute above)
+}
+
+model RolProyecto {
+  id Int @id @default(autoincrement())
+  proyecto       Proyecto     @relation(fields: [proyectoId], references: [id])
+  proyectoId     Int // relation scalar field (used in the `@relation` attribute above)
+  rol   Rol @relation(fields: [rolId], references: [id])
+  rolId Int // relation scalar field (used in the `@relation` attribute above)
+}
+
+model Backlog {
+  id Int @id @default(autoincrement())
+  nombre String
+  proyecto Proyecto @relation(fields: [proyectoId], references: [id]) 
+  proyectoId Int
+  tareas Tarea[] 
+}
+
+model Tarea {
+  id Int @id @default(autoincrement())
+  nombre String
+  tiempo Int
+  Backlog Backlog @relation(fields: [backlogId], references: [id]) 
+  backlogId Int 
+  sprint Sprint @relation(fields: [sprintId], references: [id]) 
+  sprintId Int 
+  responsable Usuario @relation(fields: [usuarioId], references: [id]) 
+  usuarioId Int 
+}
+
+model Sprint {
+  id Int @id @default(autoincrement())
+  nombre String
+  goal String
+  tareas Tarea[]
+  proyecto Proyecto @relation(fields: [proyectoId], references: [id]) 
+  proyectoId Int
+}
