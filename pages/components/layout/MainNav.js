@@ -15,7 +15,8 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import InboxIcon from '@material-ui/icons/MoveToInbox'
+import Person from '@material-ui/icons/Person';
 import LoginIcon from '@material-ui/icons/VpnKey';
 import HomeIcon from '@material-ui/icons/Home';
 import RegisterIcon from '@material-ui/icons/ContactMail';
@@ -171,7 +172,14 @@ export default function PersistentDrawerLeft(props) {
       label: 'Tarea', 
       path: '/tarea', 
       icon: ListAlt
+    },
+    {
+      id: 13, 
+      label: 'Usuario', 
+      path: '/usuario', 
+      icon: Person
     }
+    
   ]
   return (
     <div className={classes.root}>
