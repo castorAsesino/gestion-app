@@ -15,7 +15,7 @@ export default async function handler(req, res) {
       }
     case "POST":
       try {
-
+        const { body: data } = req;
         const response = await prisma.rol.create({ data });
         return res.status(201).json(response);
       } catch (error) {
