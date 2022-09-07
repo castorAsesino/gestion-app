@@ -22,14 +22,14 @@ import { Grid, Input, InputLabel, MenuItem, FormControl, ListItemText, Select, C
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 150,
+    PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 150,
+        },
     },
-  },
-  variant: "menu",
-  getContentAnchorEl: null
+    variant: "menu",
+    getContentAnchorEl: null
 };
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function UsuarioForm(props) {
+export default function ProyectoForm(props) {
   const classes = useStyles();
   const router = useRouter();
   const id = router.query['id'];
@@ -71,7 +71,7 @@ export default function UsuarioForm(props) {
   const [rolId, setRolId] = useState('');
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
     defaultValues: {
-      nombre: "", apellido: "", rolId: ""
+      nombre: "", presupuesto: "", rolId: ""
     }
   });
 
@@ -143,45 +143,74 @@ export default function UsuarioForm(props) {
                   helperText={errors.apellido ? 'Empty field' : ''}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                <FormControl fullWidth={true}>
-                  <InputLabel>Rol</InputLabel>
-                  <Select
-                    fullWidth
-                    onChange={handleChange}
-                    error={errors.rolId}
-                    helperText={errors.rolId ? 'Empty field' : ''}
-                    inputProps={register('rolId')}
-                    value={rolId}
-                    input={<Input />}
-                    MenuProps={MenuProps}
-                    required={true}
-                  >
-                    {roles.map((option) => (
-                      <MenuItem key={option.id} value={option.id}>
-                        {option.nombre}
-                      </MenuItem>
-                    ))}
+              {/* <Grid item xs={12} sm={12} lg={6}>
+                <TextField
+                  fullWidth margin="normal"
+                  select
+                  label="Rol"
+                  onChange={handleChange}
+                   {...register('rolId', { required: true })} 
+                  error={errors.rolId}
+                  helperText={errors.rolId ? 'Empty field' : ''}
+                  inputProps={register('rolId')}
+                  value={rolId}
+                >
+                  {roles.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.nombre}
+                    </MenuItem>
+                  ))}
+                </TextField> 
 
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                <div style={{ float: 'right' }}>
-                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/usuario">
-                    Cancelar
-                  </Button>
-                  <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>
-                    Guardar
-                  </Button>
-                </div>
-              </Grid>
+
+            </Grid>*/}
+
+
+            <Grid item xs={12} sm={12} lg={6}>
+              <FormControl  fullWidth={true}>
+                <InputLabel>Rol</InputLabel>
+                <Select
+                  
+                  fullWidth
+                  onChange={handleChange}
+                /*   {...register('rolId', { required: true })} */
+                  error={errors.rolId}
+                  helperText={errors.rolId ? 'Empty field' : ''}
+                  inputProps={register('rolId')}
+                  value={rolId}
+                  input={<Input />}
+                  MenuProps={MenuProps}
+                  required={true}
+                >
+                  {roles.map((option) => (
+                    <MenuItem key={option.id} value={option.id}>
+                      {option.nombre}
+                    </MenuItem>
+                  ))}
+
+                </Select>
+              </FormControl>
             </Grid>
-            <div>
-            </div>
-          </form>
-        </div>
-      </Card>
+
+
+            <Grid item xs={12} sm={12} lg={6}>
+              <div style={{ float: 'right' }}>
+                <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/usuario">
+                  Cancelar
+                </Button>
+                <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>
+                  Guardar
+                </Button>
+              </div>
+            </Grid>
+          </Grid>
+          <div>
+
+
+          </div>
+        </form>
+      </div>
+    </Card>
 
 
     </Container >

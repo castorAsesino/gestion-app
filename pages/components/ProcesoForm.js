@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function UsuarioForm(props) {
+export default function ProcesoForm(props) {
   const classes = useStyles();
   const router = useRouter();
   const id = router.query['id'];
@@ -71,52 +71,37 @@ export default function UsuarioForm(props) {
   const [rolId, setRolId] = useState('');
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
     defaultValues: {
-      nombre: "", apellido: "", rolId: ""
+      nombre: "", descripcion: ""
     }
   });
 
   useEffect(() => {
-    getRoles();
-    if (!isAddMode) getUsuarioById();
+    if (!isAddMode) getProcesoById();
     return
   }, [isAddMode]);
 
-  const getRoles = async () => {
-    const response = await axios.get("/api/rol");
-    setRoles(response.data)
-  }
-
-  const getUsuarioById = async () => {
-    fetch("/api/usuario/" + id)
+  const getProcesoById = async () => {
+    fetch("/api/proceso/" + id)
       .then((response) => response.json())
       .then((data) => {
         setValue('nombre', data.nombre)
-        setValue('apellido', data.apellido)
-        setValue('rolId', data.rolId)
-        const singleValue = getValues("rolId");
-        setRolId(getValues("rolId"))
+        setValue('descripcion', data.descripcion)
       });
 
   };
   const onSubmit = (data) => {
     return isAddMode
-      ? createUser(data)
-      : updateUser(data);
+      ? createProceso(data)
+      : updateProceso(data);
   }
 
-  const updateUser = async (data) => {
-    const response = await axios.put("/api/usuario/" + id, data);
+  const updateProceso = async (data) => {
+    const response = await axios.put("/api/proceso/" + id, data);
   }
 
-  const createUser = async (data) => {
-    const response = await axios.post("/api/usuario", data);
+  const createProceso = async (data) => {
+    const response = await axios.post("/api/proceso", data);
   }
-
-  const handleChange = (event) => {
-    setValue('rolId', event.target.value);
-    setRolId(event.target.value);
-  };
-
 
   return (
     <Container component="main" >
@@ -127,7 +112,7 @@ export default function UsuarioForm(props) {
             <Person />
           </Avatar>
           <Typography component="h1" variant="h5" >
-            Usuario
+            Proceso
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3} className={classes.form}>
@@ -137,38 +122,20 @@ export default function UsuarioForm(props) {
                   helperText={errors.nombre ? 'Empty field' : ''}
                 />
               </Grid>
+              
               <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Apellido" variant="standard" fullWidth margin="normal" {...register('apellido', { required: true })}
-                  error={errors.apellido}
-                  helperText={errors.apellido ? 'Empty field' : ''}
+
+                <TextField id="standard-basic" label="Descripción" variant="standard" fullWidth margin="normal" {...register('descripcion', { required: true })}
+                  multiline minRows={1}
+                  error={errors.descripcion}
+                  helperText={errors.descripcion ? 'Empty field' : ''}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                <FormControl fullWidth={true}>
-                  <InputLabel>Rol</InputLabel>
-                  <Select
-                    fullWidth
-                    onChange={handleChange}
-                    error={errors.rolId}
-                    helperText={errors.rolId ? 'Empty field' : ''}
-                    inputProps={register('rolId')}
-                    value={rolId}
-                    input={<Input />}
-                    MenuProps={MenuProps}
-                    required={true}
-                  >
-                    {roles.map((option) => (
-                      <MenuItem key={option.id} value={option.id}>
-                        {option.nombre}
-                      </MenuItem>
-                    ))}
 
-                  </Select>
-                </FormControl>
-              </Grid>
+
               <Grid item xs={12} sm={12} lg={6}>
                 <div style={{ float: 'right' }}>
-                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/usuario">
+                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/proceso">
                     Cancelar
                   </Button>
                   <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>
@@ -178,6 +145,8 @@ export default function UsuarioForm(props) {
               </Grid>
             </Grid>
             <div>
+
+
             </div>
           </form>
         </div>
