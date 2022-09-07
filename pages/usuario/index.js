@@ -1,18 +1,9 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-
 import Container from '@material-ui/core/Container';
-
 import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -29,9 +20,11 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableHead from '@material-ui/core/TableHead';
-import Person from '@material-ui/icons/Person';
 import Add from '@material-ui/icons/Add';
-
+import axios from "axios";
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteModal from '../../pages/components/layout/DeleteModal'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -61,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   center: {
     textAlign: 'center'
   },
-  right:{
+  right: {
     float: 'right'
   }
 }));
@@ -124,34 +117,31 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-function createData(name, calories, fat) {
-  return { name, calories, fat };
-}
 
-const rows = [
-  createData('Cupcake', 305),
-  createData('Donut', 452),
-  createData('Eclair', 262),
-  createData('Frozen yoghurt', 159),
-  createData('Gingerbread', 356),
-  createData('Honeycomb', 408),
-  createData('Ice cream sandwich', 237),
-  createData('Jelly Bean', 375),
-  createData('KitKat', 518),
-  createData('Lollipop', 392),
-  createData('Marshmallow', 3),
-  createData('Nougat', 360),
-  createData('Oreo', 437),
-].sort((a, b) => (a.calories < b.calories ? -1 : 1));
-
-
-
-export default function Usuario() {
+export default function Usuario(props) {
   const classes = useStyles();
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rows, setRows] = useState([]);
+  const [deleteItem, setDeleteItem] = React.useState(false);
+  const [id, setId] = React.useState('');
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
+  useEffect(() => {
+    getListData();
+  }, []);
+
+  useEffect(() => {
+    if (deleteItem) {
+      axios
+     .delete(("/api/usuario/" + id))
+     .then(response => {
+      window.location.reload();
+     })
+    }
+
+  }, [deleteItem, id]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -162,75 +152,95 @@ export default function Usuario() {
     setPage(0);
   };
 
+  const getListData = async () => {
+    const response = await axios.get("/api/usuario");
+    setRows(response.data)
+  }
+
+
+
   return (
     <>
-      <Grid container spacing={3}>
-
-        <Grid item xs={6}>
-          <Typography component="h1" variant="h5">
-            Usuarios
-          </Typography>
+      <Container component="main" >
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <Typography component="h1" variant="h5">
+              Usuario
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Button variant="contained" color="primary" className={classes.right} href="/usuario/agregar">
+              <Add /> Agregar
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <Button variant="contained" color="primary" className={classes.right} href="/usuario/agregar">
-            <Add/> Agregar
-          </Button>
-        </Grid>
-      </Grid>
 
-      <TableContainer component={Paper}>
-        <Table className={classes.table} aria-label="custom pagination table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Nombre</TableCell>
-              <TableCell align="right">Rol</TableCell>
-              <TableCell align="right"></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {(rowsPerPage > 0
-              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              : rows
-            ).map((row) => (
-              <TableRow key={row.name}>
-                <TableCell component="th" scope="row">
-                  {row.name}
-                </TableCell>
-                <TableCell style={{ width: 160 }} align="right">
-                  {row.calories}
-                </TableCell>
-                <TableCell style={{ width: 160 }} align="right">
-                  {row.fat}
-                </TableCell>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="custom pagination table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Nombre</TableCell>
+                <TableCell align="right">Apellido</TableCell>
+               {/*  <TableCell align="right">Rol</TableCell> */}
+                <TableCell align="right"></TableCell>
               </TableRow>
-            ))}
-
-            {emptyRows > 0 && (
-              <TableRow style={{ height: 53 * emptyRows }}>
-                <TableCell colSpan={3} />
+            </TableHead>
+            <TableBody>
+              {(rowsPerPage > 0
+                ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                : rows
+              ).map((row) => (
+                <TableRow key={row.id}>
+                  <TableCell component="th" scope="row">
+                    {row.nombre}
+                  </TableCell>
+                  <TableCell style={{ width: 160 }} align="right">
+                    {row.apellido}
+                  </TableCell>
+               {/*    <TableCell style={{ width: 160 }} align="right">
+                    {row.descripcion}
+                  </TableCell> */}
+                  <TableCell style={{ width: 160 }} align="right">
+                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/usuario/editar/' + row.id}>
+                      <EditIcon />
+                    </IconButton>
+                    <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>
+                  </TableCell>
+                </TableRow>
+              ))}
+              {emptyRows > 0 && rows.length === 0 && (
+                <TableRow>
+                  <TableCell colSpan={4} align="center"> No se encontraron registros.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+            <TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
+                  colSpan={3}
+                  count={rows.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: { 'aria-label': 'Registros por páginas' },
+                    native: true,
+                  }}
+                  labelRowsPerPage={"Registros por páginas"}
+                  labelDisplayedRows={
+                    ({ from, to, count }) => {
+                      return '' + from + '-' + to + ' de ' + count
+                    }
+                  }
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions} />
               </TableRow>
-            )}
-          </TableBody>
-          <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                colSpan={3}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { 'aria-label': 'Registros por páginas' },
-                  native: true,
-                }}
-                labelRowsPerPage={"Registros por páginas"}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions} />
-            </TableRow>
-          </TableFooter>
-        </Table>
-      </TableContainer>
+            </TableFooter>
+          </Table>
+        </TableContainer>
+      </Container>
     </>
   );
 }

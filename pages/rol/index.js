@@ -210,8 +210,9 @@ export default function Rol(props) {
               ))}
 
               {emptyRows > 0 && rows.length === 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={4} />
+                <TableRow>
+                   <TableCell colSpan={4} align="center"> No se encontraron registros.
+                  </TableCell>
                 </TableRow>
               )}
             </TableBody>
