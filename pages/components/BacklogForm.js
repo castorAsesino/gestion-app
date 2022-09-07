@@ -61,17 +61,17 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function SprintForm(props) {
+export default function BacklogForm(props) {
   const classes = useStyles();
   const router = useRouter();
   const id = router.query['id'];
-  const sprint = router?.query['id'];
-  const isAddMode = !sprint;
+  const backlog = router?.query['id'];
+  const isAddMode = !backlog;
   const [proyectos, setProyectos] = useState([]);
   const [proyectoId, setProyectoId] = useState('');
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
     defaultValues: {
-      nombre: "", goal: "", proyectoId: ""
+      nombre: "", descripcion: "", proyectoId: ""
     }
   });
 
@@ -87,11 +87,11 @@ export default function SprintForm(props) {
   }
 
   const getSprintId = async () => {
-    fetch("/api/sprint/" + id)
+    fetch("/api/backlog/" + id)
       .then((response) => response.json())
       .then((data) => {
         setValue('nombre', data.nombre)
-        setValue('goal', data.goal)
+        setValue('descripcion', data.descripcion)
         setValue('proyectoId', data.proyectoId)
         setProyectoId(getValues("proyectoId"))
       });
@@ -99,16 +99,16 @@ export default function SprintForm(props) {
   };
   const onSubmit = (data) => {
     return isAddMode
-      ? createSprint(data)
-      : updateSprint(data);
+      ? createBacklog(data)
+      : updateBacklog(data);
   }
 
-  const updateSprint = async (data) => {
-    const response = await axios.put("/api/sprint/" + id, data);
+  const updateBacklog = async (data) => {
+    const response = await axios.put("/api/backlog/" + id, data);
   }
 
-  const createSprint = async (data) => {
-    const response = await axios.post("/api/sprint", data);
+  const createBacklog = async (data) => {
+    const response = await axios.post("/api/backlog", data);
   }
 
   const handleChange = (event) => {
@@ -126,7 +126,7 @@ export default function SprintForm(props) {
             <Person />
           </Avatar>
           <Typography component="h1" variant="h5" >
-            Sprint
+            Backlog
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3} className={classes.form}>
@@ -137,9 +137,9 @@ export default function SprintForm(props) {
                 />
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Goal" variant="standard" fullWidth margin="normal" {...register('goal', { required: true })}
-                  error={errors.goal}
-                  helperText={errors.goal ? 'Empty field' : ''}
+                <TextField id="standard-basic" label="Descripción" variant="standard" fullWidth margin="normal" {...register('descripcion', { required: true })}
+                  error={errors.descripcion}
+                  helperText={errors.descripcion ? 'Empty field' : ''}
                 />
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
@@ -167,7 +167,7 @@ export default function SprintForm(props) {
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
                 <div style={{ float: 'right' }}>
-                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/sprint">
+                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/backlog">
                     Cancelar
                   </Button>
                   <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>

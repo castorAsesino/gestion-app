@@ -67,6 +67,7 @@ model RolProyecto {
 model Backlog {
   id Int @id @default(autoincrement())
   nombre String
+  descripcion String
   proyecto Proyecto @relation(fields: [proyectoId], references: [id]) 
   proyectoId Int
   tareas Tarea[] 

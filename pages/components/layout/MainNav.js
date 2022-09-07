@@ -119,7 +119,7 @@ export default function PersistentDrawerLeft(props) {
       path: '/', 
       icon: HomeIcon
     }, 
-    {
+    /* {
       id: 2, 
       label: 'Login', 
       path: '/login', 
@@ -130,7 +130,7 @@ export default function PersistentDrawerLeft(props) {
       label: 'Register', 
       path: '/register', 
       icon: RegisterIcon
-    },
+    }, */
     {
       id: 4, 
       label:'Backlog', 
