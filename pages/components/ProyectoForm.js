@@ -7,9 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import LoginIcon from '@material-ui/icons/VpnKey';
-import { useForm } from 'react-hook-form';
 import Card from '@material-ui/core/Card';
-import Alert from '@material-ui/lab/Alert';
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Link from '../../src/Link';
@@ -17,6 +15,7 @@ import Person from '@material-ui/icons/Person';
 import { useRouter } from "next/router";
 import { FormGroup, ListItemIcon } from "@material-ui/core";
 import { Grid, Input, InputLabel, MenuItem, FormControl, ListItemText, Select, Checkbox } from "@material-ui/core";
+import { useForm } from 'react-hook-form';
 
 
 const ITEM_HEIGHT = 48;
@@ -65,19 +64,16 @@ export default function ProyectoForm(props) {
   const classes = useStyles();
   const router = useRouter();
   const id = router.query['id'];
-  const usuario = router?.query['id'];
-  const isAddMode = !usuario;
-  const [roles, setRoles] = useState([]);
-  const [rolId, setRolId] = useState('');
+  const proyecto = router?.query['id'];
+  const isAddMode = !proyecto;
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
     defaultValues: {
-      nombre: "", presupuesto: "", rolId: ""
+      nombre: "", presupuesto: 0
     }
   });
 
   useEffect(() => {
-    getRoles();
-    if (!isAddMode) getUsuarioById();
+    if (!isAddMode) getProyectoId();
     return
   }, [isAddMode]);
 
@@ -86,37 +82,28 @@ export default function ProyectoForm(props) {
     setRoles(response.data)
   }
 
-  const getUsuarioById = async () => {
-    fetch("/api/usuario/" + id)
+  const getProyectoId = async () => {
+    fetch("/api/proyecto/" + id)
       .then((response) => response.json())
       .then((data) => {
         setValue('nombre', data.nombre)
-        setValue('apellido', data.apellido)
-        setValue('rolId', data.rolId)
-        const singleValue = getValues("rolId");
-        setRolId(getValues("rolId"))
+        setValue('presupuesto', data.presupuesto)
       });
 
   };
   const onSubmit = (data) => {
     return isAddMode
-      ? createUser(data)
-      : updateUser(data);
+      ? createProyecto({...data, presupuesto: +data.presupuesto})
+      : updateProyecto({...data, presupuesto: +data.presupuesto});
   }
 
-  const updateUser = async (data) => {
-    const response = await axios.put("/api/usuario/" + id, data);
+  const updateProyecto = async (data) => {
+    const response = await axios.put("/api/proyecto/" + id, data);
   }
 
-  const createUser = async (data) => {
-    const response = await axios.post("/api/usuario", data);
+  const createProyecto = async (data) => {
+    const response = await axios.post("/api/proyecto", data);
   }
-
-  const handleChange = (event) => {
-    setValue('rolId', event.target.value);
-    setRolId(event.target.value);
-  };
-
 
   return (
     <Container component="main" >
@@ -127,7 +114,7 @@ export default function ProyectoForm(props) {
             <Person />
           </Avatar>
           <Typography component="h1" variant="h5" >
-            Usuario
+            Proyecto
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3} className={classes.form}>
@@ -138,64 +125,14 @@ export default function ProyectoForm(props) {
                 />
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Apellido" variant="standard" fullWidth margin="normal" {...register('apellido', { required: true })}
-                  error={errors.apellido}
-                  helperText={errors.apellido ? 'Empty field' : ''}
+                <TextField id="standard-basic"  type="number" label="Presupuesto" variant="standard" fullWidth margin="normal" {...register('presupuesto', { required: true })}
+                  error={errors.presupuesto}
+                  helperText={errors.presupuesto ? 'Empty field' : ''}
                 />
               </Grid>
-              {/* <Grid item xs={12} sm={12} lg={6}>
-                <TextField
-                  fullWidth margin="normal"
-                  select
-                  label="Rol"
-                  onChange={handleChange}
-                   {...register('rolId', { required: true })} 
-                  error={errors.rolId}
-                  helperText={errors.rolId ? 'Empty field' : ''}
-                  inputProps={register('rolId')}
-                  value={rolId}
-                >
-                  {roles.map((option) => (
-                    <MenuItem key={option.id} value={option.id}>
-                      {option.nombre}
-                    </MenuItem>
-                  ))}
-                </TextField> 
-
-
-            </Grid>*/}
-
-
-            <Grid item xs={12} sm={12} lg={6}>
-              <FormControl  fullWidth={true}>
-                <InputLabel>Rol</InputLabel>
-                <Select
-                  
-                  fullWidth
-                  onChange={handleChange}
-                /*   {...register('rolId', { required: true })} */
-                  error={errors.rolId}
-                  helperText={errors.rolId ? 'Empty field' : ''}
-                  inputProps={register('rolId')}
-                  value={rolId}
-                  input={<Input />}
-                  MenuProps={MenuProps}
-                  required={true}
-                >
-                  {roles.map((option) => (
-                    <MenuItem key={option.id} value={option.id}>
-                      {option.nombre}
-                    </MenuItem>
-                  ))}
-
-                </Select>
-              </FormControl>
-            </Grid>
-
-
             <Grid item xs={12} sm={12} lg={6}>
               <div style={{ float: 'right' }}>
-                <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/usuario">
+                <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/proyecto">
                   Cancelar
                 </Button>
                 <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>
@@ -205,8 +142,6 @@ export default function ProyectoForm(props) {
             </Grid>
           </Grid>
           <div>
-
-
           </div>
         </form>
       </div>

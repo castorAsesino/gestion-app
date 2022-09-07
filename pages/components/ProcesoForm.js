@@ -65,8 +65,8 @@ export default function ProcesoForm(props) {
   const classes = useStyles();
   const router = useRouter();
   const id = router.query['id'];
-  const usuario = router?.query['id'];
-  const isAddMode = !usuario;
+  const proceso = router?.query['id'];
+  const isAddMode = !proceso;
   const [roles, setRoles] = useState([]);
   const [rolId, setRolId] = useState('');
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
