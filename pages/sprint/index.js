@@ -180,9 +180,13 @@ export default function Sprint(props) {
             <TableHead>
               <TableRow>
                 <TableCell>Nombre</TableCell>
-                <TableCell align="right">Goal</TableCell>
-               {/*  <TableCell align="right">Rol</TableCell> */}
-                <TableCell align="right"></TableCell>
+                <TableCell align="center">Descripción</TableCell>
+                <TableCell align="center">Duración</TableCell>
+                <TableCell align="center">Goal</TableCell>
+                <TableCell align="center">Fecha Inicio</TableCell>
+                <TableCell align="center">Fecha Fin</TableCell>
+                <TableCell align="center">Backlog</TableCell>
+                <TableCell align="center"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -194,13 +198,13 @@ export default function Sprint(props) {
                   <TableCell component="th" scope="row">
                     {row.nombre}
                   </TableCell>
-                  <TableCell style={{ width: 160 }} align="right">
-                    {row.goal}
-                  </TableCell>
-               {/*    <TableCell style={{ width: 160 }} align="right">
-                    {row.descripcion}
-                  </TableCell> */}
-                  <TableCell style={{ width: 160 }} align="right">
+                  <TableCell align="center">{row.descripcion}</TableCell>
+                  <TableCell align="center">{row.duracion}</TableCell>
+                  <TableCell align="center">{row.goal}</TableCell>
+                  <TableCell align="center">{row.fecha_inicio}</TableCell>
+                  <TableCell align="center">{row.fecha_fin}</TableCell>
+                  <TableCell align="center">{row.nombreBacklog}</TableCell>
+                  <TableCell align="center">
                     <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/sprint/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>

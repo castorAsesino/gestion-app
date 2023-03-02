@@ -12,7 +12,7 @@ export default async function handler(req, res) {
           query: { id },
           method,
         } = req;
-        const response = await prisma.rol.findUnique({
+        const response = await prisma.rol_recurso.findUnique({
           where: {
             id: +id,
           },
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
           method,
         } = req;
 
-        const response = await prisma.rol.delete({
+        const response = await prisma.rol_recurso.delete({
           where: {
             id: +id,
           },
@@ -44,7 +44,7 @@ export default async function handler(req, res) {
           const { body: data } = req;
           const { query: { id } } = req;
           console.log(data, id)
-          const response = await prisma.rol.update({
+          const response = await prisma.rol_recurso.update({
             where: {
               id: +id,
             },

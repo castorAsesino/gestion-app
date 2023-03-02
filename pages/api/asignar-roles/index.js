@@ -10,13 +10,16 @@ export default async function handler(req, res) {
       try {
         const response =
           await prisma.$queryRaw`    
-        SELECT 
-          b.id,
-            b.nombre,
-            b.descripcion,
-            p.nombre as nombreProyecto
-            FROM gestionapp.backlog as b
-        LEFT JOIN gestionapp.proyecto as p ON p.id = b.proyectoId`
+          SELECT 
+              rr.id,
+              rr.rolId,
+              rr.recursoId,
+              ro.nombre as nombreRol, 
+              re.nombre as nombreRecurso
+              FROM rol_recurso as rr
+          LEFT JOIN rol as ro ON ro.id = rr.rolId
+          LEFT JOIN recurso as re ON re.id = rr.recursoId`
+        // const response = await prisma.rol_recurso.findMany();
         return res.status(200).json(response);
       } catch (error) {
         return res.status(400).json({ error });
@@ -24,7 +27,7 @@ export default async function handler(req, res) {
     case "POST":
       try {
         const { body: data } = req;
-        const response = await prisma.backlog.create({ data });
+        const response = await prisma.rol_recurso.create({ data });
         return res.status(201).json(response);
       } catch (error) {
         return res.status(500).json({ message: error.message });

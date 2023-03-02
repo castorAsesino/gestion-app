@@ -190,8 +190,8 @@ export default function Rol(props) {
                 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : rows
               ).map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
+                <TableRow key={row.id} >
+                  <TableCell style={{ width: 160 }} component="th" scope="row">
                     {row.nombre}
                   </TableCell>
                   <TableCell style={{ width: 160 }} align="right">

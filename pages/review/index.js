@@ -118,7 +118,7 @@ TablePaginationActions.propTypes = {
 };
 
 
-export default function Tarea(props) {
+export default function Review(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -135,7 +135,7 @@ export default function Tarea(props) {
   useEffect(() => {
     if (deleteItem) {
       axios
-        .delete(("/api/tarea/" + id))
+        .delete(("/api/review/" + id))
         .then(response => {
           window.location.reload();
         })
@@ -153,7 +153,7 @@ export default function Tarea(props) {
   };
 
   const getListData = async () => {
-    const response = await axios.get("/api/tarea");
+    const response = await axios.get("/api/review");
     setRows(response.data)
   }
 
@@ -165,12 +165,12 @@ export default function Tarea(props) {
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Typography component="h1" variant="h5">
-              Tarea
+              Review
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary" className={classes.right} href="/tarea/agregar">
-              <Add /> Agregar
+            <Button variant="contained" color="primary" className={classes.right} href="/review/agregar">
+              <Add /> Agregar5555
             </Button>
           </Grid>
         </Grid>
@@ -179,9 +179,12 @@ export default function Tarea(props) {
           <Table className={classes.table} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                <TableCell>Nombre</TableCell>
+                <TableCell>Sprint</TableCell>
+                <TableCell align="center">Nombre</TableCell>
                 <TableCell align="center">Descripción</TableCell>
-                <TableCell align="right"></TableCell>
+                <TableCell align="center">Avance</TableCell>
+                <TableCell align="center">Conclusión</TableCell>
+                <TableCell align="center"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -189,24 +192,34 @@ export default function Tarea(props) {
                 ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : rows
               ).map((row) => (
-                <TableRow key={row.id}>
+                <TableRow key={row.id} >
                   <TableCell component="th" scope="row">
+                    {row.nombreSprint}
+                  </TableCell>
+                  <TableCell align="center">
                     {row.nombre}
                   </TableCell>
                   <TableCell align="center">
                     {row.descripcion}
                   </TableCell>
                   <TableCell align="center">
-                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/tarea/editar/' + row.id}>
+                    {row.avance}
+                  </TableCell>
+                  <TableCell align="center">
+                    {row.conclusion}
+                  </TableCell>
+                  <TableCell align="center">
+                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/review/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>
                     <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>
                   </TableCell>
                 </TableRow>
               ))}
+
               {emptyRows > 0 && rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={4} align="center"> No se encontraron registros.
+                  <TableCell colSpan={7} align="center"> No se encontraron registros.
                   </TableCell>
                 </TableRow>
               )}
@@ -237,6 +250,8 @@ export default function Tarea(props) {
           </Table>
         </TableContainer>
       </Container>
+
+
     </>
   );
 }

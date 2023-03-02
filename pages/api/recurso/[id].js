@@ -3,7 +3,6 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-  debugger
   const { method } = req;
   switch (method) {
     case "GET":
@@ -12,7 +11,7 @@ export default async function handler(req, res) {
           query: { id },
           method,
         } = req;
-        const response = await prisma.rol.findUnique({
+        const response = await prisma.recurso.findUnique({
           where: {
             id: +id,
           },
@@ -30,7 +29,7 @@ export default async function handler(req, res) {
           method,
         } = req;
 
-        const response = await prisma.rol.delete({
+        const response = await prisma.recurso.delete({
           where: {
             id: +id,
           },
@@ -44,7 +43,7 @@ export default async function handler(req, res) {
           const { body: data } = req;
           const { query: { id } } = req;
           console.log(data, id)
-          const response = await prisma.rol.update({
+          const response = await prisma.recurso.update({
             where: {
               id: +id,
             },

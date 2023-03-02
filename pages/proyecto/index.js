@@ -180,8 +180,9 @@ export default function Proyecto(props) {
             <TableHead>
               <TableRow>
                 <TableCell>Nombre</TableCell>
-                <TableCell align="right">Presupuesto</TableCell>
-                <TableCell align="right"></TableCell>
+                <TableCell align="center">Descripción</TableCell>
+                <TableCell align="center">Presupuesto</TableCell>
+                <TableCell align="center"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -193,10 +194,13 @@ export default function Proyecto(props) {
                   <TableCell component="th" scope="row">
                     {row.nombre}
                   </TableCell>
-                  <TableCell style={{ width: 160 }} align="right">
+                  <TableCell align="center">
+                    {row.descripcion}
+                  </TableCell>
+                  <TableCell align="center">
                     {row.presupuesto}
                   </TableCell>
-                  <TableCell style={{ width: 160 }} align="right">
+                  <TableCell align="center">
                     <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/proyecto/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>
@@ -206,7 +210,7 @@ export default function Proyecto(props) {
               ))}
               {emptyRows > 0 && rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={4} align="center"> No se encontraron registros.
+                  <TableCell colSpan={5} align="center"> No se encontraron registros.
                   </TableCell>
                 </TableRow>
               )}

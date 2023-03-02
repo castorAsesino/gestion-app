@@ -8,7 +8,22 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const response = await prisma.sprint.findMany();
+
+        const response =
+          await prisma.$queryRaw`    
+        SELECT 
+        s.id,
+          s.nombre,
+          s.descripcion,
+          s.duracion,
+          s.fecha_inicio,
+          s.fecha_fin,
+          s.goal,
+          b.nombre as nombreBacklog
+          FROM gestionapp.sprint as s
+      LEFT JOIN gestionapp.backlog as b ON b.id = s.backlogId`
+
+
         return res.status(200).json(response);
       } catch (error) {
         return res.status(400).json({ error });
@@ -21,7 +36,7 @@ export default async function handler(req, res) {
       } catch (error) {
         return res.status(500).json({ message: error.message });
       }
-   
+
     default:
       res.setHeaders("Allow", ["GET", "POST"]);
       return res

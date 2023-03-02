@@ -180,9 +180,9 @@ export default function Backlog(props) {
             <TableHead>
               <TableRow>
                 <TableCell>Nombre</TableCell>
-                <TableCell align="right">Descripción</TableCell>
-               {/*  <TableCell align="right">Rol</TableCell> */}
-                <TableCell align="right"></TableCell>
+                <TableCell align="center">Descripción</TableCell>
+                <TableCell align="center">Proyecto</TableCell> 
+                <TableCell align="center"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -194,13 +194,13 @@ export default function Backlog(props) {
                   <TableCell component="th" scope="row">
                     {row.nombre}
                   </TableCell>
-                  <TableCell style={{ width: 160 }} align="right">
+                  <TableCell align="center">
                     {row.descripcion}
                   </TableCell>
-               {/*    <TableCell style={{ width: 160 }} align="right">
-                    {row.descripcion}
-                  </TableCell> */}
-                  <TableCell style={{ width: 160 }} align="right">
+                  <TableCell align="center">
+                    {row.nombreProyecto}
+                  </TableCell> 
+                  <TableCell align="center">
                     <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/backlog/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>
@@ -210,7 +210,7 @@ export default function Backlog(props) {
               ))}
               {emptyRows > 0 && rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={4} align="center"> No se encontraron registros.
+                  <TableCell colSpan={5} align="center"> No se encontraron registros.
                   </TableCell>
                 </TableRow>
               )}

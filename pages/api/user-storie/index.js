@@ -10,13 +10,19 @@ export default async function handler(req, res) {
       try {
         const response =
           await prisma.$queryRaw`    
-        SELECT 
-          b.id,
-            b.nombre,
-            b.descripcion,
-            p.nombre as nombreProyecto
-            FROM gestionapp.backlog as b
-        LEFT JOIN gestionapp.proyecto as p ON p.id = b.proyectoId`
+          SELECT 
+	us.id,
+    us.story_points,
+    t.nombre as nombreTarea,
+    t.descripcion,
+    s.nombre as nombreSprint,
+    r.nombre as nombreRecurso
+    FROM gestionapp.user_story as us
+LEFT JOIN gestionapp.sprint as s ON s.id = us.sprintId
+LEFT JOIN gestionapp.tarea as t ON t.id = us.tareaId
+LEFT JOIN gestionapp.rol_recurso as rr ON rr.id = us.rol_recursoId
+LEFT JOIN gestionapp.recurso as r ON r.id = rr.recursoId`
+        // const response = await prisma.rol_recurso.findMany();
         return res.status(200).json(response);
       } catch (error) {
         return res.status(400).json({ error });
@@ -24,7 +30,7 @@ export default async function handler(req, res) {
     case "POST":
       try {
         const { body: data } = req;
-        const response = await prisma.backlog.create({ data });
+        const response = await prisma.user_story.create({ data });
         return res.status(201).json(response);
       } catch (error) {
         return res.status(500).json({ message: error.message });

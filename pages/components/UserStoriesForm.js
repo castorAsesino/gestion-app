@@ -17,7 +17,6 @@ import Person from '@material-ui/icons/Person';
 import { useRouter } from "next/router";
 import { FormGroup, ListItemIcon } from "@material-ui/core";
 import { Grid, Input, InputLabel, MenuItem, FormControl, ListItemText, Select, Checkbox } from "@material-ui/core";
-import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 
 const ITEM_HEIGHT = 48;
@@ -42,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
+    textAlign: 'center',
+    alignItems: 'center',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -62,136 +63,120 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function TareaForm(props) {
+export default function UserStoriesForm(props) {
   const classes = useStyles();
   const router = useRouter();
-  const id = router.query['id'];
-  const tarea = router?.query['id'];
-  const isAddMode = !tarea;
+  const id = router?.query['id'];
+  const isAddMode = !id;
+  const [recursos, setRecursos] = useState([]);
+  const [recursoId, setRecursoId] = useState('');
+
+  const [tareas, setTareas] = useState([]);
+  const [tareaId, setTareaId] = useState('');
+
+  const [sprint, setSprint] = useState([]);
+  const [sprintId, setSprintId] = useState('');
 
 
-  /*   const [backlog, setBacklog] = useState([]);
-    const [sprint, setSprint] = useState([]);
-    const [usuario, setUsuario] = useState([]);
-  
-    const [backlogId, setBacklogId] = useState('');
-    const [sprintId, setSprintId] = useState('');
-    const [usuarioId, setUsuarioId] = useState(''); */
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
     defaultValues: {
-      nombre: "", descripcion: ""
+      rol_recursoId: "", tareaId: "", sprintId: "", story_points: 0, sprintId: ""
     }
   });
 
   useEffect(() => {
-    /*     getBacklog();
-        getUsuario();
-        getSprint(); */
-    if (!isAddMode) getTareaId();
+    getRecursos();
+    getSprint();
+    getTarea();
+    if (!isAddMode) getUserStories();
     return
   }, [isAddMode]);
-  /* 
-    const getBacklog = async () => {
-      axios
-        .get(("/api/backlog"))
-        .then(response => {
-          setBacklog(response.data);
-          console.log(response.data);
-        })
-    }
-  
-    const getUsuario = async () => {
-      const response = await axios.get("/api/usuario");
-      setUsuario(response.data)
-      console.log(usuario)
-    }
-   */
+
+  const getRecursos = async () => {
+    const response = await axios.get("/api/asignar-roles");
+    setRecursos(response.data)
+  }
+
   const getSprint = async () => {
     const response = await axios.get("/api/sprint");
     setSprint(response.data)
-    console.log(sprint)
   }
 
-  const getTareaId = async () => {
-    fetch("/api/tarea/" + id)
+  const getTarea = async () => {
+    const response = await axios.get("/api/tarea");
+    setTareas(response.data)
+  }
+
+  const getUserStories = async () => {
+    fetch("/api/asignar-roles/" + id)
       .then((response) => response.json())
       .then((data) => {
-        setValue('nombre', data.nombre);
-        setValue('descripcion', data.descripcion);
-      });
-  };
+        setValue('rol_recursoId', data.rol_recursoId);
+        setRecursoId(getValues("rol_recursoId"));
+        setValue('tareaId', data.tareaId);
+        setTareaId(getValues("tareaId"));
+        setValue('sprintId', data.sprintId);
+        setSprintId(getValues("sprintId"));
+        setValue('story_points', data.story_points);
 
+      });
+
+  };
   const onSubmit = (data) => {
     return isAddMode
-      ? createTarea({ ...data, estado: "ACTIVO" })
-      : updateTarea({ ...data, estado: "ACTIVO" });
+      ? create({...data, story_points: +data.story_points})
+      : update({...data, story_points: +data.story_points});
   }
 
-  const updateTarea = async (data) => {
-    const response = await axios.put("/api/tarea/" + id, data);
+  const update = async (data) => {
+    const response = await axios.put("/api/user-storie/" + id, data);
   }
 
-  const createTarea = async (data) => {
-    const response = await axios.post("/api/tarea", data);
+  const create = async (data) => {
+    const response = await axios.post("/api/user-storie", data);
   }
 
-  /*   const handleChangeBacklog = (event) => {
-      setValue('backlogId', event.target.value);
-      setBacklogId(event.target.value);
-    };
-  
-    const handleChangeSprint = (event) => {
-      setValue('sprintId', event.target.value);
-      setSprintId(event.target.value);
-    };
-  
-    const handleChangeUsuario = (event) => {
-      setValue('usuarioId', event.target.value);
-      setUsuarioId(event.target.value);
-    };
-  
-   */
+  const handleChangerecurso = (event) => {
+    setValue('rol_recursoId', event.target.value);
+    setRecursoId(event.target.value);
+  };
+
+  const handleChangeTarea = (event) => {
+    setValue('tareaId', event.target.value);
+    setTareaId(event.target.value);
+  };
+
+  const handleChangeSprint = (event) => {
+    setValue('sprintId', event.target.value);
+    setSprintId(event.target.value);
+  };
+
   return (
     <Container component="main" >
       <CssBaseline />
       <Card className={classes.root}>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <Person />
-          </Avatar>
-          <Typography component="h1" variant="h5" >
-            Tarea
+        <div className={classes}>
+          <Typography component="h1" variant="h5" style={{ textAlign: 'center' }}>
+            User Stories
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={3} className={classes.form}>
-              <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Nombre" variant="standard" fullWidth margin="normal" {...register('nombre', { required: true })}
-                  error={errors.nombre}
-                  helperText={errors.nombre ? 'Empty field' : ''}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                <TextareaAutosize variant="standard" style={{ width: "100%" }} minRows={4}
-                  placeholder="Descripción" margin="normal" {...register('descripcion', { required: true })}
-                  error={errors.descripcion}
-                  helperText={errors.descripcion ? 'Empty field' : ''}
-                />              </Grid>
+            <Grid container spacing={5} className={classes.form}>
 
-              {/*               <Grid item xs={12} sm={12} lg={6}>
+              <Grid item xs={12} sm={12} lg={6}>
                 <FormControl fullWidth={true}>
-                  <InputLabel>Backlog</InputLabel>
+                  <InputLabel>Tarea</InputLabel>
                   <Select
                     fullWidth
-                    onChange={handleChangeBacklog}
-                    error={errors.backlogId}
-                    helperText={errors.backlogId ? 'Empty field' : ''}
-                    inputProps={register('backlogId')}
-                    value={backlogId}
+                    onChange={handleChangeTarea}
+                    error={errors.tareaId}
+                    helperText={errors.tareaId ? 'Empty field' : ''}
+                    inputProps={register('tareaId')}
+                    value={tareaId}
                     input={<Input />}
                     MenuProps={MenuProps}
                     required={true}
                   >
-                    {backlog.map((option) => (
+                    {tareas.map((option) => (
                       <MenuItem key={option.id} value={option.id}>
                         {option.nombre}
                       </MenuItem>
@@ -200,6 +185,33 @@ export default function TareaForm(props) {
                   </Select>
                 </FormControl>
               </Grid>
+
+              <Grid item xs={12} sm={12} lg={6}>
+                <FormControl fullWidth={true}>
+                  <InputLabel>Recurso</InputLabel>
+                  <Select
+                    fullWidth
+                    onChange={handleChangerecurso}
+                    error={errors.rol_recursoId}
+                    helperText={errors.rol_recursoId ? 'Empty field' : ''}
+                    inputProps={register('rol_recursoId')}
+                    value={recursoId}
+                    input={<Input />}
+                    MenuProps={MenuProps}
+                    required={true}
+                    disabled={!isAddMode}
+                  >
+                    {recursos.map((option) => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.nombreRecurso}
+                      </MenuItem>
+                    ))}
+
+                  </Select>
+                </FormControl>
+              </Grid>
+
+
               <Grid item xs={12} sm={12} lg={6}>
                 <FormControl fullWidth={true}>
                   <InputLabel>Sprint</InputLabel>
@@ -213,8 +225,9 @@ export default function TareaForm(props) {
                     input={<Input />}
                     MenuProps={MenuProps}
                     required={true}
+                    disabled={!isAddMode}
                   >
-                    {sprint?.map((option) => (
+                    {sprint.map((option) => (
                       <MenuItem key={option.id} value={option.id}>
                         {option.nombre}
                       </MenuItem>
@@ -224,31 +237,15 @@ export default function TareaForm(props) {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
-                <FormControl fullWidth={true}>
-                  <InputLabel>Usuario</InputLabel>
-                  <Select
-                    fullWidth
-                    onChange={handleChangeUsuario}
-                    error={errors.usuarioId}
-                    helperText={errors.usuarioId ? 'Empty field' : ''}
-                    inputProps={register('usuarioId')}
-                    value={usuarioId}
-                    input={<Input />}
-                    MenuProps={MenuProps}
-                    required={true}
-                  >
-                    {usuario?.map((option) => (
-                      <MenuItem key={option.id} value={option.id}>
-                        {option.nombre}
-                      </MenuItem>
-                    ))}
+                <TextField id="standard-basic" type="number" label="Story Point" variant="standard" fullWidth margin="normal" {...register('story_points', { required: true })}
+                  error={errors.story_points}
+                  helperText={errors.story_points ? 'Empty field' : ''}
+                />
+              </Grid>
 
-                  </Select>
-                </FormControl>
-              </Grid> */}
               <Grid item xs={12} sm={12} lg={6}>
-                <div style={{ float: 'left' }}>
-                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/tarea">
+                <div >
+                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/user-storie">
                     Cancelar
                   </Button>
                   <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>

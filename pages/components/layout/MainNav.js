@@ -133,8 +133,8 @@ export default function PersistentDrawerLeft(props) {
     }, */
     {
       id: 4, 
-      label:'Backlog', 
-      path: '/backlog', 
+      label:'AsignarRoles', 
+      path: '/asignar-roles', 
       icon: AllInboxIcon
     }, 
     {
@@ -191,7 +191,7 @@ export default function PersistentDrawerLeft(props) {
         })}
       >
         <Toolbar>
-          <IconButton
+ {/*          <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -199,7 +199,7 @@ export default function PersistentDrawerLeft(props) {
             className={clsx(classes.menuButton, open && classes.hide)}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <Typography variant="h6" className={classes.title}>gestion-app v0.0</Typography>                    
           <Button color="inherit" component={Link} href="/register">Register</Button>     
           <Button color="inherit" component={Link} href="/login">Login</Button>     

@@ -24,7 +24,7 @@ import Add from '@material-ui/icons/Add';
 import axios from "axios";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteModal from '../../pages/components/layout/DeleteModal'
+import DeleteModal from '../components/layout/DeleteModal'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -118,7 +118,7 @@ TablePaginationActions.propTypes = {
 };
 
 
-export default function Tarea(props) {
+export default function UserStorie(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -135,7 +135,7 @@ export default function Tarea(props) {
   useEffect(() => {
     if (deleteItem) {
       axios
-        .delete(("/api/tarea/" + id))
+        .delete(("/api/user-storie/" + id))
         .then(response => {
           window.location.reload();
         })
@@ -153,7 +153,7 @@ export default function Tarea(props) {
   };
 
   const getListData = async () => {
-    const response = await axios.get("/api/tarea");
+    const response = await axios.get("/api/user-storie");
     setRows(response.data)
   }
 
@@ -165,12 +165,12 @@ export default function Tarea(props) {
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <Typography component="h1" variant="h5">
-              Tarea
+              User Stories
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary" className={classes.right} href="/tarea/agregar">
-              <Add /> Agregar
+            <Button variant="contained" color="primary" className={classes.right} href="/user-storie/agregar">
+              <Add /> Asignar
             </Button>
           </Grid>
         </Grid>
@@ -179,9 +179,11 @@ export default function Tarea(props) {
           <Table className={classes.table} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                <TableCell>Nombre</TableCell>
-                <TableCell align="center">Descripción</TableCell>
-                <TableCell align="right"></TableCell>
+                <TableCell>Sprint</TableCell>
+                <TableCell align="center">Tarea</TableCell>
+                <TableCell align="center">Encargado</TableCell>
+                <TableCell align="center">Story Point</TableCell>
+                <TableCell align="center"></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -191,13 +193,19 @@ export default function Tarea(props) {
               ).map((row) => (
                 <TableRow key={row.id}>
                   <TableCell component="th" scope="row">
-                    {row.nombre}
+                    {row.nombreSprint}
                   </TableCell>
                   <TableCell align="center">
                     {row.descripcion}
                   </TableCell>
                   <TableCell align="center">
-                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/tarea/editar/' + row.id}>
+                    {row.nombreRecurso}
+                  </TableCell>
+                  <TableCell align="center">
+                    {row.story_points}
+                  </TableCell>
+                  <TableCell align="center">
+                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/user-storie/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>
                     <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>

@@ -11,85 +11,124 @@ datasource db {
 }
 
 //aca se crean los modelos
-
-
-model Usuario {
-  id Int @id @default(autoincrement())
-  nombre String
-  apellido String
-  rol Rol @relation(fields: [rolId], references: [id]) 
-  rolId Int
-  tareas Tarea[] 
-}
-
-model Rol {
-  id Int @id @default(autoincrement())
-  nombre String
-  descripcion String
-  codigo String
-  usuarios Usuario[]
-  proyectos RolProyecto[]
-}
-
 model Proyecto {
   id Int @id @default(autoincrement())
   nombre String
-  presupuesto Int 
-  procesos ProyectoProceso[]
-  roles RolProyecto[]
+  descripcion String
+  presupuesto Int
+  fecha_creacion DateTime @default(now())
+  evaluacion Evaluacion[]
   backlog Backlog?
-  sprint Sprint[]
 }
 
 model Proceso {
   id Int @id @default(autoincrement())
   nombre String
   descripcion String
-  proyectos ProyectoProceso[]
+  fecha_creacion DateTime @default(now())
+  evaluacion Evaluacion[]
 }
 
-model ProyectoProceso {
+model Evaluacion {
   id Int @id @default(autoincrement())
-  proyecto       Proyecto     @relation(fields: [proyectoId], references: [id])
-  proyectoId     Int // relation scalar field (used in the `@relation` attribute above)
-  proceso   Proceso @relation(fields: [procesoId], references: [id])
-  procesoId Int // relation scalar field (used in the `@relation` attribute above)
+  nombre String
+  descripcion String
+  estado String
+  proceso   Proceso     @relation(fields: [procesoId], references: [id])
+  procesoId  Int // relation scalar field (used in the `@relation` attribute above)
+  proyecto  Proyecto @relation(fields: [proyectoId], references: [id])
+  proyectoId Int // relation scalar field (used in the `@relation` attribute above)
+  fecha_creacion DateTime @default(now())
 }
 
-model RolProyecto {
+
+
+
+model Recurso {
   id Int @id @default(autoincrement())
-  proyecto       Proyecto     @relation(fields: [proyectoId], references: [id])
-  proyectoId     Int // relation scalar field (used in the `@relation` attribute above)
-  rol   Rol @relation(fields: [rolId], references: [id])
-  rolId Int // relation scalar field (used in the `@relation` attribute above)
+  nombre String
+  descripcion String
+  tipo String
+  fecha_creacion DateTime @default(now())
+  rol_recurso Rol_recurso[]
+}
+
+
+model Rol {
+  id Int @id @default(autoincrement())
+  nombre String
+  descripcion String
+  codigo String
+  rol_recurso Rol_recurso[]
+  fecha_creacion DateTime @default(now())
+}
+
+model Rol_recurso {
+  id Int @id @default(autoincrement())
+  rol Rol @relation(fields: [rolId], references: [id])
+  rolId Int // relation scalar field  (used in the `@relation` attribute above)
+  recurso Recurso @relation(fields: [recursoId], references: [id])
+  recursoId Int // relation scalar field  (used in the `@relation` attribute above)
+  fecha_creacion DateTime @default(now())
+  user_story User_story[]
+}
+
+model Tarea {
+  id Int @id @default(autoincrement())
+  nombre String
+  descripcion String
+  estado String
+  user_story User_story[]
+  fecha_creacion DateTime @default(now())
 }
 
 model Backlog {
   id Int @id @default(autoincrement())
   nombre String
   descripcion String
-  proyecto Proyecto @relation(fields: [proyectoId], references: [id]) 
-  proyectoId Int
-  tareas Tarea[] 
-}
-
-model Tarea {
-  id Int @id @default(autoincrement())
-  nombre String
-  tiempo Int
-  Backlog Backlog @relation(fields: [backlogId], references: [id]) 
-  backlogId Int 
-  sprint Sprint @relation(fields: [sprintId], references: [id]) 
-  sprintId Int 
-  responsable Usuario @relation(fields: [usuarioId], references: [id]) 
-  usuarioId Int 
+  proyecto Proyecto @relation(fields: [proyectoId], references: [id])
+  proyectoId Int  @unique // relation scalar field (used in the `@relation` attribute above)
+  sprint Sprint?
+  fecha_creacion DateTime @default(now())
 }
 
 model Sprint {
   id Int @id @default(autoincrement())
   nombre String
+  descripcion String
+  fecha_inicio String
+  fecha_fin String
+  duracion Int
   goal String
-  tareas Tarea[]
-  proyecto Proyecto @relation(fields: [proyectoId], references: [id]) 
-  proyectoId Int
+  backlog Backlog @relation(fields: [backlogId], references: [id])
+  backlogId Int  @unique // relation scalar field (used in the `@relation` attribute above)
+  user_story User_story[]
+  review Review[]
+  fecha_creacion DateTime @default(now())
 }
+
+
+model User_story {
+  id Int @id @default(autoincrement())
+  tarea Tarea @relation(fields: [tareaId], references: [id])
+  tareaId Int // relation scalar field  (used in the `@relation` attribute above)
+  story_points Int
+  sprint Sprint @relation(fields: [sprintId], references: [id])
+  sprintId Int // relation scalar field  (used in the `@relation` attribute above)
+  fecha_creacion DateTime @default(now())
+  rol_recurso Rol_recurso @relation(fields: [rol_recursoId], references: [id])
+  rol_recursoId Int // relation scalar field  (used in the `@relation` attribute above)
+}
+
+model Review {
+  id Int @id @default(autoincrement())
+  nombre String
+  descripcion String
+  avance String
+  conclusion String
+  estado String
+  sprint Sprint @relation(fields: [sprintId], references: [id])
+  sprintId Int // relation scalar field  (used in the `@relation` attribute above)
+  fecha_creacion DateTime @default(now())
+}
+

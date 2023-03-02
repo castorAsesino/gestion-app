@@ -68,7 +68,7 @@ export default function ProyectoForm(props) {
   const isAddMode = !proyecto;
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
     defaultValues: {
-      nombre: "", presupuesto: 0
+      nombre: "", descripcion: "", presupuesto: 0
     }
   });
 
@@ -87,6 +87,7 @@ export default function ProyectoForm(props) {
       .then((response) => response.json())
       .then((data) => {
         setValue('nombre', data.nombre)
+        setValue('descripcion', data.descripcion)
         setValue('presupuesto', data.presupuesto)
       });
 
@@ -122,6 +123,12 @@ export default function ProyectoForm(props) {
                 <TextField id="standard-basic" label="Nombre" variant="standard" fullWidth margin="normal" {...register('nombre', { required: true })}
                   error={errors.nombre}
                   helperText={errors.nombre ? 'Empty field' : ''}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                <TextField type="text" id="standard-basic" label="Descripción" variant="standard" fullWidth margin="normal" {...register('descripcion', { required: true })}
+                  error={errors.descripcion}
+                  helperText={errors.descripcion ? 'Empty field' : ''}
                 />
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>

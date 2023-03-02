@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-html-link-for-pages */
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
@@ -15,40 +16,36 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Sistema de Gestión
         </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
+          <a href="/menu-proyecto" className={styles.card}>
+            <h2>Procesos &rarr;</h2>
+            <p>Se lleva a cabo la gestión de todos los procesos utilizados por la empresa o equipo de desarrollo.</p>
           </a>
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
+          <a href="/menu-proyecto" className={styles.card}>
+            <h2>Proyectos &rarr;</h2>
+            <p>Se realizan todas las gestiones relacionadas a las diferentes entidades del proyecto.</p>
           </a>
 
           <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
+            href="/menu-scrum"
             className={styles.card}
           >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
+            <h2>Scrum &rarr;</h2>
+            <p>Se realizan las gestiones necesarias para llevar a cabo la correcta implementación de la metodología SCRUM.</p>
           </a>
 
           <a
             href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
             className={styles.card}
           >
-            <h2>Deploy &rarr;</h2>
+            <h2>Evaluación &rarr;</h2>
             <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
+              Se lleva a cabo la implementación de la evaluación de la capacidad y calidad de los procesos de trabajo.
             </p>
           </a>
         </div>

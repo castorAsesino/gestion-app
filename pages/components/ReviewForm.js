@@ -41,6 +41,8 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
+    textAlign: 'center',
+    alignItems: 'center',
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -61,66 +63,66 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function SprintForm(props) {
+export default function ReviewForm(props) {
   const classes = useStyles();
   const router = useRouter();
-  const id = router.query['id'];
-  const sprint = router?.query['id'];
-  const isAddMode = !sprint;
-  
-  const [backlog, setBacklog] = useState([]);
-  const [backlogId, setBacklogId] = useState('');
+  const id = router?.query['id'];
+  const isAddMode = !id;
+
+
+  const [sprint, setSprint] = useState([]);
+  const [sprintId, setSprintId] = useState('');
 
 
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
     defaultValues: {
-      nombre: "", goal: "", descripcion: "", duracion: "", fecha_inicio: "", fecha_fin: "", backlogId: ""
+      nombre: "", descripcion: "", avance: "", conclusion: "", sprintId: "", 
     }
   });
 
   useEffect(() => {
-    getBacklog();
-    if (!isAddMode) getSprintId();
+    getSprint();
+    if (!isAddMode) getReview();
     return
   }, [isAddMode]);
 
-  const getBacklog = async () => {
-    const response = await axios.get("/api/backlog");
-    setBacklog(response.data)
+  const getSprint = async () => {
+    const response = await axios.get("/api/sprint");
+    setSprint(response.data)
   }
 
-  const getSprintId = async () => {
-    fetch("/api/sprint/" + id)
+
+
+  const getReview = async () => {
+    fetch("/api/review/" + id)
       .then((response) => response.json())
       .then((data) => {
-        setValue('nombre', data.nombre)
-        setValue('goal', data.goal)
-        setValue('backlogId', data.backlogId)
-        setBacklogId(getValues("backlogId"))
-        setValue('duracion', data.duracion)
-        setValue('fecha_inicio', data.fecha_inicio)
-        setValue('fecha_fin', data.fecha_fin)
-        setValue('descripcion', data.descripcion)
+        setValue('sprintId', data.sprintId);
+        setSprintId(getValues("sprintId"));
+        setValue('descripcion', data.descripcion);
+        setValue('nombre', data.nombre);
+        setValue('avance', data.avance);
+        setValue('conclusion', data.conclusion);
       });
 
   };
   const onSubmit = (data) => {
     return isAddMode
-      ? createSprint({...data, duracion: +data.duracion})
-      : updateSprint({...data, duracion: +data.duracion});
+      ? create({...data, estado: "ACTIVO"})
+      : update({...data, estado: "ACTIVO"});
   }
 
-  const updateSprint = async (data) => {
-    const response = await axios.put("/api/sprint/" + id, data);
+  const update = async (data) => {
+    const response = await axios.put("/api/review/" + id, data);
   }
 
-  const createSprint = async (data) => {
-    const response = await axios.post("/api/sprint", data);
+  const create = async (data) => {
+    const response = await axios.post("/api/review", data);
   }
 
   const handleChange = (event) => {
-    setValue('backlogId', event.target.value);
-    setBacklogId(event.target.value);
+    setValue('sprintId', event.target.value);
+    setSprintId(event.target.value);
   };
 
 
@@ -128,66 +130,57 @@ export default function SprintForm(props) {
     <Container component="main" >
       <CssBaseline />
       <Card className={classes.root}>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <Person />
-          </Avatar>
-          <Typography component="h1" variant="h5" >
-            Sprint
+        <div className={classes}>
+          <Typography component="h1" variant="h5" style={{ textAlign: 'center' }}>
+            Review
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={3} className={classes.form}>
-              <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Nombre" variant="standard" fullWidth margin="normal" {...register('nombre', { required: true })}
+            <Grid container spacing={5} className={classes.form}>
+
+            <Grid item xs={12} sm={12} lg={6}>
+                <TextField id="standard-basic" type="text" label="Nombre" variant="standard" fullWidth margin="normal" {...register('nombre', { required: true })}
                   error={errors.nombre}
                   helperText={errors.nombre ? 'Empty field' : ''}
                 />
               </Grid>
+
               <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Descripción" variant="standard" fullWidth margin="normal" {...register('descripcion', { required: true })}
+                <TextField id="standard-basic" type="text" label="Descripción" variant="standard" fullWidth margin="normal" {...register('descripcion', { required: true })}
                   error={errors.descripcion}
                   helperText={errors.descripcion ? 'Empty field' : ''}
                 />
               </Grid>
+
+
               <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Goal" variant="standard" fullWidth margin="normal" {...register('goal', { required: true })}
-                  error={errors.goal}
-                  helperText={errors.goal ? 'Empty field' : ''}
+                <TextField id="standard-basic" type="text" label="Avance" variant="standard" fullWidth margin="normal" {...register('avance', { required: true })}
+                  error={errors.avance}
+                  helperText={errors.avance ? 'Empty field' : ''}
                 />
               </Grid>
+
               <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Duración" type="number" variant="standard" fullWidth margin="normal" {...register('duracion', { required: true })}
-                  error={errors.duracion}
-                  helperText={errors.duracion ? 'Empty field' : ''}
+                <TextField id="standard-basic" type="text" label="Conclusión" variant="standard" fullWidth margin="normal" {...register('conclusion', { required: true })}
+                  error={errors.conclusion}
+                  helperText={errors.conclusion ? 'Empty field' : ''}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Fecha Inicio" variant="standard" fullWidth margin="normal" {...register('fecha_inicio', { required: true })}
-                  error={errors.fecha_inicio}
-                  helperText={errors.fecha_inicio ? 'Empty field' : ''}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Fecha Fin" variant="standard" fullWidth margin="normal" {...register('fecha_fin', { required: true })}
-                  error={errors.fecha_fin}
-                  helperText={errors.fecha_fin ? 'Empty field' : ''}
-                />
-              </Grid>
+
               <Grid item xs={12} sm={12} lg={6}>
                 <FormControl fullWidth={true}>
-                  <InputLabel>Backlog</InputLabel>
+                  <InputLabel>Tarea</InputLabel>
                   <Select
                     fullWidth
                     onChange={handleChange}
-                    error={errors.backlogId}
-                    helperText={errors.backlogId ? 'Empty field' : ''}
-                    inputProps={register('backlogId')}
-                    value={backlogId}
+                    error={errors.sprintId}
+                    helperText={errors.sprintId ? 'Empty field' : ''}
+                    inputProps={register('sprintId')}
+                    value={sprintId}
                     input={<Input />}
                     MenuProps={MenuProps}
                     required={true}
                   >
-                    {backlog.map((option) => (
+                    {sprint.map((option) => (
                       <MenuItem key={option.id} value={option.id}>
                         {option.nombre}
                       </MenuItem>
@@ -196,9 +189,11 @@ export default function SprintForm(props) {
                   </Select>
                 </FormControl>
               </Grid>
+
+
               <Grid item xs={12} sm={12} lg={6}>
-                <div style={{ float: 'right' }}>
-                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/sprint">
+                <div >
+                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/review">
                     Cancelar
                   </Button>
                   <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>
