@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -19,6 +19,9 @@ model Proyecto {
   fecha_creacion DateTime @default(now())
   evaluacion Evaluacion[]
   backlog Backlog?
+  atributo_de_proceso Atributo_De_Proceso[]
+  cliente Cliente @relation(fields: [clienteId], references: [id])
+  clienteId Int 
 }
 
 model Proceso {
@@ -130,5 +133,28 @@ model Review {
   sprint Sprint @relation(fields: [sprintId], references: [id])
   sprintId Int // relation scalar field  (used in the `@relation` attribute above)
   fecha_creacion DateTime @default(now())
+}
+
+model Cliente {
+  id Int @id @default(autoincrement())
+  nombre String
+  descripcion String
+  numero String
+  pais String
+  direccion String
+  estado String
+  web String
+  fecha_creacion DateTime @default(now())
+  proyecto Proyecto[]
+}
+
+model Atributo_De_Proceso {
+  id Int @id @default(autoincrement())
+  nombre String
+  descripcion String
+  valor String
+  fecha_creacion DateTime @default(now())
+  proyecto Proyecto @relation(fields: [proyectoId], references: [id])
+  proyectoId Int 
 }
 
