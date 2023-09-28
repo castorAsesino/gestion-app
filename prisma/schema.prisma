@@ -19,7 +19,6 @@ model Proyecto {
   fecha_creacion DateTime @default(now())
   evaluacion Evaluacion[]
   backlog Backlog?
-  atributo_de_proceso Atributo_De_Proceso[]
   cliente Cliente @relation(fields: [clienteId], references: [id])
   clienteId Int 
 }
@@ -30,6 +29,7 @@ model Proceso {
   descripcion String
   fecha_creacion DateTime @default(now())
   evaluacion Evaluacion[]
+  atributo_de_proceso Atributo_De_Proceso[]
 }
 
 model Evaluacion {
@@ -154,7 +154,7 @@ model Atributo_De_Proceso {
   descripcion String
   valor String
   fecha_creacion DateTime @default(now())
-  proyecto Proyecto @relation(fields: [proyectoId], references: [id])
-  proyectoId Int 
+  proceso Proceso @relation(fields: [procesoId], references: [id])
+  procesoId Int 
 }
 
