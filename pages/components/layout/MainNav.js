@@ -37,15 +37,18 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+
   },
   title: {
     flexGrow: 1,
   },
   appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+      transition: theme.transitions.create(['margin', 'width'], {
+       easing: theme.transitions.easing.sharp,
+       duration: theme.transitions.duration.leavingScreen,
+     }), 
+    
+    background: '#3f1477'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -109,89 +112,54 @@ export default function PersistentDrawerLeft(props) {
   };
 
   const activeRoute = (routeName, currentRoute) => {
-    return routeName === currentRoute? true : false;
+    return routeName === currentRoute ? true : false;
   }
 
   const routes = [
     {
-      id: 1, 
-      label:'Home', 
-      path: '/', 
+      id: 1,
+      label: 'Inicio',
+      path: '/',
       icon: HomeIcon
-    }, 
-    /* {
-      id: 2, 
-      label: 'Login', 
-      path: '/login', 
-      icon: LoginIcon
-    }, 
+    },
     {
-      id: 3, 
-      label: 'Register', 
-      path: '/register', 
-      icon: RegisterIcon
-    }, */
-    {
-      id: 4, 
-      label:'AsignarRoles', 
-      path: '/asignar-roles', 
+      id: 2,
+      label: 'Procesos',
+      path: '/menu-proyecto',
       icon: AllInboxIcon
-    }, 
+    },
     {
-      id: 5, 
-      label: 'Proceso', 
-      path: '/proceso', 
-      icon: AccountCircle
-    }, 
-    {
-      id: 6, 
-      label: 'Proyecto', 
-      path: '/proyecto', 
+      id: 3,
+      label: 'Proyectos',
+      path: '/menu-proyecto',
       icon: LibraryBooks
     },
     {
-      id: 8, 
-      label:'Recurso', 
-      path: '/recurso', 
-      icon: Build
-    }, 
-    {
-      id: 9, 
-      label: 'Rol', 
-      path: '/rol', 
-      icon: LoginIcon
-    }, 
-    {
-      id: 10, 
-      label: 'Sprint', 
-      path: '/sprint', 
+      id: 4,
+      label: 'SCRUM',
+      path: '/menu-scrum',
       icon: Loop
     },
     {
-      id: 12, 
-      label: 'Tarea', 
-      path: '/tarea', 
-      icon: ListAlt
-    },
-    {
-      id: 13, 
-      label: 'Usuario', 
-      path: '/usuario', 
-      icon: Person
+      id: 5,
+      label: 'Evaluación',
+      path: '/rol',
+      icon: Build
     }
-    
+
   ]
   return (
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
         position="fixed"
+
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
       >
         <Toolbar>
- {/*          <IconButton
+          <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -199,10 +167,11 @@ export default function PersistentDrawerLeft(props) {
             className={clsx(classes.menuButton, open && classes.hide)}
           >
             <MenuIcon />
-          </IconButton> */}
-          <Typography variant="h6" className={classes.title}>gestion-app v0.0</Typography>                    
+
+          </IconButton>
+          {/*  <Typography variant="h6" className={classes.title}>gestion-app v0.0</Typography>                    
           <Button color="inherit" component={Link} href="/register">Register</Button>     
-          <Button color="inherit" component={Link} href="/login">Login</Button>     
+          <Button color="inherit" component={Link} href="/login">Login< /Button>     */}
 
         </Toolbar>
       </AppBar>
@@ -216,14 +185,16 @@ export default function PersistentDrawerLeft(props) {
         }}
       >
         <div className={classes.drawerHeader}>
+          <Typography variant="h6" className={classes.title}>Menu</Typography>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
+
         </div>
         <Divider />
         <List>
           {routes.map((item, index) => (
-            <Link  href={item.path} style={{ textDecoration: 'none', color: 'black' }} key={index}>
+            <Link href={item.path} style={{ textDecoration: 'none', color: 'black' }} key={index}>
               <MenuItem selected={activeRoute(item.path, router.pathname)}>
                 <ListItem button key={index}  >
                   <ListItemIcon> <item.icon /> </ListItemIcon>

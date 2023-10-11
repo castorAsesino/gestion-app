@@ -114,3 +114,14 @@
     flex-direction: column;
   }
 }
+
+.MuiButton-containedPrimary {
+  color: #fff !important;
+  background-color: #ff4e71 !important;
+}
+
+.MuiAppBar-colorPrimary {
+  color: #fff;
+  background-color: #ff4e71 !important;
+}
+
