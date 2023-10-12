@@ -10,7 +10,7 @@ import Link from 'next/link';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 
-export default function MenuScrum() {
+export default function MenuEvaluacion() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -46,7 +46,7 @@ export default function MenuScrum() {
                 <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <AssignmentIndIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h5">User Storie</Typography>
+                    <Typography variant="h5">....</Typography>
                   </CardContent>
                 </Card>
               </a>

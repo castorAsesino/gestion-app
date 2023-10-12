@@ -125,7 +125,7 @@ export default function PersistentDrawerLeft(props) {
     {
       id: 2,
       label: 'Procesos',
-      path: '/menu-proyecto',
+      path: '/menu-proceso',
       icon: AllInboxIcon
     },
     {
@@ -143,7 +143,7 @@ export default function PersistentDrawerLeft(props) {
     {
       id: 5,
       label: 'Evaluación',
-      path: '/rol',
+      path: '/menu-evaluacion',
       icon: Build
     }
 

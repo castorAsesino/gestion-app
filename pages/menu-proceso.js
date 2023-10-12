@@ -10,7 +10,7 @@ import Link from 'next/link';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 
-export default function MenuScrum() {
+export default function MenuProceso() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
