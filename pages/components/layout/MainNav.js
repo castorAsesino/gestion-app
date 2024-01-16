@@ -32,7 +32,7 @@ import Build from '@material-ui/icons/Build';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Container from '@material-ui/core/Container';
-const drawerWidth = 240;
+const drawerWidth = 270;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,6 +78,11 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
+
+  },
+  colornav:{
+    background: "#3f1477",
+    color: "#fff",
   },
   content: {
     flexGrow: 1,
@@ -131,7 +136,7 @@ export default function PersistentDrawerLeft(props) {
     {
       id: 3,
       label: 'Proyectos',
-      path: '/menu-proyecto',
+      path: '/proyecto',
       icon: LibraryBooks
     },
     {
@@ -145,6 +150,12 @@ export default function PersistentDrawerLeft(props) {
       label: 'Evaluación',
       path: '/menu-evaluacion',
       icon: Build
+    },
+    {
+      id: 6,
+      label: 'Atributo de Proceso',
+      path: '/atributos',
+      icon: MenuIcon
     }
 
   ]
@@ -184,9 +195,9 @@ export default function PersistentDrawerLeft(props) {
           paper: classes.drawerPaper,
         }}
       >
-        <div className={classes.drawerHeader}>
-          <Typography variant="h6" className={classes.title}>Menu</Typography>
-          <IconButton onClick={handleDrawerClose}>
+        <div className={classes.drawerHeader} style={{  background: "#3f1477", color: "#fff", }}>
+          <Typography variant="h6" className={classes.title}></Typography>
+          <IconButton onClick={handleDrawerClose} style={{  color: "#fff", }}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
 

@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Card, CardContent, Typography } from '@material-ui/core';
+import { Card, CardContent, ListItem, Typography } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import styles from '../styles/Home.module.css';
 import NotesIcon from '@material-ui/icons/Notes';
@@ -7,6 +7,7 @@ import WebIcon from '@material-ui/icons/Web';
 import CachedIcon from '@material-ui/icons/Cached';
 import BuildIcon from '@material-ui/icons/Build';
 import Link from 'next/link';
+import MenuIcon from '@material-ui/icons/Menu';
 
 export default function Home() {
   return (
@@ -58,6 +59,19 @@ export default function Home() {
                   <BuildIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Evaluación</Typography>
+                  </CardContent>
+                </Card>
+              </a>
+            </Link>
+          </div>
+
+          <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
+            <Link href="/atributos">
+              <a>
+                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                  <MenuIcon style={{ fontSize: 100 }} />
+                  <CardContent>
+                    <Typography variant="h5">Atributo de Proceso</Typography>
                   </CardContent>
                 </Card>
               </a>

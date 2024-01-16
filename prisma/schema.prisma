@@ -156,5 +156,48 @@ model Atributo_De_Proceso {
   fecha_creacion DateTime @default(now())
   proceso Proceso @relation(fields: [procesoId], references: [id])
   procesoId Int 
+  detalle_matriz_evaluacion Detalle_Matriz_Evaluacion[]
 }
+
+model Escala_Calificacion {
+  id Int @id @default(autoincrement())
+  nombre String
+  valor Int
+  fecha_creacion DateTime @default(now())
+  detalle_matriz_evaluacion Detalle_Matriz_Evaluacion[]
+}
+
+model Niveles {
+  id Int @id @default(autoincrement())
+  nombre String
+  valorMax Int
+  valorMin Int
+  fecha_creacion DateTime @default(now())
+ 
+}
+
+model Matriz_Evaluacion {
+  id Int @id @default(autoincrement())
+  nombre String
+  descripcion String
+  fecha_creacion DateTime @default(now())
+  detalle_matriz_evaluacion Detalle_Matriz_Evaluacion @relation(fields: [detalle_matriz_evaluacionId], references: [id])
+  detalle_matriz_evaluacionId Int 
+}
+
+model Detalle_Matriz_Evaluacion {
+  id Int @id @default(autoincrement())
+  
+  atributo Atributo_De_Proceso @relation(fields: [atributoProcesoId], references: [id])
+  atributoProcesoId Int 
+
+  calificacion Escala_Calificacion @relation(fields: [calificacionId], references: [id])
+  calificacionId Int 
+  porcentaje Float?
+
+
+  matriz_evaluacion Matriz_Evaluacion[]
+}
+
+
 
