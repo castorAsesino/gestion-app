@@ -21,10 +21,10 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableHead from '@material-ui/core/TableHead';
 import Add from '@material-ui/icons/Add';
-import axios from "axios";
+import axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteModal from '../components/layout/DeleteModal'
+import DeleteModal from '../components/layout/DeleteModal';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,30 +33,53 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
+  tableContainer: {
+    marginTop: theme.spacing(3),
   },
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
   },
   right: {
-    float: 'right'
-  }
+    textAlign: 'right',
+  },
+  addButton: {
+    margin: theme.spacing(2, 0),
+  },
+  headerStyle: {
+    color: '#556cd6',
+    fontWeight: 900,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
+  tableCell: {
+    width: 100,
+    border: '2px solid #000000',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '2px solid #000000',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '2px solid #000000',
+    textAlign: 'center',
+  },
 }));
 
 function TablePaginationActions(props) {
@@ -81,7 +104,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.right}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -89,7 +112,11 @@ function TablePaginationActions(props) {
       >
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label="previous page"
+      >
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
       <IconButton
@@ -117,14 +144,13 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-
 export default function Proyecto(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
-  const [deleteItem, setDeleteItem] = React.useState(false);
-  const [id, setId] = React.useState('');
+  const [deleteItem, setDeleteItem] = useState(false);
+  const [id, setId] = useState('');
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -134,13 +160,10 @@ export default function Proyecto(props) {
 
   useEffect(() => {
     if (deleteItem) {
-      axios
-        .delete(("/api/proyecto/" + id))
-        .then(response => {
-          window.location.reload();
-        })
+      axios.delete('/api/proyecto/' + id).then((response) => {
+        window.location.reload();
+      });
     }
-
   }, [deleteItem, id]);
 
   const handleChangePage = (event, newPage) => {
@@ -153,94 +176,104 @@ export default function Proyecto(props) {
   };
 
   const getListData = async () => {
-    const response = await axios.get("/api/proyecto");
-    setRows(response.data)
-  }
-
-
+    const response = await axios.get('/api/proyecto');
+    setRows(response.data);
+  };
 
   return (
-    <>
-      <Container component="main" >
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Typography component="h1" variant="h5">
-              Proyecto
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Button variant="contained" color="primary" className={classes.right} href="/proyecto/agregar">
-              <Add /> Agregar
-            </Button>
-          </Grid>
+    <Container component="main">
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5" className={classes.center}>
+          Lista de Proyectos
+        </Typography>
+        <Grid item xs={12} md={6} className={classes.buttonContainer}>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.addButton}
+            href="/proyecto/agregar"
+          >
+            <Add /> Agregar
+          </Button>
         </Grid>
-
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="custom pagination table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Nombre</TableCell>
-                <TableCell align="center">Descripción</TableCell>
-                <TableCell align="center">Presupuesto</TableCell>
-                <TableCell align="center"></TableCell>
+      </div>
+      <TableContainer component={Paper} className={classes.tableContainer}>
+        <Table aria-label="custom pagination table" className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <TableCell style={{ width: 100, border: '2px solid #000000' }} align="center" className={classes.headerStyle}>
+                Nombre
+              </TableCell>
+              <TableCell style={{ border: '2px solid #000000' }} align="center" className={classes.headerStyle}>
+                Descripción
+              </TableCell>
+              <TableCell style={{ width: 100, border: '2px solid #000000' }} align="center" className={classes.headerStyle}>
+                Presupuesto
+              </TableCell>
+              <TableCell className={classes.tableCellActions} align="center"></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : rows
+            ).map((row) => (
+              <TableRow key={row.id}>
+                <TableCell className={classes.tableCell} component="th" scope="row" align="center">
+                  {row.nombre}
+                </TableCell>
+                <TableCell className={classes.tableCellDescription} align="center">
+                  {row.descripcion}
+                </TableCell>
+                <TableCell className={classes.tableCellDescription} align="center">
+                  {row.presupuesto}
+                </TableCell>
+                <TableCell className={classes.tableCellActions} align="center">
+                  <IconButton
+                    aria-label="delete"
+                    title={'Editar'}
+                    component={Link}
+                    href={'/proyecto/editar/' + row.id}
+                    style={{ color: '#54bca4' }}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {(rowsPerPage > 0
-                ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : rows
-              ).map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.nombre}
-                  </TableCell>
-                  <TableCell align="center">
-                    {row.descripcion}
-                  </TableCell>
-                  <TableCell align="center">
-                    {row.presupuesto}
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/proyecto/editar/' + row.id}>
-                      <EditIcon />
-                    </IconButton>
-                    <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {emptyRows > 0 && rows.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={5} align="center"> No se encontraron registros.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
+            ))}
+            {emptyRows > 0 && rows.length === 0 && (
               <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                  colSpan={3}
-                  count={rows.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: { 'aria-label': 'Registros por páginas' },
-                    native: true,
-                  }}
-                  labelRowsPerPage={"Registros por páginas"}
-                  labelDisplayedRows={
-                    ({ from, to, count }) => {
-                      return '' + from + '-' + to + ' de ' + count
-                    }
-                  }
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions} />
+                <TableCell colSpan={3} align="center">
+                  No se encontraron registros.
+                </TableCell>
               </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      </Container>
-    </>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
+                colSpan={4}
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: { 'aria-label': 'Registros por páginas' },
+                  native: true,
+                }}
+                labelRowsPerPage={'Registros por páginas'}
+                labelDisplayedRows={({ from, to, count }) => {
+                  return '' + from + '-' + to + ' de ' + count;
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }

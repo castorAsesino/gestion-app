@@ -71,16 +71,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ProcesoForm(props) {
+export default function ClienteForm(props) {
   const classes = useStyles();
   const router = useRouter();
   const id = router.query['id'];
-  const proceso = router?.query['id'];
-  const isAddMode = !proceso;
+  const cliente = router?.query['id'];
+  const isAddMode = !cliente;
   const [roles, setRoles] = useState([]);
   const [rolId, setRolId] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
+  const [estado, setEstado] = useState('Activo'); 
   const {
     register,
     handleSubmit,
@@ -91,27 +92,32 @@ export default function ProcesoForm(props) {
     defaultValues: {
       nombre: '',
       descripcion: '',
+      pais: '',
+      numero: '',
+      direccion: '',
     },
   });
 
   useEffect(() => {
-    if (!isAddMode) getProcesoById();
+    if (!isAddMode) getClienteById();
     return;
   }, [isAddMode]);
 
-  const getProcesoById = async () => {
-    fetch('/api/proceso/' + id)
+  const getClienteById = async () => {
+    fetch('/api/cliente/' + id)
       .then((response) => response.json())
       .then((data) => {
         setValue('nombre', data.nombre);
         setValue('descripcion', data.descripcion);
+        setValue('numero', data.numero);
+        setValue('pais', data.pais);
+        setValue('direccion', data.direccion);
       });
   };
 
   const handleOpenDialog = (message) => {
     setDialogMessage(message);
     setOpenDialog(true);
-    // Reseteamos el formulario después de mostrar el mensaje de confirmación
     reset();
   };
 
@@ -121,10 +127,11 @@ export default function ProcesoForm(props) {
 
   const onSubmit = async (data) => {
     try {
+      console.log('data: '+JSON.stringify(data));
       if (isAddMode) {
-        await createProceso(data);
+        await createCliente(data);
       } else {
-        await updateProceso(data);
+        await updateCliente(data);
       }
       handleOpenDialog('Datos guardados correctamente');
     } catch (error) {
@@ -133,13 +140,13 @@ export default function ProcesoForm(props) {
     }
   };
 
-  const updateProceso = async (data) => {
-    const response = await axios.put('/api/proceso/' + id, data);
+  const updateCliente = async (data) => {
+    const response = await axios.put('/api/cliente/' + id, data);
   };
 
-  const createProceso = async (data) => {
-    console.log('create proceso');
-    const response = await axios.post('/api/proceso', data);
+  const createCliente = async (data) => {
+    console.log('create cliente');
+    const response = await axios.post('/api/cliente', data);
   };
 
   return (
@@ -148,7 +155,7 @@ export default function ProcesoForm(props) {
       <Card className={classes.root}>
         <div className={classes.paper}>
           <Typography component="h1" variant="h5">
-            Nuevo Proceso
+            Nuevo Cliente
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3} className={classes.form}>
@@ -179,7 +186,69 @@ export default function ProcesoForm(props) {
                   helperText={errors.descripcion ? 'Campo obligatorio' : ''}
                 />
               </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                <TextField
+                  id="standard-basic"
+                  label="Numero"
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                  {...register('numero', { required: true })}
+                  multiline
+                  minRows={1}
+                  error={errors.numero}
+                  helperText={errors.numero ? 'Campo obligatorio' : ''}
+                />
+              </Grid>
 
+              <Grid item xs={12} sm={12} lg={6}>
+                <TextField
+                  id="standard-basic"
+                  label="Pais"
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                  {...register('pais', { required: true })}
+                  multiline
+                  minRows={1}
+                  error={errors.pais}
+                  helperText={errors.pais ? 'Campo obligatorio' : ''}
+                />
+              </Grid>
+
+              <Grid item xs={12} sm={12} lg={6}>
+                <TextField
+                  id="standard-basic"
+                  label="Direccion"
+                  variant="standard"
+                  fullWidth
+                  margin="normal"
+                  {...register('direccion', { required: true })}
+                  multiline
+                  minRows={1}
+                  error={errors.direccion}
+                  helperText={errors.pais ? 'Campo obligatorio' : ''}
+                />
+              </Grid>
+
+              {/* <Grid item xs={12} sm={12} lg={6}>
+              <Select
+                id="estado"
+                label="Estado"
+                onChange={(e) => setValue('estado', e.target.value)}
+                fullWidth
+                {...register('estado', { required: true })}
+                displayEmpty
+                inputProps={{ 'aria-label': 'Estado' }}
+                error={errors.estado}
+              >
+                <MenuItem value="" disabled>
+                  Selecciona el estado
+                </MenuItem>
+                <MenuItem value="Activo">Activo</MenuItem>
+                <MenuItem value="Inactivo">Inactivo</MenuItem>
+              </Select>
+              </Grid> */}
               <Grid item xs={12} sm={12} lg={6}>
                 <div style={{ float: 'right' }}>
                   <Button
@@ -189,7 +258,7 @@ export default function ProcesoForm(props) {
                     className={classes.margin}
                     style={{ marginRight: '10px' }}
                     component={Link}
-                    href="/proceso"
+                    href="/cliente"
                   >
                     Cancelar
                   </Button>

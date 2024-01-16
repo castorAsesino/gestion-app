@@ -3,21 +3,22 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-  debugger
   const { method } = req;
+  console.log('axios');
   switch (method) {
     case "GET":
       try {
-        const response = await prisma.proceso.findMany();
+        const response = await prisma.cliente.findMany();
         return res.status(200).json(response);
       } catch (error) {
         return res.status(400).json({ error });
       }
     case "POST":
+      console.log('post api');
       try {
-        console.log('post proceso');
         const { body: data } = req;
-        const response = await prisma.proceso.create({ data });
+        console.log('axios post: '+JSON.stringify(data));
+        const response = await prisma.cliente.create({ data });
         return res.status(201).json(response);
       } catch (error) {
         return res.status(500).json({ message: error.message });

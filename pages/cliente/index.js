@@ -59,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
   headerStyle: {
     color: '#556cd6',
     fontWeight: 900,
-    textAlign: 'center',
   },
   buttonContainer: {
     display: 'flex',
@@ -146,7 +145,7 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-export default function Proceso(props) {
+export default function Cliente(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -162,7 +161,7 @@ export default function Proceso(props) {
 
   useEffect(() => {
     if (deleteItem) {
-      axios.delete('/api/proceso/' + id).then((response) => {
+      axios.delete('/api/cliente/' + id).then((response) => {
         window.location.reload();
       });
     }
@@ -178,7 +177,7 @@ export default function Proceso(props) {
   };
 
   const getListData = async () => {
-    const response = await axios.get('/api/proceso');
+    const response = await axios.get('/api/cliente');
     setRows(response.data);
   };
 
@@ -186,14 +185,14 @@ export default function Proceso(props) {
     <Container component="main">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5" className={classes.center}>
-          Lista De Procesos
+          Lista De Clientes
         </Typography>
         <Grid item xs={12} md={6} className={classes.buttonContainer}>
           <Button
             variant="contained"
             color="primary"
             className={classes.addButton}
-            href="/proceso/agregar"
+            href="/cliente/agregar"
           >
             <Add /> Agregar
           </Button>
@@ -203,8 +202,11 @@ export default function Proceso(props) {
         <Table aria-label="custom pagination table" className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell style={{ width: 100, border:'2px solid #000000' }} align="center"  className={classes.headerStyle}>Nombre</TableCell>
+              <TableCell style={{ width: 100, border:'2px solid #000000' }} align="center" className={classes.headerStyle}>Nombre</TableCell>
               <TableCell style={{border:'2px solid #000000' }} align="center" className={classes.headerStyle}>Descripción</TableCell>
+              <TableCell style={{ width: 100, border:'2px solid #000000' }} align="center" className={classes.headerStyle}>Numero</TableCell>
+              <TableCell style={{border:'2px solid #000000' }} align="center" className={classes.headerStyle}>País</TableCell>
+              <TableCell style={{ width: 100, border:'2px solid #000000' }} align="center" className={classes.headerStyle}>Dirección</TableCell>
               <TableCell className={classes.tableCellActions} align="center"></TableCell>
             </TableRow>
           </TableHead>
@@ -220,12 +222,21 @@ export default function Proceso(props) {
                 <TableCell className={classes.tableCellDescription} align="center">
                   {row.descripcion}
                 </TableCell>
+                <TableCell className={classes.tableCellDescription} align="center">
+                  {row.numero}
+                </TableCell>
+                <TableCell className={classes.tableCellDescription} align="center">
+                  {row.pais}
+                </TableCell>
+                <TableCell className={classes.tableCellDescription} align="center">
+                  {row.direccion}
+                </TableCell>
                 <TableCell className={classes.tableCellActions} align="center">
                   <IconButton
                     aria-label="delete"
                     title={'Editar'}
                     component={Link}
-                    href={'/proceso/editar/' + row.id}
+                    href={'/cliente/editar/' + row.id}
                     style={{ color: '#54bca4' }}
                   >
                     <EditIcon />
@@ -246,7 +257,7 @@ export default function Proceso(props) {
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                colSpan={3}
+                colSpan={6}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
