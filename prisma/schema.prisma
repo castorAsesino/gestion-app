@@ -45,8 +45,6 @@ model Evaluacion {
 }
 
 
-
-
 model Recurso {
   id Int @id @default(autoincrement())
   nombre String
@@ -54,6 +52,16 @@ model Recurso {
   tipo String
   fecha_creacion DateTime @default(now())
   rol_recurso Rol_recurso[]
+  tipoDeRecurso TipoDeRecurso @relation(fields: [tipoDeRecursoId], references: [id])
+  tipoDeRecursoId Int 
+}
+
+model TipoDeRecurso {
+  id Int @id @default(autoincrement())
+  nombre String
+  descripcion String
+  fecha_creacion DateTime @default(now())
+  recurso Recurso[]
 }
 
 
@@ -142,8 +150,6 @@ model Cliente {
   numero String
   pais String
   direccion String
-  estado String
-  web String
   fecha_creacion DateTime @default(now())
   proyecto Proyecto[]
 }
