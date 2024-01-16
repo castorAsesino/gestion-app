@@ -13,7 +13,11 @@ import { useEffect, useState } from "react";
 import Link from '../../src/Link';
 import Person from '@material-ui/icons/Person';
 import { useRouter } from "next/router";
-import { FormGroup, ListItemIcon } from "@material-ui/core";
+import { FormGroup, ListItemIcon, Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions, } from "@material-ui/core";
 import { Grid, Input, InputLabel, MenuItem, FormControl, ListItemText, Select, Checkbox } from "@material-ui/core";
 import { useForm } from 'react-hook-form';
 
@@ -68,14 +72,23 @@ export default function ProyectoForm(props) {
   const isAddMode = !proyecto;
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
     defaultValues: {
-      nombre: "", descripcion: "", presupuesto: 0
+      nombre: "", descripcion: "", presupuesto: 0, cliente:""
     }
   });
+  const [clientes, setClientes] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState('');
 
   useEffect(() => {
     if (!isAddMode) getProyectoId();
+    getClientes();
     return
   }, [isAddMode]);
+
+  const getClientes = async () => {
+    const response = await axios.get('/api/cliente');
+    setClientes(response.data);
+  };
 
   const getRoles = async () => {
     const response = await axios.get("/api/rol");
@@ -89,13 +102,32 @@ export default function ProyectoForm(props) {
         setValue('nombre', data.nombre)
         setValue('descripcion', data.descripcion)
         setValue('presupuesto', data.presupuesto)
+        setValue('cliente', data.cliente)
       });
-
   };
-  const onSubmit = (data) => {
-    return isAddMode
-      ? createProyecto({...data, presupuesto: +data.presupuesto})
-      : updateProyecto({...data, presupuesto: +data.presupuesto});
+
+  const handleOpenDialog = (message) => {
+    setDialogMessage(message);
+    setOpenDialog(true);
+    reset();
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      if(isAddMode){
+        await createProyecto({...data, presupuesto: +data.presupuesto});
+      }else{
+        await updateProyecto({...data, presupuesto: +data.presupuesto});
+      }
+      handleOpenDialog('Datos guardados correctamente');
+    } catch (error) {
+      console.error('Error:', error);
+      handleOpenDialog('No se pudo guardar los datos');
+    }
   }
 
   const updateProyecto = async (data) => {
@@ -103,6 +135,7 @@ export default function ProyectoForm(props) {
   }
 
   const createProyecto = async (data) => {
+    console.log('proyecto: '+JSON.stringify(data));
     const response = await axios.post("/api/proyecto", data);
   }
 
@@ -137,6 +170,18 @@ export default function ProyectoForm(props) {
                   helperText={errors.presupuesto ? 'Empty field' : ''}
                 />
               </Grid>
+              <Grid item xs={12} sm={12} lg={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="cliente-label">Cliente</InputLabel>
+                  <Select labelId="cliente-label" id="cliente" {...register('cliente', { required: true })} error={errors.cliente} MenuProps={MenuProps}>
+                    {clientes.map((cliente) => (
+                      <MenuItem key={cliente.id} value={cliente.id}>
+                        {cliente.nombre}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
             <Grid item xs={12} sm={12} lg={6}>
               <div style={{ float: 'right' }}>
                 <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/proyecto">
@@ -154,6 +199,24 @@ export default function ProyectoForm(props) {
       </div>
     </Card>
 
+    <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Mensaje de Confirmación"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {dialogMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary" autoFocus>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
     </Container >
   );
