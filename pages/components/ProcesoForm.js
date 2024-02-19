@@ -162,6 +162,9 @@ export default function ProcesoForm(props) {
                   {...register('nombre', { required: true })}
                   error={errors.nombre}
                   helperText={errors.nombre ? 'Campo obligatorio' : ''}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
 
@@ -177,6 +180,9 @@ export default function ProcesoForm(props) {
                   minRows={1}
                   error={errors.descripcion}
                   helperText={errors.descripcion ? 'Campo obligatorio' : ''}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
 
