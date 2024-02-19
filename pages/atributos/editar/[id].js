@@ -1,9 +1,9 @@
 import AtributosForm from "../../components/AtributosForm";
 
-function EditarTarea() {
+function EditarAtributo() {
 
   return (
     <AtributosForm />
   );
 }
-export default AtributosTarea;
+export default EditarAtributo;

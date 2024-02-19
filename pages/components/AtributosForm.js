@@ -97,10 +97,12 @@ export default function AtributosForm(props) {
     fetch("/api/atributo/" + id)
       .then((response) => response.json())
       .then((data) => {
+        console.log('sad', data)
         setValue('nombre', data.nombre);
         setValue('descripcion', data.descripcion);
         setValue('valor', data.valor);
         setValue('procesoId', data.procesoId);
+        setProcesoId(data.procesoId);
       });
   };
   const handleOpenDialog = (message) => {
@@ -156,21 +158,34 @@ export default function AtributosForm(props) {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3} className={classes.form}>
               <Grid item xs={12} sm={12} lg={12}>
-                <TextField id="standard-basic" label="Nombre" variant="standard" fullWidth margin="normal" {...register('nombre', { required: true })}
+                <TextField label="Nombre"  fullWidth margin="normal" {...register('nombre', { required: true })}
                   error={errors.nombre}
+                  placeholder="Nombre"
                   helperText={errors.nombre ? 'Campo obligatorio' : ''}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={12} lg={12}>
-                <TextField id="standard-basic" label="Descripción" variant="standard" fullWidth margin="normal" {...register('descripcion', { required: true })}
+                <TextField label="Descripción" variant="standard" 
+                fullWidth margin="normal" {...register('descripcion', { required: true })}
+               
                   error={errors.descripcion}
-                  helperText={errors.descripcion ? 'Campo obligatorio' : ''}
+                  placeholder="Descripción"
+                  helperText={errors.descripcion ? 'Campo obligatorio' : ''}   InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
               <Grid item xs={12} sm={12} lg={12}>
-                <TextField id="standard-basic"  type="number" label="Valor" variant="standard" fullWidth margin="normal" {...register('valor', { required: true })}
+                <TextField  type="number" label="Valor" variant="standard" fullWidth margin="normal" {...register('valor', { required: true })}
                   error={errors.valor}
+                  placeholder="Valor"
                   helperText={errors.valor ? 'Campo obligatorio' : ''}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
 
@@ -187,7 +202,7 @@ export default function AtributosForm(props) {
                     input={<Input />}
                     MenuProps={MenuProps}
                     required={true}
-                    disabled={!isAddMode}
+                   /*  disabled={!isAddMode} */
                   >
                     {procesos.map((option) => (
                       <MenuItem key={option.id} value={option.id}>
