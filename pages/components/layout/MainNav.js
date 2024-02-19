@@ -130,7 +130,7 @@ export default function PersistentDrawerLeft(props) {
     {
       id: 2,
       label: 'Procesos',
-      path: '/menu-proceso',
+      path: '/proceso',
       icon: AllInboxIcon
     },
     {

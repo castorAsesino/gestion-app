@@ -182,7 +182,8 @@ export default function Atributos(props) {
                 <TableCell>Nombre</TableCell>
                 <TableCell align="center">Descripción</TableCell>
                 <TableCell align="center">Valor</TableCell>
-                <TableCell align="right"></TableCell>
+                <TableCell align="center">Proceso</TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -194,11 +195,14 @@ export default function Atributos(props) {
                   <TableCell component="th" scope="row">
                     {row.nombre}
                   </TableCell>
-                  <TableCell component="th" scope="row">
+                  <TableCell align="center">
                     {row.descripcion}
                   </TableCell>
                   <TableCell align="center">
                     {row.valor}
+                  </TableCell>
+                  <TableCell align="center">
+                    {row.proceso.nombre}
                   </TableCell>
                   <TableCell align="center">
                     <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/atributos/editar/' + row.id}>
@@ -210,7 +214,7 @@ export default function Atributos(props) {
               ))}
               {emptyRows > 0 && rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={4} align="center"> No se encontraron registros.
+                  <TableCell colSpan={5} align="center"> No se encontraron registros.
                   </TableCell>
                 </TableRow>
               )}

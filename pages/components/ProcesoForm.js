@@ -152,7 +152,7 @@ export default function ProcesoForm(props) {
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3} className={classes.form}>
-              <Grid item xs={12} sm={12} lg={6}>
+              <Grid item xs={12} sm={12} lg={12}>
                 <TextField
                   id="standard-basic"
                   label="Nombre"
@@ -165,7 +165,7 @@ export default function ProcesoForm(props) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} lg={6}>
+              <Grid item xs={12} sm={12} lg={12}>
                 <TextField
                   id="standard-basic"
                   label="Descripción"
@@ -180,7 +180,7 @@ export default function ProcesoForm(props) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} lg={6}>
+              <Grid item xs={12} sm={12} lg={12}>
                 <div style={{ float: 'right' }}>
                   <Button
                     variant="contained"

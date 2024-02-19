@@ -8,7 +8,11 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const response = await prisma.atributo_De_Proceso.findMany();
+        const response = await prisma.atributo_De_Proceso.findMany({
+          include: {
+            proceso: true
+          }
+        });
         return res.status(200).json(response);
       } catch (error) {
         return res.status(400).json({ error });

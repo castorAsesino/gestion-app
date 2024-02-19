@@ -18,7 +18,13 @@ import { useRouter } from "next/router";
 import { FormGroup, ListItemIcon } from "@material-ui/core";
 import { Grid, Input, InputLabel, MenuItem, FormControl, ListItemText, Select, Checkbox } from "@material-ui/core";
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
-
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+} from '@material-ui/core';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -68,14 +74,21 @@ export default function AtributosForm(props) {
   const id = router.query['id'];
   const atributo = router?.query['id'];
   const isAddMode = !atributo;
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState('');
 
-  const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
+  const [procesos, setProcesos] = useState([]);
+  const [procesoId, setProcesoId] = useState('');
+
+
+  const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue,  reset, } = useForm({
     defaultValues: {
-      nombre: "", descripcion: ""
+      nombre: "", descripcion: "", procesoId: ""
     }
   });
 
   useEffect(() => {
+    getProcesos();
     if (!isAddMode) getAtributoId();
     return
   }, [isAddMode]);
@@ -87,15 +100,33 @@ export default function AtributosForm(props) {
         setValue('nombre', data.nombre);
         setValue('descripcion', data.descripcion);
         setValue('valor', data.valor);
+        setValue('procesoId', data.procesoId);
       });
   };
+  const handleOpenDialog = (message) => {
+    setDialogMessage(message);
+    setOpenDialog(true);
+    // Reseteamos el formulario después de mostrar el mensaje de confirmación
+    reset();
+  };
 
-  const onSubmit = (data) => {
-    return isAddMode
-      ? createAtributo({ ...data })
-      : updateAtributo({ ...data });
-  }
-
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+  const onSubmit = async (data) => {
+    try {
+      if (isAddMode) {
+        await createAtributo(data);
+      } else {
+        await updateAtributo(data);
+      }
+      handleOpenDialog('Datos guardados correctamente');
+      router.push('/atributos');
+    } catch (error) {
+      console.error('Error:', error);
+      handleOpenDialog('No se pudo guardar los datos');
+    }
+  };
   const updateAtributo = async (data) => {
     const response = await axios.put("/api/atributo/" + id, data);
   }
@@ -103,23 +134,16 @@ export default function AtributosForm(props) {
   const createAtributo = async (data) => {
     const response = await axios.post("/api/atributo", data);
   }
+  const getProcesos = async () => {
+    const response = await axios.get("/api/proceso");
+    setProcesos(response.data)
+  }
 
-  /*   const handleChangeBacklog = (event) => {
-      setValue('backlogId', event.target.value);
-      setBacklogId(event.target.value);
-    };
-  
-    const handleChangeSprint = (event) => {
-      setValue('sprintId', event.target.value);
-      setSprintId(event.target.value);
-    };
-  
-    const handleChangeUsuario = (event) => {
-      setValue('usuarioId', event.target.value);
-      setUsuarioId(event.target.value);
-    };
-  
-   */
+
+  const handleChangeproceso = (event) => {
+    setValue('procesoId', event.target.value);
+    setProcesoId(event.target.value);
+  };
   return (
     <Container component="main" >
       <CssBaseline />
@@ -134,21 +158,47 @@ export default function AtributosForm(props) {
               <Grid item xs={12} sm={12} lg={12}>
                 <TextField id="standard-basic" label="Nombre" variant="standard" fullWidth margin="normal" {...register('nombre', { required: true })}
                   error={errors.nombre}
-                  helperText={errors.nombre ? 'Empty field' : ''}
+                  helperText={errors.nombre ? 'Campo obligatorio' : ''}
                 />
               </Grid>
               <Grid item xs={12} sm={12} lg={12}>
                 <TextField id="standard-basic" label="Descripción" variant="standard" fullWidth margin="normal" {...register('descripcion', { required: true })}
                   error={errors.descripcion}
-                  helperText={errors.descripcion ? 'Empty field' : ''}
+                  helperText={errors.descripcion ? 'Campo obligatorio' : ''}
                 />
               </Grid>
               <Grid item xs={12} sm={12} lg={12}>
-                <TextField id="standard-basic" label="Valor" variant="standard" fullWidth margin="normal" {...register('valor', { required: true })}
+                <TextField id="standard-basic"  type="number" label="Valor" variant="standard" fullWidth margin="normal" {...register('valor', { required: true })}
                   error={errors.valor}
-                  helperText={errors.valor ? 'Empty field' : ''}
+                  helperText={errors.valor ? 'Campo obligatorio' : ''}
                 />
               </Grid>
+
+              <Grid item xs={12} sm={12} lg={12}>
+                <FormControl fullWidth={true}>
+                  <InputLabel>Seleccione un Proceso</InputLabel>
+                  <Select
+                    fullWidth
+                    onChange={handleChangeproceso}
+                    error={errors.procesoId}
+                    helperText={errors.procesoId ? 'Campo obligatorio' : ''}
+                    inputProps={register('procesoId')}
+                    value={procesoId}
+                    input={<Input />}
+                    MenuProps={MenuProps}
+                    required={true}
+                    disabled={!isAddMode}
+                  >
+                    {procesos.map((option) => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.nombre}
+                      </MenuItem>
+                    ))}
+
+                  </Select>
+                </FormControl>
+              </Grid>
+
               <Grid item xs={12} sm={12} lg={12}>
                 <div style={{ float: 'left' }}>
                   <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/atributos">
@@ -166,6 +216,25 @@ export default function AtributosForm(props) {
         </div>
       </Card>
 
+
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        {/*  <DialogTitle id="alert-dialog-title">{"Mensaje de Confirmación"}</DialogTitle> */}
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {dialogMessage}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary" autoFocus>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
     </Container >
   );
