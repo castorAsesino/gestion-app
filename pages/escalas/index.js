@@ -24,7 +24,7 @@ import Add from '@material-ui/icons/Add';
 import axios from "axios";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteModal from '../../pages/components/layout/DeleteModal'
+import DeleteModal from '../components/layout/DeleteModal'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -118,7 +118,7 @@ TablePaginationActions.propTypes = {
 };
 
 
-export default function Atributos(props) {
+export default function Escala(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -135,7 +135,7 @@ export default function Atributos(props) {
   useEffect(() => {
     if (deleteItem) {
       axios
-        .delete(("/api/atributo/" + id))
+        .delete(("/api/escala/" + id))
         .then(response => {
           window.location.reload();
         })
@@ -153,7 +153,7 @@ export default function Atributos(props) {
   };
 
   const getListData = async () => {
-    const response = await axios.get("/api/atributo");
+    const response = await axios.get("/api/escala");
     setRows(response.data)
   }
 
@@ -164,13 +164,13 @@ export default function Atributos(props) {
       <Container component="main" >
       <Grid item xs={12}>
             <Typography component="h1" variant="h5" className={classes.center}>
-              Lista De Atributos de Procesos
+              Lista De Escalas
             </Typography>
           </Grid>
         <Grid container spacing={3}>
         
           <Grid item xs={12} style={{ marginBottom: 10 }}>
-            <Button variant="contained" color="primary" className={classes.right} href="/atributos/agregar">
+            <Button variant="contained" color="primary" className={classes.right} href="/escalas/agregar">
               <Add /> Agregar
             </Button>
           </Grid>
@@ -181,9 +181,8 @@ export default function Atributos(props) {
             <TableHead>
               <TableRow>
                 <TableCell>Nombre</TableCell>
-                <TableCell align="center">Descripción</TableCell>
+               
                 <TableCell align="center">Valor</TableCell>
-                <TableCell align="center">Proceso</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -197,16 +196,12 @@ export default function Atributos(props) {
                     {row.nombre}
                   </TableCell>
                   <TableCell align="center">
-                    {row.descripcion}
-                  </TableCell>
-                  <TableCell align="center">
                     {row.valor}
                   </TableCell>
+                
+               
                   <TableCell align="center">
-                    {row.proceso.nombre}
-                  </TableCell>
-                  <TableCell align="center">
-                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/atributos/editar/' + row.id}>
+                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/escalas/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>
                     <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>
@@ -215,7 +210,7 @@ export default function Atributos(props) {
               ))}
               {emptyRows > 0 && rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={5} align="center"> No se encontraron registros.
+                  <TableCell colSpan={3} align="center"> No se encontraron registros.
                   </TableCell>
                 </TableRow>
               )}

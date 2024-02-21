@@ -33,7 +33,8 @@ import AllInboxIcon from '@material-ui/icons/AllInbox';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Container from '@material-ui/core/Container';
 const drawerWidth = 270;
-
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import ListIcon from '@material-ui/icons/List';
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -142,15 +143,27 @@ export default function PersistentDrawerLeft(props) {
     },
     {
       id: 4,
+      label: 'Niveles',
+      path: '/niveles',
+      icon: EqualizerIcon
+    }, 
+    /* {
+      id: 4,
       label: 'SCRUM',
       path: '/menu-scrum',
       icon: Loop
-    },
-    {
+    }, */
+   /*  {
       id: 5,
       label: 'Evaluación',
       path: '/menu-evaluacion',
       icon: Build
+    }, */
+    {
+      id: 5,
+      label: 'Escalas',
+      path: '/escalas',
+      icon: ListIcon
     },
     {
       id: 6,
