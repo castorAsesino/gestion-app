@@ -25,19 +25,9 @@ model Proceso {
   nombre String
   descripcion String
   fecha_creacion DateTime @default(now())
-  atributo_de_proceso Atributo_De_Proceso[]
-}
 
-model Evaluacion {
-  id Int @id @default(autoincrement())
-  nombre String
-  descripcion String
-  estado String
-  proceso   Proceso     @relation(fields: [procesoId], references: [id])
-  procesoId  Int // relation scalar field (used in the `@relation` attribute above)
-  proyecto  Proyecto @relation(fields: [proyectoId], references: [id])
-  proyectoId Int // relation scalar field (used in the `@relation` attribute above)
-  fecha_creacion DateTime @default(now())
+  atributos ProcesoAtributo[]
+  evaluacion Evaluacion[]
 }
 
 model Atributo_De_Proceso {
@@ -46,14 +36,27 @@ model Atributo_De_Proceso {
   descripcion String
   valor String
   fecha_creacion DateTime @default(now())
-  proceso Proceso @relation(fields: [procesoId], references: [id])
-  procesoId Int 
+  atributos ProcesoAtributo[]
   detalle_matriz_evaluacion Detalle_Matriz_Evaluacion[]
+}
+
+
+model Evaluacion {
+  id Int @id @default(autoincrement())
+  nombre String
+  descripcion String
+  estado String
+  proceso  Proceso   @relation(fields: [procesoId], references: [id])
+  procesoId Int // relation scalar field (used in the `@relation` attribute above)
+  proyecto Proyecto @relation(fields: [proyectoId], references: [id])
+  proyectoId Int // relation scalar field (used in the `@relation` attribute above)
+  fecha_creacion DateTime @default(now())
 }
 
 model Escala_Calificacion {
   id Int @id @default(autoincrement())
   nombre String
+  descripcion String
   valor Int
   fecha_creacion DateTime @default(now())
   detalle_matriz_evaluacion Detalle_Matriz_Evaluacion[]
@@ -87,5 +90,10 @@ model Detalle_Matriz_Evaluacion {
   matriz_evaluacion Matriz_Evaluacion[]
 }
 
-
-
+model ProcesoAtributo {
+  id Int @id @default(autoincrement())
+  procesoId Int
+  atributoProcesoId Int
+  proceso Proceso @relation(fields: [procesoId], references: [id])
+  atributo Atributo_De_Proceso @relation(fields: [atributoProcesoId], references: [id])
+}

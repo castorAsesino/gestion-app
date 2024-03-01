@@ -157,16 +157,7 @@ export default function NivelesForm(props) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} lg={12}>
-                <TextField type="number" label="Valor Máximo" variant="standard" fullWidth margin="normal" {...register('valorMax', { required: true })}
-                  error={errors.valorMax}
-                  placeholder="Valor Máximo"
-                  helperText={errors.valorMax ? 'Campo obligatorio' : ''}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
+             
               <Grid item xs={12} sm={12} lg={12}>
                 <TextField type="number" label="Valor Mínimo" variant="standard" fullWidth margin="normal" {...register('valorMin', { required: true })}
                   error={errors.valorMin}
@@ -178,7 +169,16 @@ export default function NivelesForm(props) {
                 />
               </Grid>
 
-
+              <Grid item xs={12} sm={12} lg={12}>
+                <TextField type="number" label="Valor Máximo" variant="standard" fullWidth margin="normal" {...register('valorMax', { required: true })}
+                  error={errors.valorMax}
+                  placeholder="Valor Máximo"
+                  helperText={errors.valorMax ? 'Campo obligatorio' : ''}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
               <Grid item xs={12} sm={12} lg={12}>
                 <div style={{ float: 'left' }}>
                   <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/niveles">

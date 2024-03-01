@@ -181,7 +181,7 @@ export default function Escala(props) {
             <TableHead>
               <TableRow>
                 <TableCell>Nombre</TableCell>
-               
+                <TableCell align="center">Código</TableCell>
                 <TableCell align="center">Valor</TableCell>
                 <TableCell></TableCell>
               </TableRow>
@@ -194,6 +194,9 @@ export default function Escala(props) {
                 <TableRow key={row.id}>
                   <TableCell component="th" scope="row">
                     {row.nombre}
+                  </TableCell>
+                  <TableCell align="center">
+                    {row.descripcion}
                   </TableCell>
                   <TableCell align="center">
                     {row.valor}
@@ -210,7 +213,7 @@ export default function Escala(props) {
               ))}
               {emptyRows > 0 && rows.length === 0 && (
                 <TableRow>
-                  <TableCell colSpan={3} align="center"> No se encontraron registros.
+                  <TableCell colSpan={4} align="center"> No se encontraron registros.
                   </TableCell>
                 </TableRow>
               )}
@@ -219,7 +222,7 @@ export default function Escala(props) {
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                  colSpan={3}
+                  colSpan={4}
                   count={rows.length}
                   rowsPerPage={rowsPerPage}
                   page={page}

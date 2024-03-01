@@ -25,14 +25,14 @@ import axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteModal from '../../pages/components/layout/DeleteModal';
-
+import CheckIcon from '@material-ui/icons/Check';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    
+
   },
   form: {
     width: '100%', // Fix IE 11 issue.
@@ -204,8 +204,8 @@ export default function Proceso(props) {
         <Table aria-label="custom pagination table" className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell style={{ width: 100, border:'2px solid #000000' }} align="center"  className={classes.headerStyle}>Nombre</TableCell>
-              <TableCell style={{border:'2px solid #000000' }} align="center" className={classes.headerStyle}>Descripción</TableCell>
+              <TableCell style={{ width: 100, border: '2px solid #000000' }} align="center" className={classes.headerStyle}>Nombre</TableCell>
+              <TableCell style={{ border: '2px solid #000000' }} align="center" className={classes.headerStyle}>Descripción</TableCell>
               <TableCell className={classes.tableCellActions} align="center"></TableCell>
             </TableRow>
           </TableHead>
@@ -230,6 +230,15 @@ export default function Proceso(props) {
                     style={{ color: '#54bca4' }}
                   >
                     <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="asignar"
+                    title={'Asignar Atributo de Proceso'}
+                    component={Link}
+                    href={'/proceso//asignar/' + row.id}
+                    style={{ color: '#3f1477' }}
+                  >
+                    <CheckIcon />
                   </IconButton>
                   <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>
                 </TableCell>

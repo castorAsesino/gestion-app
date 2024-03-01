@@ -83,7 +83,7 @@ export default function AtributosForm(props) {
 
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue,  reset, } = useForm({
     defaultValues: {
-      nombre: "", descripcion: "", procesoId: ""
+      nombre: "", descripcion: "", /* procesoId: "" */
     }
   });
 
@@ -101,8 +101,8 @@ export default function AtributosForm(props) {
         setValue('nombre', data.nombre);
         setValue('descripcion', data.descripcion);
         setValue('valor', data.valor);
-        setValue('procesoId', data.procesoId);
-        setProcesoId(data.procesoId);
+        /* setValue('procesoId', data.procesoId); */
+      /*   setProcesoId(data.procesoId); */
       });
   };
   const handleOpenDialog = (message) => {
@@ -189,7 +189,7 @@ export default function AtributosForm(props) {
                 />
               </Grid>
 
-              <Grid item xs={12} sm={12} lg={12}>
+            {/*   <Grid item xs={12} sm={12} lg={12}>
                 <FormControl fullWidth={true}>
                   <InputLabel>Seleccione un Proceso</InputLabel>
                   <Select
@@ -202,7 +202,7 @@ export default function AtributosForm(props) {
                     input={<Input />}
                     MenuProps={MenuProps}
                     required={true}
-                   /*  disabled={!isAddMode} */
+                   
                   >
                     {procesos.map((option) => (
                       <MenuItem key={option.id} value={option.id}>
@@ -212,7 +212,7 @@ export default function AtributosForm(props) {
 
                   </Select>
                 </FormControl>
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={12} sm={12} lg={12}>
                 <div style={{ float: 'left' }}>

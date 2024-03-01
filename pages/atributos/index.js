@@ -183,7 +183,7 @@ export default function Atributos(props) {
                 <TableCell>Nombre</TableCell>
                 <TableCell align="center">Descripción</TableCell>
                 <TableCell align="center">Valor</TableCell>
-                <TableCell align="center">Proceso</TableCell>
+              {/*   <TableCell align="center">Proceso</TableCell> */}
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -202,9 +202,9 @@ export default function Atributos(props) {
                   <TableCell align="center">
                     {row.valor}
                   </TableCell>
-                  <TableCell align="center">
+                  {/* <TableCell align="center">
                     {row.proceso.nombre}
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell align="center">
                     <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/atributos/editar/' + row.id}>
                       <EditIcon />

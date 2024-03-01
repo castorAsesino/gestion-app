@@ -82,7 +82,7 @@ export default function EscalaForm(props) {
 
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue, reset, } = useForm({
     defaultValues: {
-      nombre: "", valor: 0
+      nombre: "", descripcion: "", valor: 0
     }
   });
 
@@ -98,6 +98,7 @@ export default function EscalaForm(props) {
       .then((data) => {
       
         setValue('nombre', data.nombre);
+        setValue('descripcion', data.descripcion);
         setValue('valor', data.valor);
       });
   };
@@ -149,6 +150,16 @@ export default function EscalaForm(props) {
                   error={errors.nombre}
                   placeholder="Nombre"
                   helperText={errors.nombre ? 'Campo obligatorio' : ''}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} lg={12}>
+                <TextField label="Código" fullWidth margin="normal" {...register('descripcion', { required: true })}
+                  error={errors.descripcion}
+                  placeholder="Código"
+                  helperText={errors.descripcion ? 'Campo obligatorio' : ''}
                   InputLabelProps={{
                     shrink: true,
                   }}

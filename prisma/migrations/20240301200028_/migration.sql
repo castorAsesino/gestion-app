@@ -20,6 +20,17 @@ CREATE TABLE "Proceso" (
 );
 
 -- CreateTable
+CREATE TABLE "Atributo_De_Proceso" (
+    "id" SERIAL NOT NULL,
+    "nombre" TEXT NOT NULL,
+    "descripcion" TEXT NOT NULL,
+    "valor" TEXT NOT NULL,
+    "fecha_creacion" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "Atributo_De_Proceso_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "Evaluacion" (
     "id" SERIAL NOT NULL,
     "nombre" TEXT NOT NULL,
@@ -33,21 +44,10 @@ CREATE TABLE "Evaluacion" (
 );
 
 -- CreateTable
-CREATE TABLE "Atributo_De_Proceso" (
-    "id" SERIAL NOT NULL,
-    "nombre" TEXT NOT NULL,
-    "descripcion" TEXT NOT NULL,
-    "valor" TEXT NOT NULL,
-    "fecha_creacion" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "procesoId" INTEGER NOT NULL,
-
-    CONSTRAINT "Atributo_De_Proceso_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "Escala_Calificacion" (
     "id" SERIAL NOT NULL,
     "nombre" TEXT NOT NULL,
+    "descripcion" TEXT NOT NULL,
     "valor" INTEGER NOT NULL,
     "fecha_creacion" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -86,14 +86,20 @@ CREATE TABLE "Detalle_Matriz_Evaluacion" (
     CONSTRAINT "Detalle_Matriz_Evaluacion_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "ProcesoAtributo" (
+    "id" SERIAL NOT NULL,
+    "procesoId" INTEGER NOT NULL,
+    "atributoProcesoId" INTEGER NOT NULL,
+
+    CONSTRAINT "ProcesoAtributo_pkey" PRIMARY KEY ("id")
+);
+
 -- AddForeignKey
 ALTER TABLE "Evaluacion" ADD CONSTRAINT "Evaluacion_procesoId_fkey" FOREIGN KEY ("procesoId") REFERENCES "Proceso"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Evaluacion" ADD CONSTRAINT "Evaluacion_proyectoId_fkey" FOREIGN KEY ("proyectoId") REFERENCES "Proyecto"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Atributo_De_Proceso" ADD CONSTRAINT "Atributo_De_Proceso_procesoId_fkey" FOREIGN KEY ("procesoId") REFERENCES "Proceso"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Matriz_Evaluacion" ADD CONSTRAINT "Matriz_Evaluacion_detalle_matriz_evaluacionId_fkey" FOREIGN KEY ("detalle_matriz_evaluacionId") REFERENCES "Detalle_Matriz_Evaluacion"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -103,3 +109,9 @@ ALTER TABLE "Detalle_Matriz_Evaluacion" ADD CONSTRAINT "Detalle_Matriz_Evaluacio
 
 -- AddForeignKey
 ALTER TABLE "Detalle_Matriz_Evaluacion" ADD CONSTRAINT "Detalle_Matriz_Evaluacion_calificacionId_fkey" FOREIGN KEY ("calificacionId") REFERENCES "Escala_Calificacion"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ProcesoAtributo" ADD CONSTRAINT "ProcesoAtributo_procesoId_fkey" FOREIGN KEY ("procesoId") REFERENCES "Proceso"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ProcesoAtributo" ADD CONSTRAINT "ProcesoAtributo_atributoProcesoId_fkey" FOREIGN KEY ("atributoProcesoId") REFERENCES "Atributo_De_Proceso"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

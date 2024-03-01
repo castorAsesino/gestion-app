@@ -177,11 +177,14 @@ export default function ProcesoForm(props) {
                   margin="normal"
                   {...register('descripcion', { required: true })}
                   multiline
-                  minRows={1}
+                  minRows={3} // Cambiado a 3 para mostrar al menos 3 filas
                   error={errors.descripcion}
                   helperText={errors.descripcion ? 'Campo obligatorio' : ''}
                   InputLabelProps={{
                     shrink: true,
+                  }}
+                  InputProps={{
+                    as: 'textarea', // Cambiado a 'textarea' para renderizar un componente <textarea>
                   }}
                 />
               </Grid>

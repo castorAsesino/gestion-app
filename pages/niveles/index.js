@@ -181,9 +181,8 @@ export default function Niveles(props) {
             <TableHead>
               <TableRow>
                 <TableCell>Nombre</TableCell>
-               
-                <TableCell align="center">Valor Máximo</TableCell>
                 <TableCell align="center">Valor Mínimo</TableCell>
+                <TableCell align="center">Valor Máximo</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -197,12 +196,11 @@ export default function Niveles(props) {
                     {row.nombre}
                   </TableCell>
                   <TableCell align="center">
-                    {row.valorMax}
-                  </TableCell>
-                  <TableCell align="center">
                     {row.valorMin}
                   </TableCell>
-               
+                  <TableCell align="center">
+                    {row.valorMax}
+                  </TableCell>
                   <TableCell align="center">
                     <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/niveles/editar/' + row.id}>
                       <EditIcon />

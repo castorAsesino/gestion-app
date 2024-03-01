@@ -9,9 +9,9 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const response = await prisma.atributo_De_Proceso.findMany({
-          include: {
+          /* include: {
             proceso: true
-          }
+          } */
         });
         return res.status(200).json(response);
       } catch (error) {
