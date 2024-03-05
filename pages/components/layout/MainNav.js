@@ -129,6 +129,13 @@ export default function PersistentDrawerLeft(props) {
       icon: HomeIcon
     },
     {
+      id: 6,
+      label: 'Proyectos',
+      path: '/proyecto',
+      icon: LibraryBooks
+    },
+   
+    {
       id: 2,
       label: 'Procesos',
       path: '/proceso',
@@ -167,7 +174,7 @@ export default function PersistentDrawerLeft(props) {
     },
     {
       id: 6,
-      label: 'Proyectos',
+      label: 'Evaluar Calidad',
       path: '/proyecto',
       icon: LibraryBooks
     }

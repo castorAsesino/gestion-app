@@ -13,26 +13,29 @@ import { useEffect, useState } from "react";
 import Link from '../../src/Link';
 import Person from '@material-ui/icons/Person';
 import { useRouter } from "next/router";
-import { FormGroup, ListItemIcon, Dialog,
+import {
+  FormGroup, ListItemIcon, Dialog,
   DialogTitle,
   DialogContent,
   DialogContentText,
-  DialogActions, } from "@material-ui/core";
+  DialogActions,
+} from "@material-ui/core";
 import { Grid, Input, InputLabel, MenuItem, FormControl, ListItemText, Select, Checkbox } from "@material-ui/core";
 import { useForm } from 'react-hook-form';
 
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
-    PaperProps: {
-        style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 150,
-        },
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 150,
     },
-    variant: "menu",
-    getContentAnchorEl: null
+  },
+  variant: "menu",
+  getContentAnchorEl: null
 };
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -72,7 +75,7 @@ export default function ProyectoForm(props) {
   const isAddMode = !proyecto;
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue } = useForm({
     defaultValues: {
-      nombre: "", descripcion: "", presupuesto: 0, cliente:""
+      nombre: "", descripcion: "", presupuesto: 0,
     }
   });
   const [clientes, setClientes] = useState([]);
@@ -81,7 +84,7 @@ export default function ProyectoForm(props) {
 
   useEffect(() => {
     if (!isAddMode) getProyectoId();
-    getClientes();
+   
     return
   }, [isAddMode]);
 
@@ -101,15 +104,15 @@ export default function ProyectoForm(props) {
       .then((data) => {
         setValue('nombre', data.nombre)
         setValue('descripcion', data.descripcion)
-        setValue('presupuesto', data.presupuesto)
-        setValue('cliente', data.cliente)
+   /*      setValue('presupuesto', data.presupuesto)
+        setValue('cliente', data.cliente) */
       });
   };
 
   const handleOpenDialog = (message) => {
     setDialogMessage(message);
     setOpenDialog(true);
-    reset();
+    /* reset(); */
   };
 
   const handleCloseDialog = () => {
@@ -118,12 +121,13 @@ export default function ProyectoForm(props) {
 
   const onSubmit = async (data) => {
     try {
-      if(isAddMode){
-        await createProyecto({...data, presupuesto: +data.presupuesto});
-      }else{
-        await updateProyecto({...data, presupuesto: +data.presupuesto});
+      if (isAddMode) {
+        await createProyecto({ ...data, presupuesto: +data.presupuesto });
+      } else {
+        await updateProyecto({ ...data, presupuesto: +data.presupuesto });
       }
       handleOpenDialog('Datos guardados correctamente');
+      router.push('/proyecto');
     } catch (error) {
       console.error('Error:', error);
       handleOpenDialog('No se pudo guardar los datos');
@@ -135,7 +139,7 @@ export default function ProyectoForm(props) {
   }
 
   const createProyecto = async (data) => {
-    console.log('proyecto: '+JSON.stringify(data));
+    console.log('proyecto: ' + JSON.stringify(data));
     const response = await axios.post("/api/proyecto", data);
   }
 
@@ -144,33 +148,41 @@ export default function ProyectoForm(props) {
       <CssBaseline />
       <Card className={classes.root}>
         <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <Person />
-          </Avatar>
+
           <Typography component="h1" variant="h5" >
             Proyecto
           </Typography>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3} className={classes.form}>
-              <Grid item xs={12} sm={12} lg={6}>
-                <TextField id="standard-basic" label="Nombre" variant="standard" fullWidth margin="normal" {...register('nombre', { required: true })}
+              <Grid item xs={12} sm={12} lg={12}>
+                <TextField label="Nombre" fullWidth margin="normal" {...register('nombre', { required: true })}
                   error={errors.nombre}
-                  helperText={errors.nombre ? 'Empty field' : ''}
+                  placeholder="Nombre"
+                  helperText={errors.nombre ? 'Campo obligatorio' : ''}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
-                <TextField type="text" id="standard-basic" label="Descripción" variant="standard" fullWidth margin="normal" {...register('descripcion', { required: true })}
+              <Grid item xs={12} sm={12} lg={12}>
+
+                <TextField label="Descripción" variant="standard"
+                  fullWidth margin="normal" {...register('descripcion', { required: true })}
+
                   error={errors.descripcion}
-                  helperText={errors.descripcion ? 'Empty field' : ''}
+                  placeholder="Descripción"
+                  helperText={errors.descripcion ? 'Campo obligatorio' : ''} InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
+              {/*  <Grid item xs={12} sm={12} lg={6}>
                 <TextField id="standard-basic"  type="number" label="Presupuesto" variant="standard" fullWidth margin="normal" {...register('presupuesto', { required: true })}
                   error={errors.presupuesto}
                   helperText={errors.presupuesto ? 'Empty field' : ''}
                 />
-              </Grid>
-              <Grid item xs={12} sm={12} lg={6}>
+              </Grid> */}
+              {/*  <Grid item xs={12} sm={12} lg={6}>
                 <FormControl fullWidth>
                   <InputLabel id="cliente-label">Cliente</InputLabel>
                   <Select labelId="cliente-label" id="cliente" {...register('cliente', { required: true })} error={errors.cliente} MenuProps={MenuProps}>
@@ -181,25 +193,25 @@ export default function ProyectoForm(props) {
                     ))}
                   </Select>
                 </FormControl>
+              </Grid> */}
+              <Grid item xs={12} sm={12} lg={6}>
+                <div style={{ float: 'left' }}>
+                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/proyecto">
+                    Cancelar
+                  </Button>
+                  <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>
+                    Guardar
+                  </Button>
+                </div>
               </Grid>
-            <Grid item xs={12} sm={12} lg={6}>
-              <div style={{ float: 'right' }}>
-                <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/proyecto">
-                  Cancelar
-                </Button>
-                <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>
-                  Guardar
-                </Button>
-              </div>
             </Grid>
-          </Grid>
-          <div>
-          </div>
-        </form>
-      </div>
-    </Card>
+            <div>
+            </div>
+          </form>
+        </div>
+      </Card>
 
-    <Dialog
+      <Dialog
         open={openDialog}
         onClose={handleCloseDialog}
         aria-labelledby="alert-dialog-title"

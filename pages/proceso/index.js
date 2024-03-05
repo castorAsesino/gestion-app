@@ -235,7 +235,7 @@ export default function Proceso(props) {
                     aria-label="asignar"
                     title={'Asignar Atributo de Proceso'}
                     component={Link}
-                    href={'/proceso//asignar/' + row.id}
+                    href={'/proceso/asignar/' + row.id}
                     style={{ color: '#3f1477' }}
                   >
                     <CheckIcon />

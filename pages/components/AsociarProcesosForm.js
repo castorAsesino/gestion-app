@@ -24,7 +24,7 @@ import Add from '@material-ui/icons/Add';
 import axios from "axios";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteModal from '../../pages/components/layout/DeleteModal';
+import DeleteModal from './layout/DeleteModal';
 import { useRouter } from "next/router";
 import { useForm } from 'react-hook-form';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -142,15 +142,15 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-export default function AsignarAtributosForm(props) {
+export default function AsociarProcesosForm(props) {
   const classes = useStyles();
   const router = useRouter();
-  const idProceso = router.query['id'];
+  const idProyecto = router.query['id'];
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
 
   const [procesos, setProcesos] = useState([]);
-  const [procesoId, setProcesoId] = useState(idProceso);
+  const [procesoId, setProcesoId] = useState(idProyecto);
   const [id, setId] = React.useState('');
 
   const [page, setPage] = useState(0);
@@ -170,7 +170,7 @@ export default function AsignarAtributosForm(props) {
   }, []);
   useEffect(() => {
     getProcesos();
-  }, [idProceso]);
+  }, [idProyecto]);
 
 
   const handleChangePage = (event, newPage) => {
@@ -218,22 +218,22 @@ export default function AsignarAtributosForm(props) {
   const createAtributo = async () => {
     debugger
     const selectedItems = rows.filter(item => item.seleccionado === true);
-    const atributoProcesoIds = selectedItems.map(item => item.id);
+    const procesoIds = selectedItems.map(item => item.id);
 
-    const response = await axios.post("/api/proceso/asignar/" + idProceso, {
-      procesoId: +idProceso,
-      atributoProcesoIds,
+    const response = await axios.post("/api/proyecto/asociado/" + idProyecto, {
+      proyectoId: +idProyecto,
+      procesoIds,
     });
 
   }
   const getProcesos = async () => {
-    if (idProceso !== undefined && idProceso !== null) {
-      const response = await axios.get("/api/proceso/asignar/" + idProceso);
+    if (idProyecto !== undefined && idProyecto !== null) {
+      const response = await axios.get("/api/proyecto/asociado/" + idProyecto);
       setSeleccionados(response.data)
       console.log(response.data)
       rows.forEach(element => {
         response.data.forEach(index => {
-          if (element.id === index.atributoProcesoId) {
+          if (element.id === index.procesoId) {
             element.seleccionado = true;
           }
         });
@@ -241,7 +241,7 @@ export default function AsignarAtributosForm(props) {
     }
   }
   const getListData = async () => {
-    const response = await axios.get("/api/atributo");
+    const response = await axios.get("/api/proceso");
     const newList = response.data.map(item => ({ ...item, seleccionado: false }));
     setRows(newList);
 
@@ -262,7 +262,7 @@ export default function AsignarAtributosForm(props) {
       <Card className={classes.root}>
         <div className={classes.paper}>
           <Typography component="h1" variant="h5" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
-            Seleccionar Atributo de Proceso
+            Seleccionar Procesos
           </Typography>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="custom pagination table">
@@ -270,7 +270,7 @@ export default function AsignarAtributosForm(props) {
                 <TableRow>
                   <TableCell>Nombre</TableCell>
                   <TableCell align="center">Descripción</TableCell>
-                  <TableCell align="center">Valor</TableCell>
+        
                   <TableCell align="center">Seleccionar</TableCell>
 
                 </TableRow>
@@ -287,9 +287,7 @@ export default function AsignarAtributosForm(props) {
                     <TableCell align="center">
                       {row.descripcion}
                     </TableCell>
-                    <TableCell align="center">
-                      {row.valor}
-                    </TableCell>
+                   
                     <TableCell align="center">
                       <Checkbox
                         checked={row.seleccionado}
@@ -302,7 +300,7 @@ export default function AsignarAtributosForm(props) {
                 ))}
                 {emptyRows > 0 && rows.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={5} align="center"> No se encontraron registros.
+                    <TableCell colSpan={4} align="center"> No se encontraron registros.
                     </TableCell>
                   </TableRow>
                 )}
@@ -311,7 +309,7 @@ export default function AsignarAtributosForm(props) {
                 <TableRow>
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                    colSpan={4}
+                    colSpan={3}
                     count={rows.length}
                     rowsPerPage={rowsPerPage}
                     page={page}

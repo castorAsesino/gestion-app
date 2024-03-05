@@ -25,6 +25,7 @@ import axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteModal from '../components/layout/DeleteModal';
+import CheckIcon from '@material-ui/icons/Check';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -207,9 +208,9 @@ export default function Proyecto(props) {
               <TableCell style={{ border: '2px solid #000000' }} align="center" className={classes.headerStyle}>
                 Descripción
               </TableCell>
-              <TableCell style={{ width: 100, border: '2px solid #000000' }} align="center" className={classes.headerStyle}>
+              {/* <TableCell style={{ width: 100, border: '2px solid #000000' }} align="center" className={classes.headerStyle}>
                 Presupuesto
-              </TableCell>
+              </TableCell> */}
               <TableCell className={classes.tableCellActions} align="center"></TableCell>
             </TableRow>
           </TableHead>
@@ -225,9 +226,9 @@ export default function Proyecto(props) {
                 <TableCell className={classes.tableCellDescription} align="center">
                   {row.descripcion}
                 </TableCell>
-                <TableCell className={classes.tableCellDescription} align="center">
+                {/* <TableCell className={classes.tableCellDescription} align="center">
                   {row.presupuesto}
-                </TableCell>
+                </TableCell> */}
                 <TableCell className={classes.tableCellActions} align="center">
                   <IconButton
                     aria-label="delete"
@@ -237,6 +238,15 @@ export default function Proyecto(props) {
                     style={{ color: '#54bca4' }}
                   >
                     <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    aria-label="asociar"
+                    title={'Asociar Procesos'}
+                    component={Link}
+                    href={'/proyecto/asociar/' + row.id}
+                    style={{ color: '#3f1477' }}
+                  >
+                    <CheckIcon />
                   </IconButton>
                   <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>
                 </TableCell>

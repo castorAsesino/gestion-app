@@ -18,6 +18,8 @@ model Proyecto {
   presupuesto Int
   fecha_creacion DateTime @default(now())
   evaluacion Evaluacion[]
+  procesos ProyectoProceso[]
+  
 }
 
 model Proceso {
@@ -28,8 +30,15 @@ model Proceso {
 
   atributos ProcesoAtributo[]
   evaluacion Evaluacion[]
+  proyectos ProyectoProceso[]
 }
-
+model ProyectoProceso {
+  id Int @id @default(autoincrement())
+  proyectoId Int
+  procesoId Int
+  proyecto Proyecto @relation(fields: [proyectoId], references: [id])
+  proceso Proceso @relation(fields: [procesoId], references: [id])
+}
 model Atributo_De_Proceso {
   id Int @id @default(autoincrement())
   nombre String
