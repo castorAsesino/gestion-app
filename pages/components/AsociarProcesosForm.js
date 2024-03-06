@@ -41,6 +41,18 @@ import Card from '@material-ui/core/Card';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
+import { withStyles } from '@material-ui/core/styles';
+
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: '#146677f5',
+    color: '#fff',
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 const MenuProps = {
   PaperProps: {
     style: {
@@ -207,7 +219,7 @@ export default function AsociarProcesosForm(props) {
       await createAtributo();
 
       handleOpenDialog('Datos guardados correctamente');
-      router.push('/proceso');
+      router.push('/proyecto');
     } catch (error) {
       console.error('Error:', error);
       handleOpenDialog('No se pudo guardar los datos');
@@ -268,10 +280,10 @@ export default function AsociarProcesosForm(props) {
             <Table className={classes.table} aria-label="custom pagination table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Nombre</TableCell>
-                  <TableCell align="center">Descripción</TableCell>
+                  <StyledTableCell>Nombre</StyledTableCell>
+                  <StyledTableCell align="center">Descripción</StyledTableCell>
         
-                  <TableCell align="center">Seleccionar</TableCell>
+                  <StyledTableCell align="center">Seleccionar</StyledTableCell>
 
                 </TableRow>
               </TableHead>
@@ -309,7 +321,7 @@ export default function AsociarProcesosForm(props) {
                 <TableRow>
                   <TablePagination
                     rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                    colSpan={3}
+                    colSpan={4}
                     count={rows.length}
                     rowsPerPage={rowsPerPage}
                     page={page}

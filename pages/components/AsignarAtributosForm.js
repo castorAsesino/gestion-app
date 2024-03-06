@@ -41,6 +41,18 @@ import Card from '@material-ui/core/Card';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
+import { withStyles } from '@material-ui/core/styles';
+
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: '#146677f5',
+    color: '#fff',
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 const MenuProps = {
   PaperProps: {
     style: {
@@ -268,10 +280,10 @@ export default function AsignarAtributosForm(props) {
             <Table className={classes.table} aria-label="custom pagination table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Nombre</TableCell>
-                  <TableCell align="center">Descripción</TableCell>
-                  <TableCell align="center">Valor</TableCell>
-                  <TableCell align="center">Seleccionar</TableCell>
+                  <StyledTableCell>Nombre</StyledTableCell>
+                  <StyledTableCell align="center">Descripción</StyledTableCell>
+                  <StyledTableCell align="center">Valor</StyledTableCell>
+                  <StyledTableCell align="center">Seleccionar</StyledTableCell>
 
                 </TableRow>
               </TableHead>

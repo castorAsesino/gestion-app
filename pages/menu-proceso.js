@@ -18,7 +18,7 @@ export default function MenuProceso() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/backlog">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <NotesIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Backlog</Typography>
@@ -30,7 +30,7 @@ export default function MenuProceso() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/sprint">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <ListAltIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Sprint</Typography>
@@ -43,7 +43,7 @@ export default function MenuProceso() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/user-storie">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <AssignmentIndIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">User Storie</Typography>
@@ -56,7 +56,7 @@ export default function MenuProceso() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/review">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <TrendingUpIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Review</Typography>

@@ -26,7 +26,18 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteModal from '../components/layout/DeleteModal';
 import CheckIcon from '@material-ui/icons/Check';
+import { withStyles } from '@material-ui/core/styles';
 
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: '#146677f5',
+    color: '#fff',
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -34,54 +45,32 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
   form: {
-    width: '100%',
+    width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  tableContainer: {
-    marginTop: theme.spacing(3),
+  root: {
+    flexShrink: 0,
+    marginLeft: theme.spacing(2.5),
   },
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center',
+    textAlign: 'center'
   },
   right: {
-    textAlign: 'right',
-  },
-  addButton: {
-    margin: theme.spacing(2, 0),
-  },
-  headerStyle: {
-    color: '#556cd6',
-    fontWeight: 900,
-  },
-  buttonContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    width: '100%',
-    maxWidth: '100%',
-  },
-  tableCell: {
-    width: 100,
-    border: '2px solid #000000',
-    textAlign: 'center',
-  },
-  tableCellDescription: {
-    width: 200,
-    border: '2px solid #000000',
-    textAlign: 'center',
-  },
-  tableCellActions: {
-    width: 100,
-    border: '2px solid #000000',
-    textAlign: 'center',
-  },
+    float: 'right'
+  }
 }));
+
 
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -105,7 +94,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <div className={classes.right}>
+    <div className={classes.root}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -113,11 +102,7 @@ function TablePaginationActions(props) {
       >
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
+      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
       <IconButton
@@ -183,35 +168,36 @@ export default function Proyecto(props) {
 
   return (
     <Container component="main">
-      <div className={classes.paper}>
+     
         <Typography component="h1" variant="h5" className={classes.center}>
           Lista de Proyectos
         </Typography>
-        <Grid item xs={12} md={6} className={classes.buttonContainer}>
+       
+        <Grid item xs={12}  style={{ marginBottom: 50 }}>
           <Button
             variant="contained"
             color="primary"
-            className={classes.addButton}
+            className={classes.right}
             href="/proyecto/agregar"
           >
             <Add /> Agregar
           </Button>
         </Grid>
-      </div>
+     
       <TableContainer component={Paper} className={classes.tableContainer}>
         <Table aria-label="custom pagination table" className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell style={{ width: 100, border: '2px solid #000000' }} align="center" className={classes.headerStyle}>
+              <StyledTableCell  align="center" className={classes.headerStyle}>
                 Nombre
-              </TableCell>
-              <TableCell style={{ border: '2px solid #000000' }} align="center" className={classes.headerStyle}>
+              </StyledTableCell>
+              <StyledTableCell  align="center" className={classes.headerStyle}>
                 Descripción
-              </TableCell>
-              {/* <TableCell style={{ width: 100, border: '2px solid #000000' }} align="center" className={classes.headerStyle}>
+              </StyledTableCell>
+              {/* <StyledTableCell  align="center" className={classes.headerStyle}>
                 Presupuesto
-              </TableCell> */}
-              <TableCell className={classes.tableCellActions} align="center"></TableCell>
+              </StyledTableCell> */}
+              <StyledTableCell align="center"></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -244,7 +230,7 @@ export default function Proyecto(props) {
                     title={'Asociar Procesos'}
                     component={Link}
                     href={'/proyecto/asociar/' + row.id}
-                    style={{ color: '#3f1477' }}
+                    style={{ color: '#146677f5' }}
                   >
                     <CheckIcon />
                   </IconButton>

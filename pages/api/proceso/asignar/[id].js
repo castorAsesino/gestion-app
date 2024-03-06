@@ -9,16 +9,19 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const {
-          query: { idProceso },
+          query: { id },
           method,
         } = req;
+        const idProceso = id;
+
         const response = await prisma.procesoAtributo.findMany({
           where: {
-            idProceso,
+            procesoId: +idProceso,
           },
           include: {
             proceso: true,
             atributo: true,
+            
           },
         })
         return res.status(200).json(response);

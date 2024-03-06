@@ -26,6 +26,18 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteModal from '../../pages/components/layout/DeleteModal'
 
+import { withStyles } from '@material-ui/core/styles';
+
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: '#146677f5',
+    color: '#fff',
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -58,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
     float: 'right'
   }
 }));
+
 
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -180,11 +193,11 @@ export default function Atributos(props) {
           <Table className={classes.table} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                <TableCell>Nombre</TableCell>
-                <TableCell align="center">Descripción</TableCell>
-                <TableCell align="center">Valor</TableCell>
-              {/*   <TableCell align="center">Proceso</TableCell> */}
-                <TableCell></TableCell>
+                <StyledTableCell>Nombre</StyledTableCell>
+                <StyledTableCell align="center">Descripción</StyledTableCell>
+                <StyledTableCell align="center">Valor</StyledTableCell>
+              {/*   <StyledTableCell align="center">Proceso</StyledTableCell> */}
+                <StyledTableCell></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

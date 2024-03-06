@@ -9,12 +9,12 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const {
-          query: { idProyecto },
+          query: { id },
           method,
         } = req;
         const response = await prisma.proyectoProceso.findMany({
           where: {
-            idProyecto,
+            proyectoId: +id,
           },
           include: {
             proyecto: true,

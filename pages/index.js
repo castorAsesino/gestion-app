@@ -17,7 +17,7 @@ export default function Home() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/menu-proyecto">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <NotesIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Procesos</Typography>
@@ -29,7 +29,7 @@ export default function Home() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/menu-proyecto">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <WebIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Proyectos</Typography>
@@ -42,7 +42,7 @@ export default function Home() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/menu-scrum">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <CachedIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Scrum</Typography>
@@ -55,7 +55,7 @@ export default function Home() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/menu-evaluacion">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <BuildIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Evaluación</Typography>
@@ -68,7 +68,7 @@ export default function Home() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/atributos">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <MenuIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Atributo de Proceso</Typography>

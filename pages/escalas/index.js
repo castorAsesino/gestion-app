@@ -25,7 +25,18 @@ import axios from "axios";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteModal from '../components/layout/DeleteModal'
+import { withStyles } from '@material-ui/core/styles';
 
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: '#146677f5',
+    color: '#fff',
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -180,10 +191,10 @@ export default function Escala(props) {
           <Table className={classes.table} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                <TableCell>Nombre</TableCell>
-                <TableCell align="center">Código</TableCell>
-                <TableCell align="center">Valor</TableCell>
-                <TableCell></TableCell>
+                <StyledTableCell>Nombre</StyledTableCell>
+                <StyledTableCell align="center">Código</StyledTableCell>
+                <StyledTableCell align="center">Valor</StyledTableCell>
+                <StyledTableCell></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

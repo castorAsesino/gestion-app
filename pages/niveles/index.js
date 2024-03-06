@@ -25,7 +25,18 @@ import axios from "axios";
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteModal from '../components/layout/DeleteModal'
+import { withStyles } from '@material-ui/core/styles';
 
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: '#146677f5',
+    color: '#fff',
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -162,13 +173,13 @@ export default function Niveles(props) {
   return (
     <>
       <Container component="main" >
-      <Grid item xs={12}>
-            <Typography component="h1" variant="h5" className={classes.center}>
-              Lista De Niveles
-            </Typography>
-          </Grid>
+        <Grid item xs={12}>
+          <Typography component="h1" variant="h5" className={classes.center}>
+            Lista De Niveles
+          </Typography>
+        </Grid>
         <Grid container spacing={3}>
-        
+
           <Grid item xs={12} style={{ marginBottom: 10 }}>
             <Button variant="contained" color="primary" className={classes.right} href="/niveles/agregar">
               <Add /> Agregar
@@ -180,10 +191,10 @@ export default function Niveles(props) {
           <Table className={classes.table} aria-label="custom pagination table">
             <TableHead>
               <TableRow>
-                <TableCell>Nombre</TableCell>
-                <TableCell align="center">Valor Mínimo</TableCell>
-                <TableCell align="center">Valor Máximo</TableCell>
-                <TableCell></TableCell>
+                <StyledTableCell>Nombre</StyledTableCell>
+                <StyledTableCell align="center">Valor Mínimo</StyledTableCell>
+                <StyledTableCell align="center">Valor Máximo</StyledTableCell>
+                <StyledTableCell></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -18,7 +18,7 @@ export default function MenuProyecto() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/asignar-roles">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <PersonIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Ver Recursos asignados</Typography>
@@ -30,7 +30,7 @@ export default function MenuProyecto() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/proyecto">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <WebIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Ver Proyectos</Typography>
@@ -43,7 +43,7 @@ export default function MenuProyecto() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/tarea">
               <a>
-                <Card style={{ background: '#3f1477', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <LibraryBooksIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Ver Tareas</Typography>

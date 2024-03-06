@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
        duration: theme.transitions.duration.leavingScreen,
      }), 
     
-    background: '#3f1477'
+    background: '#146677f5'
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
 
   },
   colornav:{
-    background: "#3f1477",
+    background: "#146677f5",
     color: "#fff",
   },
   content: {
@@ -175,7 +175,7 @@ export default function PersistentDrawerLeft(props) {
     {
       id: 6,
       label: 'Evaluar Calidad',
-      path: '/proyecto',
+      path: '/evaluacion-calidad',
       icon: LibraryBooks
     }
 
@@ -216,7 +216,7 @@ export default function PersistentDrawerLeft(props) {
           paper: classes.drawerPaper,
         }}
       >
-        <div className={classes.drawerHeader} style={{  background: "#3f1477", color: "#fff", }}>
+        <div className={classes.drawerHeader} style={{  background: "#146677f5", color: "#fff", }}>
           <Typography variant="h6" className={classes.title}></Typography>
           <IconButton onClick={handleDrawerClose} style={{  color: "#fff", }}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}

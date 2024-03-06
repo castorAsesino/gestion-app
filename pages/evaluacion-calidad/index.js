@@ -24,7 +24,7 @@ import Add from '@material-ui/icons/Add';
 import axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteModal from '../../pages/components/layout/DeleteModal';
+import DeleteModal from '../components/layout/DeleteModal';
 import CheckIcon from '@material-ui/icons/Check';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -70,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
     float: 'right'
   }
 }));
+
 
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -129,7 +130,8 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-export default function Proceso(props) {
+
+export default function EvauacionCalidad(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -161,34 +163,32 @@ export default function Proceso(props) {
   };
 
   const getListData = async () => {
-    const response = await axios.get('/api/proceso');
+    const response = await axios.get('/api/proyecto');
     setRows(response.data);
   };
 
   return (
     <Container component="main">
-      
+      <Grid item xs={12}>
         <Typography component="h1" variant="h5" className={classes.center}>
-          Lista De Procesos
+          Lista de Proyectos
         </Typography>
-        <Grid item xs={12}  style={{ marginBottom: 50 }}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.right}
-            href="/proceso/agregar"
-          >
+      </Grid>
+      <Grid container spacing={3}>
+
+        <Grid item xs={12} style={{ marginBottom: 10 }}>
+          {/* <Button variant="contained" color="primary" className={classes.right} href="/niveles/agregar">
             <Add /> Agregar
-          </Button>
+          </Button> */}
         </Grid>
-     
-      <TableContainer component={Paper} >
-        <Table aria-label="custom pagination table">
+      </Grid>
+      <TableContainer component={Paper}>
+        <Table aria-label="custom pagination table" className={classes.table}>
           <TableHead>
             <TableRow>
-              <StyledTableCell align="center">Nombre</StyledTableCell>
-              <StyledTableCell align="center">Descripción</StyledTableCell>
-              <StyledTableCell align="center"></StyledTableCell>
+              <StyledTableCell align="center" className={classes.headerStyle}>Nombre</StyledTableCell>
+              <StyledTableCell align="center" className={classes.headerStyle}>Descripción</StyledTableCell>
+              <StyledTableCell className={classes.tableCellActions} align="center"></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -204,31 +204,18 @@ export default function Proceso(props) {
                   {row.descripcion}
                 </TableCell>
                 <TableCell className={classes.tableCellActions} align="center">
-                  <IconButton
-                    aria-label="delete"
-                    title={'Editar'}
-                    component={Link}
-                    href={'/proceso/editar/' + row.id}
-                    style={{ color: '#54bca4' }}
-                  >
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton
-                    aria-label="asignar"
-                    title={'Asignar Atributo de Proceso'}
-                    component={Link}
-                    href={'/proceso/asignar/' + row.id}
-                    style={{ color: '#146677f5' }}
-                  >
-                    <CheckIcon />
-                  </IconButton>
-                  <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>
+
+                  <Button variant="contained" color="secondary" href={'/evaluacion-calidad/proceso/' + row.id}>
+
+                    Evaluar
+                  </Button>
+
                 </TableCell>
               </TableRow>
             ))}
             {emptyRows > 0 && rows.length === 0 && (
               <TableRow>
-                <TableCell colSpan={3} align="center">
+                <TableCell colSpan={4} align="center">
                   No se encontraron registros.
                 </TableCell>
               </TableRow>
