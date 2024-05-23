@@ -45,30 +45,54 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
+  tableContainer: {
+    marginTop: theme.spacing(3),
   },
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 40,
   },
   right: {
-    float: 'right'
-  }
+    textAlign: 'right',
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
+  },
+  headerStyle: {
+    fontWeight: 900,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
+  tableCell: {
+    width: 100,
+    border: '1px solid #000000',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '1px solid #000000',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '1px solid #000000',
+    textAlign: 'center',
+  },
 }));
 
 
@@ -94,7 +118,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.right}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -102,7 +126,11 @@ function TablePaginationActions(props) {
       >
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label="previous page"
+      >
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
       <IconButton
@@ -177,7 +205,7 @@ export default function Proyecto(props) {
           <Button
             variant="contained"
             color="primary"
-            className={classes.right}
+            className={classes.addButton}
             href="/proyecto/agregar"
           >
             <Add /> Agregar
@@ -247,27 +275,29 @@ export default function Proyecto(props) {
             )}
           </TableBody>
           <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                colSpan={4}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { 'aria-label': 'Registros por páginas' },
-                  native: true,
-                }}
-                labelRowsPerPage={'Registros por páginas'}
-                labelDisplayedRows={({ from, to, count }) => {
-                  return '' + from + '-' + to + ' de ' + count;
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
+              <TableRow >
+                <TablePagination
+                style={{ flex: '1 1 50%' }}
+                  rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
+                  colSpan={3}
+                  count={rows.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: { 'aria-label': 'Registros por páginas' },
+                    native: true,
+                  }}
+                  labelRowsPerPage={"Registros por páginas"}
+                  labelDisplayedRows={
+                    ({ from, to, count }) => {
+                      return '' + from + '-' + to + ' de ' + count
+                    }
+                  }
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions} />
+              </TableRow>
+            </TableFooter>
         </Table>
       </TableContainer>
     </Container>

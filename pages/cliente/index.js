@@ -25,6 +25,17 @@ import axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteModal from '../../pages/components/layout/DeleteModal';
+import { withStyles } from '@material-ui/core/styles';
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: '#146677f5',
+    color: '#fff',
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,6 +66,8 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     margin: theme.spacing(2, 0),
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
   },
   headerStyle: {
     color: '#556cd6',
@@ -202,12 +215,12 @@ export default function Cliente(props) {
         <Table aria-label="custom pagination table" className={classes.table}>
           <TableHead>
             <TableRow>
-              <TableCell style={{ width: 100, border:'2px solid #000000' }} align="center" className={classes.headerStyle}>Nombre</TableCell>
-              <TableCell style={{border:'2px solid #000000' }} align="center" className={classes.headerStyle}>Descripción</TableCell>
-              <TableCell style={{ width: 100, border:'2px solid #000000' }} align="center" className={classes.headerStyle}>Numero</TableCell>
-              <TableCell style={{border:'2px solid #000000' }} align="center" className={classes.headerStyle}>País</TableCell>
-              <TableCell style={{ width: 100, border:'2px solid #000000' }} align="center" className={classes.headerStyle}>Dirección</TableCell>
-              <TableCell className={classes.tableCellActions} align="center"></TableCell>
+              <StyledTableCell align="center">Nombre</StyledTableCell>
+              <StyledTableCell align="center">Descripción</StyledTableCell>
+              <StyledTableCell align="center">Numero</StyledTableCell>
+              <StyledTableCell align="center">País</StyledTableCell>
+              <StyledTableCell align="center">Dirección</StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>

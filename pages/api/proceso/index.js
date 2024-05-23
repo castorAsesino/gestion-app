@@ -15,7 +15,6 @@ export default async function handler(req, res) {
       }
     case "POST":
       try {
-        console.log('post proceso');
         const { body: data } = req;
         const response = await prisma.proceso.create({ data });
         return res.status(201).json(response);

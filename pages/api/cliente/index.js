@@ -4,7 +4,6 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { method } = req;
-  console.log('axios');
   switch (method) {
     case "GET":
       try {
@@ -14,10 +13,8 @@ export default async function handler(req, res) {
         return res.status(400).json({ error });
       }
     case "POST":
-      console.log('post api');
       try {
         const { body: data } = req;
-        console.log('axios post: '+JSON.stringify(data));
         const response = await prisma.cliente.create({ data });
         return res.status(201).json(response);
       } catch (error) {

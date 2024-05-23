@@ -67,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
   },
   right: {
     float: 'right'
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
   }
 }));
 
@@ -181,7 +185,7 @@ export default function Escala(props) {
         <Grid container spacing={3}>
         
           <Grid item xs={12} style={{ marginBottom: 10 }}>
-            <Button variant="contained" color="primary" className={classes.right} href="/escalas/agregar">
+            <Button variant="contained" color="primary" className={classes.addButton} href="/escalas/agregar">
               <Add /> Agregar
             </Button>
           </Grid>

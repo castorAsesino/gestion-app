@@ -41,7 +41,6 @@ export default async function handler(req, res) {
       }
       case 'PUT': {
         try {
-          console.log('Putttt');
           const { body: data } = req;
           const { query: { id } } = req;
           console.log(data, id)

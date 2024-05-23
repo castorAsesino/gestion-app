@@ -64,11 +64,31 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 500,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 40
   },
   right: {
     float: 'right'
-  }
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
+  },
+  tableCell: {
+    width: 100,
+    border: '1px solid #000000',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '1px solid #000000',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '1px solid #000000',
+    textAlign: 'center',
+  },
 }));
 
 
@@ -183,7 +203,7 @@ export default function Atributos(props) {
         <Grid container spacing={3}>
         
           <Grid item xs={12} style={{ marginBottom: 10 }}>
-            <Button variant="contained" color="primary" className={classes.right} href="/atributos/agregar">
+            <Button variant="contained" color="primary" className={classes.addButton} href="/atributos/agregar">
               <Add /> Agregar
             </Button>
           </Grid>
@@ -206,19 +226,19 @@ export default function Atributos(props) {
                 : rows
               ).map((row) => (
                 <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
+                  <TableCell className={classes.tableCell}  component="th" scope="row">
                     {row.nombre}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell className={classes.tableCell}  align="center">
                     {row.descripcion}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell className={classes.tableCell}  align="center">
                     {row.valor}
                   </TableCell>
                   {/* <TableCell align="center">
                     {row.proceso.nombre}
                   </TableCell> */}
-                  <TableCell align="center">
+                  <TableCell className={classes.tableCell}  align="center">
                     <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/atributos/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>

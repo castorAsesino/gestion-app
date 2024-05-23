@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(3, 0, 2),
   },
+  buttonColor: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#146677f5'
+  },
   root: {
     marginTop: 100,
     padding: theme.spacing(3)
@@ -184,7 +188,7 @@ export default function EscalaForm(props) {
                   <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/escalas">
                     Cancelar
                   </Button>
-                  <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>
+                  <Button type="submit" variant="contained" color="primary" size="large" className={classes.buttonColor}>
                     Guardar
                   </Button>
                 </div>

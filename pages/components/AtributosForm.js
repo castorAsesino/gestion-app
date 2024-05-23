@@ -55,6 +55,11 @@ const useStyles = makeStyles((theme) => ({
   },
   margin: {
     margin: theme.spacing(3, 0, 2),
+    
+  },
+  buttonColor: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#146677f5'
   },
   root: {
     marginTop: 100,
@@ -83,7 +88,7 @@ export default function AtributosForm(props) {
 
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue,  reset, } = useForm({
     defaultValues: {
-      nombre: "", descripcion: "", /* procesoId: "" */
+      nombre: "", descripcion: "", valor: ''/* procesoId: "" */
     }
   });
 
@@ -97,7 +102,6 @@ export default function AtributosForm(props) {
     fetch("/api/atributo/" + id)
       .then((response) => response.json())
       .then((data) => {
-        console.log('sad', data)
         setValue('nombre', data.nombre);
         setValue('descripcion', data.descripcion);
         setValue('valor', data.valor);
@@ -134,6 +138,7 @@ export default function AtributosForm(props) {
   }
 
   const createAtributo = async (data) => {
+    data.valor = parseInt(data.valor);
     const response = await axios.post("/api/atributo", data);
   }
   const getProcesos = async () => {
@@ -141,11 +146,6 @@ export default function AtributosForm(props) {
     setProcesos(response.data)
   }
 
-
-  const handleChangeproceso = (event) => {
-    setValue('procesoId', event.target.value);
-    setProcesoId(event.target.value);
-  };
   return (
     <Container component="main" >
       <CssBaseline />
@@ -219,7 +219,7 @@ export default function AtributosForm(props) {
                   <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/atributos">
                     Cancelar
                   </Button>
-                  <Button type="submit" variant="contained" color="primary" size="large" className={classes.margin}>
+                  <Button type="submit" variant="contained" color="primary" size="large" className={classes.buttonColor}>
                     Guardar
                   </Button>
                 </div>

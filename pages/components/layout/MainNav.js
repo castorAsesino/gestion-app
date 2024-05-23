@@ -177,6 +177,12 @@ export default function PersistentDrawerLeft(props) {
       label: 'Evaluar Calidad',
       path: '/evaluacion-calidad',
       icon: LibraryBooks
+    },
+    {
+      id: 6,
+      label: 'Evaluar Capacidad',
+      path: '/evaluacion-capacidad',
+      icon: LibraryBooks
     }
 
   ]

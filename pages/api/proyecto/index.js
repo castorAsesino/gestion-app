@@ -16,7 +16,6 @@ export default async function handler(req, res) {
     case "POST":
       try {
         const { body: data } = req;
-        console.log('axios post proyecto: '+JSON.stringify(data));
         const response = await prisma.proyecto.create({ data });
         return res.status(201).json(response);
       } catch (error) {

@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
   },
   right: {
     float: 'right'
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
   }
 }));
 
@@ -169,7 +173,7 @@ export default function Tarea(props) {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary" className={classes.right} href="/tarea/agregar">
+            <Button variant="contained" color="primary" className={classes.addButton} href="/tarea/agregar">
               <Add /> Agregar
             </Button>
           </Grid>

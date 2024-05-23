@@ -45,10 +45,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
@@ -56,19 +52,49 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  root: {
-    flexShrink: 0,
-    marginLeft: theme.spacing(2.5),
+  tableContainer: {
+    marginTop: theme.spacing(3),
   },
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 40,
   },
   right: {
-    float: 'right'
-  }
+    textAlign: 'right',
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
+  },
+  headerStyle: {
+    color: '#556cd6',
+    fontWeight: 900,
+    textAlign: 'center',
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
+  tableCell: {
+    width: 100,
+    border: '1px solid #000000',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '1px solid #000000',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '1px solid #000000',
+    textAlign: 'center',
+  },
 }));
 
 function TablePaginationActions(props) {
@@ -93,7 +119,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.right}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -101,7 +127,11 @@ function TablePaginationActions(props) {
       >
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label="previous page"
+      >
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
       <IconButton
@@ -161,7 +191,9 @@ export default function Proceso(props) {
   };
 
   const getListData = async () => {
+    console.log('response: ');
     const response = await axios.get('/api/proceso');
+    console.log('response: '+response);
     setRows(response.data);
   };
 
@@ -175,7 +207,7 @@ export default function Proceso(props) {
           <Button
             variant="contained"
             color="primary"
-            className={classes.right}
+            className={classes.addButton}
             href="/proceso/agregar"
           >
             <Add /> Agregar

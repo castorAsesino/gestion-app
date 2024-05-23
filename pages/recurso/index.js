@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
   },
   right: {
     float: 'right'
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
   }
 }));
 
@@ -172,7 +176,7 @@ export default function Recurso(props) {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary" className={classes.right} href="/recurso/agregar">
+            <Button variant="contained" color="primary" className={classes.addButton} href="/recurso/agregar">
               <Add /> Agregar
             </Button>
           </Grid>

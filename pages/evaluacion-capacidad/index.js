@@ -21,11 +21,23 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import TableHead from '@material-ui/core/TableHead';
 import Add from '@material-ui/icons/Add';
-import axios from "axios";
+import axios from 'axios';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import DeleteModal from '../components/layout/DeleteModal'
+import DeleteModal from '../components/layout/DeleteModal';
+import CheckIcon from '@material-ui/icons/Check';
+import { withStyles } from '@material-ui/core/styles';
 
+
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: '#146677f5',
+    color: '#fff',
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -56,12 +68,9 @@ const useStyles = makeStyles((theme) => ({
   },
   right: {
     float: 'right'
-  },
-  addButton: {
-    textAlign: 'right',
-    backgroundColor: '#146677f5'
   }
 }));
+
 
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -122,13 +131,13 @@ TablePaginationActions.propTypes = {
 };
 
 
-export default function Backlog(props) {
+export default function EvauacionCapacidad(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
-  const [deleteItem, setDeleteItem] = React.useState(false);
-  const [id, setId] = React.useState('');
+  const [deleteItem, setDeleteItem] = useState(false);
+  const [id, setId] = useState('');
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
@@ -138,13 +147,10 @@ export default function Backlog(props) {
 
   useEffect(() => {
     if (deleteItem) {
-      axios
-     .delete(("/api/backlog/" + id))
-     .then(response => {
-      window.location.reload();
-     })
+      axios.delete('/api/proceso/' + id).then((response) => {
+        window.location.reload();
+      });
     }
-
   }, [deleteItem, id]);
 
   const handleChangePage = (event, newPage) => {
@@ -157,94 +163,88 @@ export default function Backlog(props) {
   };
 
   const getListData = async () => {
-    const response = await axios.get("/api/backlog");
-    setRows(response.data)
-  }
-
-
+    const response = await axios.get('/api/proyecto');
+    setRows(response.data);
+  };
 
   return (
-    <>
-      <Container component="main" >
-        <Grid container spacing={3}>
-          <Grid item xs={6}>
-            <Typography component="h1" variant="h5">
-              Backlog
-            </Typography>
-          </Grid>
-          <Grid item xs={6}>
-            <Button variant="contained" color="primary" className={classes.addButton} href="/backlog/agregar">
-              <Add /> Agregar
-            </Button>
-          </Grid>
-        </Grid>
+    <Container component="main">
+      <Grid item xs={12}>
+        <Typography component="h1" variant="h5" className={classes.center}>
+          Lista de Proyectos
+        </Typography>
+      </Grid>
+      <Grid container spacing={3}>
 
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="custom pagination table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Nombre</TableCell>
-                <TableCell align="center">Descripción</TableCell>
-                <TableCell align="center">Proyecto</TableCell> 
-                <TableCell align="center"></TableCell>
+        <Grid item xs={12} style={{ marginBottom: 10 }}>
+          {/* <Button variant="contained" color="primary" className={classes.right} href="/niveles/agregar">
+            <Add /> Agregar
+          </Button> */}
+        </Grid>
+      </Grid>
+      <TableContainer component={Paper}>
+        <Table aria-label="custom pagination table" className={classes.table}>
+          <TableHead>
+            <TableRow>
+              <StyledTableCell align="center" className={classes.headerStyle}>Nombre</StyledTableCell>
+              <StyledTableCell align="center" className={classes.headerStyle}>Descripción</StyledTableCell>
+              <StyledTableCell className={classes.tableCellActions} align="center"></StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {(rowsPerPage > 0
+              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : rows
+            ).map((row) => (
+              <TableRow key={row.id}>
+                <TableCell className={classes.tableCell} component="th" scope="row" align="center">
+                  {row.nombre}
+                </TableCell>
+                <TableCell className={classes.tableCellDescription} align="center">
+                  {row.descripcion}
+                </TableCell>
+                <TableCell className={classes.tableCellActions} align="center">
+
+                  <Button variant="contained" color="secondary" href={'/evaluacion-capacidad/proceso/' + row.id}>
+
+                    Evaluar
+                  </Button>
+
+                </TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {(rowsPerPage > 0
-                ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                : rows
-              ).map((row) => (
-                <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
-                    {row.nombre}
-                  </TableCell>
-                  <TableCell align="center">
-                    {row.descripcion}
-                  </TableCell>
-                  <TableCell align="center">
-                    {row.nombreProyecto}
-                  </TableCell> 
-                  <TableCell align="center">
-                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/backlog/editar/' + row.id}>
-                      <EditIcon />
-                    </IconButton>
-                    <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>
-                  </TableCell>
-                </TableRow>
-              ))}
-              {emptyRows > 0 && rows.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={5} align="center"> No se encontraron registros.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-            <TableFooter>
+            ))}
+            {emptyRows > 0 && rows.length === 0 && (
               <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                  colSpan={3}
-                  count={rows.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: { 'aria-label': 'Registros por páginas' },
-                    native: true,
-                  }}
-                  labelRowsPerPage={"Registros por páginas"}
-                  labelDisplayedRows={
-                    ({ from, to, count }) => {
-                      return '' + from + '-' + to + ' de ' + count
-                    }
-                  }
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions} />
+                <TableCell colSpan={4} align="center">
+                  No se encontraron registros.
+                </TableCell>
               </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-      </Container>
-    </>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
+                colSpan={3}
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: { 'aria-label': 'Registros por páginas' },
+                  native: true,
+                }}
+                labelRowsPerPage={'Registros por páginas'}
+                labelDisplayedRows={({ from, to, count }) => {
+                  return '' + from + '-' + to + ' de ' + count;
+                }}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </Container>
   );
 }

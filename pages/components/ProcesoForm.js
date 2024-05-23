@@ -60,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(3, 0, 2),
   },
+  buttonColor: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#146677f5'
+  },
   root: {
     marginTop: 100,
     padding: theme.spacing(3),
@@ -207,7 +211,7 @@ export default function ProcesoForm(props) {
                     variant="contained"
                     color="primary"
                     size="large"
-                    className={classes.margin}
+                    className={classes.buttonColor}
                   >
                     Guardar
                   </Button>

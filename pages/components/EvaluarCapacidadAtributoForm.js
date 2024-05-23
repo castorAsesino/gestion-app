@@ -41,6 +41,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import { json } from 'react-router-dom';
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: '#146677f5',
@@ -105,7 +106,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function EvaluarAtributoForm(props) {
+export default function EvaluarCapacidadAtributoForm(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -117,6 +118,7 @@ export default function EvaluarAtributoForm(props) {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   const [calificaciones, setCalificaciones] = useState([]);
   const [niveles, setNiveles] = useState([]);
+  const [selectedCalificacionId, setSelectedCalificacionId] = useState('');
 
   const [open, setOpen] = React.useState(false);
   const [proyecto, setProyecto] = React.useState(false);
@@ -193,13 +195,21 @@ export default function EvaluarAtributoForm(props) {
     const { value } = event.target;
     setRows((prevRows) =>
       prevRows.map((row) =>
-        row.id === id ? { ...row, calificacion: +value } : row
+        row.id === id ? { ...row, ponderacion: +value } : row
       )
     );
+    const updatedRows = rows.map(row => {
+      if (row.id === id) {
+        const selectedcalificacion= calificaciones.find(calificacion => calificacion.id === value);
+        return { ...row, calificacion: value, nivel: selectedcalificacion ? selectedcalificacion.nombre : '' };
+      }
+      return row;
+    });
+    setRows(updatedRows);
+    setSelectedCalificacionId(value);
     calcularTotal(id);
-    /*  validar(); */
-    console.log(rows)
   };
+
   const calcularTotal = (id) => {
     const { value } = event.target;
     setRows((prevRows) =>
@@ -274,8 +284,7 @@ export default function EvaluarAtributoForm(props) {
               <StyledTableCell>Atributo de Proceso</StyledTableCell>
               <StyledTableCell align="center">Descripción</StyledTableCell>
               <StyledTableCell align="center">Calificación de Logro</StyledTableCell>
-              <StyledTableCell align="center">Ponderación (%)</StyledTableCell>
-              <StyledTableCell align="center">Calificación Ponderada</StyledTableCell>
+              <StyledTableCell align="center">Nivel De Logro</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -291,7 +300,7 @@ export default function EvaluarAtributoForm(props) {
                     <Select
 
                       value={row.ponderacion}
-                      onChange={(e) => handlePonderacionChange(e, row.id)}
+                      onChange={(e) => handleChange(e, row.id)}
                     >
                       {calificaciones.map((nivel) => (
                         <MenuItem key={nivel.id} value={nivel.id}>
@@ -302,18 +311,8 @@ export default function EvaluarAtributoForm(props) {
                   </FormControl>
                 </StyledTableCell>
                 <StyledTableCell align="center">
-                  <TextField label="" variant="standard"
-                    fullWidth margin="normal"
-
-                    value={row.calificacion}
-                    onChange={(e) => handleChange(e, row.id)}
-                    InputLabelProps={{
-                      shrink: true,
-                    }}
-
-                  />
+                  {row.nivel}
                 </StyledTableCell>
-                <StyledTableCell align="center" style={{ fontWeight: 500, fontSize: 18 }}>{row.totalPonderacion}</StyledTableCell>
               </StyledTableRow>
             ))}
           </TableBody>

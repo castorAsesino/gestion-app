@@ -43,7 +43,7 @@ model Atributo_De_Proceso {
   id Int @id @default(autoincrement())
   nombre String
   descripcion String
-  valor String
+  valor Int
   fecha_creacion DateTime @default(now())
   atributos ProcesoAtributo[]
   detalle_matriz_evaluacion Detalle_Matriz_Evaluacion[]

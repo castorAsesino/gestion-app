@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
   },
   right: {
     float: 'right'
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
   }
 }));
 
@@ -169,8 +173,8 @@ export default function Review(props) {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary" className={classes.right} href="/review/agregar">
-              <Add /> Agregar5555
+            <Button variant="contained" color="primary" className={classes.addButton} href="/review/agregar">
+              <Add /> Agregar
             </Button>
           </Grid>
         </Grid>

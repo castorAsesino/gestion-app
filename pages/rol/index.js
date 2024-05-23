@@ -56,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
   },
   right: {
     float: 'right'
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
   }
 }));
 
@@ -169,7 +173,7 @@ export default function Rol(props) {
             </Typography>
           </Grid>
           <Grid item xs={6}>
-            <Button variant="contained" color="primary" className={classes.right} href="/rol/agregar">
+            <Button variant="contained" color="primary" className={classes.addButton} href="/rol/agregar">
               <Add /> Agregar
             </Button>
           </Grid>

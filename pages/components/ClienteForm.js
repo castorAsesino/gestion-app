@@ -60,6 +60,10 @@ const useStyles = makeStyles((theme) => ({
   margin: {
     margin: theme.spacing(3, 0, 2),
   },
+  buttonColor: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#146677f5'
+  },
   root: {
     marginTop: 100,
     padding: theme.spacing(3),
@@ -127,7 +131,6 @@ export default function ClienteForm(props) {
 
   const onSubmit = async (data) => {
     try {
-      console.log('data: '+JSON.stringify(data));
       if (isAddMode) {
         await createCliente(data);
       } else {
@@ -145,7 +148,6 @@ export default function ClienteForm(props) {
   };
 
   const createCliente = async (data) => {
-    console.log('create cliente');
     const response = await axios.post('/api/cliente', data);
   };
 
@@ -267,7 +269,7 @@ export default function ClienteForm(props) {
                     variant="contained"
                     color="primary"
                     size="large"
-                    className={classes.margin}
+                    className={classes.buttonColor}
                   >
                     Guardar
                   </Button>
