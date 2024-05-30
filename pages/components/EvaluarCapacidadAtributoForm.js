@@ -58,16 +58,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -77,20 +69,50 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
+ tableContainer: {
+    marginTop: theme.spacing(3),
+  }, 
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 40,
   },
   right: {
-    float: 'right'
+    textAlign: 'right',
   },
-  buttonColor: {
-    margin: theme.spacing(3, 0, 2),
+  addButton: {
+    textAlign: 'right',
     backgroundColor: '#146677f5'
   },
+  headerStyle: {
+    fontWeight: 900,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
+  tableCell: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
 }));
+
+
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -273,20 +295,20 @@ export default function EvaluarCapacidadAtributoForm(props) {
         <Table className={classes.table} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Atributo de Proceso</StyledTableCell>
-              <StyledTableCell align="center">Descripción</StyledTableCell>
-              <StyledTableCell align="center">Calificación de Logro</StyledTableCell>
+              <StyledTableCell className={classes.headerStyle}>Atributo de Proceso</StyledTableCell>
+              <StyledTableCell className={classes.headerStyle} align="center">Descripción</StyledTableCell>
+              <StyledTableCell className={classes.headerStyle} align="center">Calificación de Logro</StyledTableCell>
               <StyledTableCell align="center">Nivel De Logro</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {rows.length > 0 ? rows.map((row) => (
               <StyledTableRow key={row.name}>
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell  className={classes.tableCell} component="th" scope="row">
                   {row.atributo.nombre}
                 </StyledTableCell>
-                <StyledTableCell align="center">{row.atributo.descripcion}</StyledTableCell>
-                <StyledTableCell align="center">
+                <StyledTableCell  className={classes.tableCell} align="center">{row.atributo.descripcion}</StyledTableCell>
+                <StyledTableCell  className={classes.tableCell} align="center">
                   <FormControl className={classes.formControl}>
 
                     <Select
@@ -302,11 +324,15 @@ export default function EvaluarCapacidadAtributoForm(props) {
                     </Select>
                   </FormControl>
                 </StyledTableCell>
-                <StyledTableCell align="center">
+                <StyledTableCell  className={classes.tableCell} align="center">
                   {row.nivel}
                 </StyledTableCell>
               </StyledTableRow>
-            ))}
+            )): <TableRow>
+            <TableCell colSpan={5} align="center">
+              No se encontraron registros.
+            </TableCell>
+          </TableRow> }
           </TableBody>
         </Table>
       </TableContainer>
@@ -363,12 +389,12 @@ export default function EvaluarCapacidadAtributoForm(props) {
                 <TableBody>
 
                   <TableRow key={'1w'}>
-                    <TableCell component="th" scope="row">
+                    <TableCell   className={classes.tableCell} component="th" scope="row">
                       {proyecto.nombre}
                     </TableCell>
-                    <TableCell align="center">{proceso?.proceso.nombre}</TableCell>
-                    <TableCell align="center">{resultados}%</TableCell>
-                    <TableCell align="center">{intervalo.nombre}</TableCell>
+                    <TableCell  className={classes.tableCell} align="center">{proceso?.proceso.nombre}</TableCell>
+                    <TableCell  className={classes.tableCell} align="center">{resultados}%</TableCell>
+                    <TableCell  className={classes.tableCell} align="center">{intervalo.nombre}</TableCell>
 
                   </TableRow>
 

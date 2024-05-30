@@ -57,16 +57,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -76,20 +68,49 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
+ tableContainer: {
+    marginTop: theme.spacing(3),
+  }, 
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 40,
   },
   right: {
-    float: 'right'
+    textAlign: 'right',
   },
-  buttonColor: {
-    margin: theme.spacing(3, 0, 2),
+  addButton: {
+    textAlign: 'right',
     backgroundColor: '#146677f5'
   },
+  headerStyle: {
+    fontWeight: 900,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
+  tableCell: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
 }));
+
 
 const StyledTableRow = withStyles((theme) => ({
   root: {
@@ -285,11 +306,11 @@ export default function EvaluarAtributoForm(props) {
           <TableBody>
             {rows.length > 0 ? rows.map((row) => (
               <StyledTableRow key={row.name}>
-                <StyledTableCell component="th" scope="row">
+                <StyledTableCell  className={classes.tableCell} component="th" scope="row">
                   {row.atributo.nombre}
                 </StyledTableCell>
-                <StyledTableCell align="center">{row.atributo.descripcion}</StyledTableCell>
-                <StyledTableCell align="center">
+                <StyledTableCell  className={classes.tableCell} align="center">{row.atributo.descripcion}</StyledTableCell>
+                <StyledTableCell  className={classes.tableCell} align="center">
                   <FormControl className={classes.formControl}>
 
                     <Select
@@ -305,7 +326,7 @@ export default function EvaluarAtributoForm(props) {
                     </Select>
                   </FormControl>
                 </StyledTableCell>
-                <StyledTableCell align="center">
+                <StyledTableCell  className={classes.tableCell} align="center">
                   <TextField label="" variant="standard"
                     fullWidth margin="normal"
 
@@ -317,7 +338,7 @@ export default function EvaluarAtributoForm(props) {
 
                   />
                 </StyledTableCell>
-                <StyledTableCell align="center" style={{ fontWeight: 500, fontSize: 18 }}>{row.totalPonderacion}</StyledTableCell>
+                <StyledTableCell  className={classes.tableCell} align="center" style={{ fontWeight: 500, fontSize: 18 }}>{row.totalPonderacion}</StyledTableCell>
               </StyledTableRow>
             )): <TableRow>
             <TableCell colSpan={5} align="center">

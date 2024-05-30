@@ -46,12 +46,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -61,17 +57,48 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
+ tableContainer: {
+    marginTop: theme.spacing(3),
+  }, 
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 40,
   },
   right: {
-    float: 'right'
-  }
+    textAlign: 'right',
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
+  },
+  headerStyle: {
+    fontWeight: 900,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
+  tableCell: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
 }));
-
 
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -198,7 +225,7 @@ export default function EvaluarCapacidadProcesoForm(props) {
             <TableRow>
               <StyledTableCell align="center" className={classes.headerStyle}>Nombre</StyledTableCell>
               <StyledTableCell align="center" className={classes.headerStyle}>Descripción</StyledTableCell>
-              <StyledTableCell className={classes.tableCellActions} align="center"></StyledTableCell>
+              <StyledTableCell align="center"></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -213,7 +240,7 @@ export default function EvaluarCapacidadProcesoForm(props) {
                 <TableCell className={classes.tableCellDescription} align="center">
                   {row.proceso.descripcion}
                 </TableCell>
-                <TableCell className={classes.tableCellActions} align="center">
+                <TableCell className={classes.tableCell} align="center">
 
                   <Button variant="contained" color="secondary" href={"/evaluacion-capacidad/atributo/" + row.procesoId}>
 
