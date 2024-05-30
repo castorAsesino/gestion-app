@@ -12,11 +12,11 @@ export default async function handler(req, res) {
           query: { id },
           method,
         } = req;
-        const idProceso = id;
+      
 
         const response = await prisma.procesoAtributo.findMany({
           where: {
-            procesoId: +idProceso,
+            procesoId: +id,
           },
           include: {
             proceso: true,

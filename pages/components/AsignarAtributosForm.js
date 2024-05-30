@@ -65,18 +65,13 @@ const MenuProps = {
 };
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(5),
+    marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
-    padding: 10
-    /*  alignItems: 'center', */
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    alignItems: 'center',
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -84,17 +79,49 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     flexShrink: 0,
-    marginLeft: theme.spacing(5),
+    marginLeft: theme.spacing(2.5),
   },
+ tableContainer: {
+    marginTop: theme.spacing(3),
+  }, 
   table: {
     minWidth: 500,
   },
-  /*   center: {
-      textAlign: 'center'
-    },
-    right: {
-      float: 'right'
-    } */
+  center: {
+    textAlign: 'center',
+    fontSize: 40,
+  },
+  right: {
+    textAlign: 'right',
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
+  },
+  headerStyle: {
+    fontWeight: 900,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
+  tableCell: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
 }));
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -271,11 +298,12 @@ export default function AsignarAtributosForm(props) {
   return (
     <Container component="main" >
       <CssBaseline />
-      <Card className={classes.root}>
+     
         <div className={classes.paper}>
-          <Typography component="h1" variant="h5" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
-            Seleccionar Atributo de Proceso
+        <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
+        Seleccionar Atributo de Proceso
           </Typography>
+          
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="custom pagination table">
               <TableHead>
@@ -293,16 +321,16 @@ export default function AsignarAtributosForm(props) {
                   : rows
                 ).map((row) => (
                   <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
+                    <TableCell className={classes.tableCell} component="th" scope="row">
                       {row.nombre}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell className={classes.tableCell} align="center">
                       {row.descripcion}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell className={classes.tableCell} align="center">
                       {row.valor}
                     </TableCell>
-                    <TableCell align="center">
+                    <TableCell className={classes.tableCell} align="center">
                       <Checkbox
                         checked={row.seleccionado}
                         onChange={() => handleCheckboxChange(row.id)}
@@ -344,7 +372,10 @@ export default function AsignarAtributosForm(props) {
               </TableFooter>
             </Table>
           </TableContainer>
-          <Grid item xs={12} sm={12} lg={12} style={{ marginTop: 10, marginBottom: 20 }}>
+         
+        </div>
+
+        <Grid item xs={12} sm={12} lg={12} style={{ marginTop: 10, marginBottom: 20 }}>
             <div style={{ float: 'right' }}>
               <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/proceso">
                 Cancelar
@@ -354,9 +385,6 @@ export default function AsignarAtributosForm(props) {
               </Button>
             </div>
           </Grid>
-        </div>
-
-      </Card>
 
 
       <Dialog

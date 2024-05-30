@@ -45,12 +45,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -60,37 +56,48 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
+ tableContainer: {
+    marginTop: theme.spacing(3),
+  }, 
   table: {
     minWidth: 500,
   },
   center: {
     textAlign: 'center',
-    fontSize: 40
+    fontSize: 40,
   },
   right: {
-    float: 'right'
+    textAlign: 'right',
   },
   addButton: {
     textAlign: 'right',
     backgroundColor: '#146677f5'
   },
+  headerStyle: {
+    fontWeight: 900,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
   tableCell: {
     width: 100,
-    border: '1px solid #000000',
+    border: '1px solid #ddd',
     textAlign: 'center',
   },
   tableCellDescription: {
     width: 200,
-    border: '1px solid #000000',
+    border: '1px solid #ddd',
     textAlign: 'center',
   },
   tableCellActions: {
     width: 100,
-    border: '1px solid #000000',
+    border: '1px solid #ddd',
     textAlign: 'center',
   },
 }));
-
 
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -149,7 +156,6 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
 };
-
 
 export default function Atributos(props) {
   const classes = useStyles();
@@ -257,7 +263,7 @@ export default function Atributos(props) {
               <TableRow>
                 <TablePagination
                   rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                  colSpan={3}
+                  colSpan={4}
                   count={rows.length}
                   rowsPerPage={rowsPerPage}
                   page={page}

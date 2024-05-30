@@ -133,10 +133,14 @@ export default function EvaluarAtributoForm(props) {
   };
 
   useEffect(() => {
-    getListData();
+   
     getListNivel();
     getCalificacion();
     getProyectoId();
+    if(idProyecto!== undefined){
+      debugger
+      getListData();
+    }
   }, [idProyecto]);
 
   useEffect(() => {
@@ -279,7 +283,7 @@ export default function EvaluarAtributoForm(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {rows.length > 0 ? rows.map((row) => (
               <StyledTableRow key={row.name}>
                 <StyledTableCell component="th" scope="row">
                   {row.atributo.nombre}
@@ -315,13 +319,18 @@ export default function EvaluarAtributoForm(props) {
                 </StyledTableCell>
                 <StyledTableCell align="center" style={{ fontWeight: 500, fontSize: 18 }}>{row.totalPonderacion}</StyledTableCell>
               </StyledTableRow>
-            ))}
+            )): <TableRow>
+            <TableCell colSpan={5} align="center">
+              No se encontraron registros.
+            </TableCell>
+          </TableRow> }
           </TableBody>
         </Table>
       </TableContainer>
-      <Grid item xs={12} sm={12} lg={12} style={{ marginTop: 30 }}>
+      {rows.length > 0 && 
+        <Grid item xs={12} sm={12} lg={12} style={{ marginTop: 20 }}>
         <div style={{ float: 'right' }}>
-          <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/evaluacion-calidad">
+          <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px',marginTop: '8px' }} component={Link} href="/evaluacion-calidad">
             Cancelar
           </Button>
           <Button variant="contained" color="primary" size="large" className={classes.buttonColor} onClick={validar}>
@@ -329,6 +338,8 @@ export default function EvaluarAtributoForm(props) {
           </Button>
         </div>
       </Grid>
+      }
+      
 
 
 

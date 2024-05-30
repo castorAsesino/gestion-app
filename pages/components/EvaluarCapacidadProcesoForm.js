@@ -215,7 +215,7 @@ export default function EvaluarCapacidadProcesoForm(props) {
                 </TableCell>
                 <TableCell className={classes.tableCellActions} align="center">
 
-                  <Button variant="contained" color="secondary" href={"/evaluacion-capacidad/atributo/" + row.id}>
+                  <Button variant="contained" color="secondary" href={"/evaluacion-capacidad/atributo/" + row.procesoId}>
 
                     Elegir Proceso
                   </Button>

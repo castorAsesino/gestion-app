@@ -3,7 +3,7 @@
 }
 
 .main {
-  min-height: 100vh;
+  min-height: 70vh;
   padding: 4rem 0;
   flex: 1;
   display: flex;
@@ -125,3 +125,7 @@
   background-color: #ff4e71 !important;
 }
 
+.customLink  {
+  color: white !important;
+  text-decoration: none !important;
+}

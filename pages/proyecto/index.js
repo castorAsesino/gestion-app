@@ -52,9 +52,13 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  tableContainer: {
-    marginTop: theme.spacing(3),
+  root: {
+    flexShrink: 0,
+    marginLeft: theme.spacing(2.5),
   },
+ tableContainer: {
+    marginTop: theme.spacing(3),
+  }, 
   table: {
     minWidth: 500,
   },
@@ -80,17 +84,17 @@ const useStyles = makeStyles((theme) => ({
   },
   tableCell: {
     width: 100,
-    border: '1px solid #000000',
+    border: '1px solid #ddd',
     textAlign: 'center',
   },
   tableCellDescription: {
     width: 200,
-    border: '1px solid #000000',
+    border: '1px solid #ddd',
     textAlign: 'center',
   },
   tableCellActions: {
     width: 100,
-    border: '1px solid #000000',
+    border: '1px solid #ddd',
     textAlign: 'center',
   },
 }));
@@ -118,7 +122,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <div className={classes.right}>
+    <div className={classes.root}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -126,11 +130,7 @@ function TablePaginationActions(props) {
       >
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
+      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
       <IconButton
@@ -196,10 +196,12 @@ export default function Proyecto(props) {
 
   return (
     <Container component="main">
-     
-        <Typography component="h1" variant="h5" className={classes.center}>
+     <Grid item xs={12}>
+     <Typography component="h1" variant="h5" className={classes.center}>
           Lista de Proyectos
         </Typography>
+        </Grid>
+        
        
         <Grid item xs={12}  style={{ marginBottom: 50 }}>
           <Button
@@ -275,11 +277,10 @@ export default function Proyecto(props) {
             )}
           </TableBody>
           <TableFooter>
-              <TableRow >
+              <TableRow>
                 <TablePagination
-                style={{ flex: '1 1 50%' }}
                   rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                  colSpan={3}
+                  colSpan={4}
                   count={rows.length}
                   rowsPerPage={rowsPerPage}
                   page={page}

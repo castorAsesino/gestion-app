@@ -44,12 +44,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -59,20 +55,50 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
+ tableContainer: {
+    marginTop: theme.spacing(3),
+  }, 
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 40,
   },
   right: {
-    float: 'right'
+    textAlign: 'right',
   },
   addButton: {
     textAlign: 'right',
     backgroundColor: '#146677f5'
-  }
+  },
+  headerStyle: {
+    fontWeight: 900,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
+  tableCell: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
 }));
+
+
 
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -133,6 +159,7 @@ TablePaginationActions.propTypes = {
 };
 
 
+
 export default function Niveles(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
@@ -191,14 +218,14 @@ export default function Niveles(props) {
           </Grid>
         </Grid>
 
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="custom pagination table">
+        <TableContainer component={Paper} className={classes.tableContainer}>
+        <Table aria-label="custom pagination table" className={classes.table}>
             <TableHead>
               <TableRow>
-                <StyledTableCell>Nombre</StyledTableCell>
-                <StyledTableCell align="center">Valor Mínimo</StyledTableCell>
-                <StyledTableCell align="center">Valor Máximo</StyledTableCell>
-                <StyledTableCell></StyledTableCell>
+              <StyledTableCell  align="center" className={classes.headerStyle}>Nombre</StyledTableCell>
+                <StyledTableCell align="center" className={classes.headerStyle}>Valor Mínimo</StyledTableCell>
+                <StyledTableCell align="center" className={classes.headerStyle}>Valor Máximo</StyledTableCell>
+                <StyledTableCell className={classes.headerStyle}></StyledTableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -207,16 +234,16 @@ export default function Niveles(props) {
                 : rows
               ).map((row) => (
                 <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" className={classes.tableCell}>
                     {row.nombre}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" className={classes.tableCell}>
                     {row.valorMin}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" className={classes.tableCell}> 
                     {row.valorMax}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" className={classes.tableCell}>
                     <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/niveles/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>

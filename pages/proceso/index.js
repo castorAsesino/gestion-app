@@ -46,15 +46,19 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
-  tableContainer: {
-    marginTop: theme.spacing(3),
+  root: {
+    flexShrink: 0,
+    marginLeft: theme.spacing(2.5),
   },
+ tableContainer: {
+    marginTop: theme.spacing(3),
+  }, 
   table: {
     minWidth: 500,
   },
@@ -70,9 +74,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#146677f5'
   },
   headerStyle: {
-    color: '#556cd6',
     fontWeight: 900,
-    textAlign: 'center',
   },
   buttonContainer: {
     display: 'flex',
@@ -82,17 +84,17 @@ const useStyles = makeStyles((theme) => ({
   },
   tableCell: {
     width: 100,
-    border: '1px solid #000000',
+    border: '1px solid #ddd',
     textAlign: 'center',
   },
   tableCellDescription: {
     width: 200,
-    border: '1px solid #000000',
+    border: '1px solid #ddd',
     textAlign: 'center',
   },
   tableCellActions: {
     width: 100,
-    border: '1px solid #000000',
+    border: '1px solid #ddd',
     textAlign: 'center',
   },
 }));
@@ -119,7 +121,7 @@ function TablePaginationActions(props) {
   };
 
   return (
-    <div className={classes.right}>
+    <div className={classes.root}>
       <IconButton
         onClick={handleFirstPageButtonClick}
         disabled={page === 0}
@@ -127,11 +129,7 @@ function TablePaginationActions(props) {
       >
         {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
+      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
         {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
       </IconButton>
       <IconButton
@@ -158,6 +156,7 @@ TablePaginationActions.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
 };
+
 
 export default function Proceso(props) {
   const classes = useStyles();
@@ -267,27 +266,28 @@ export default function Proceso(props) {
             )}
           </TableBody>
           <TableFooter>
-            <TableRow>
-              <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                colSpan={3}
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                SelectProps={{
-                  inputProps: { 'aria-label': 'Registros por páginas' },
-                  native: true,
-                }}
-                labelRowsPerPage={'Registros por páginas'}
-                labelDisplayedRows={({ from, to, count }) => {
-                  return '' + from + '-' + to + ' de ' + count;
-                }}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-                ActionsComponent={TablePaginationActions}
-              />
-            </TableRow>
-          </TableFooter>
+              <TableRow>
+                <TablePagination
+                  rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
+                  colSpan={4}
+                  count={rows.length}
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  SelectProps={{
+                    inputProps: { 'aria-label': 'Registros por páginas' },
+                    native: true,
+                  }}
+                  labelRowsPerPage={"Registros por páginas"}
+                  labelDisplayedRows={
+                    ({ from, to, count }) => {
+                      return '' + from + '-' + to + ' de ' + count
+                    }
+                  }
+                  onPageChange={handleChangePage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions} />
+              </TableRow>
+            </TableFooter>
         </Table>
       </TableContainer>
     </Container>

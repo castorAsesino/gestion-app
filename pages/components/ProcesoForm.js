@@ -131,6 +131,7 @@ export default function ProcesoForm(props) {
         await updateProceso(data);
       }
       handleOpenDialog('Datos guardados correctamente');
+      router.push('/proceso');
     } catch (error) {
       console.error('Error:', error);
       handleOpenDialog('No se pudo guardar los datos');

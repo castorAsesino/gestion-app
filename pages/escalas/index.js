@@ -44,12 +44,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -59,21 +55,48 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
+ tableContainer: {
+    marginTop: theme.spacing(3),
+  }, 
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 40,
   },
   right: {
-    float: 'right'
+    textAlign: 'right',
   },
   addButton: {
     textAlign: 'right',
     backgroundColor: '#146677f5'
-  }
+  },
+  headerStyle: {
+    fontWeight: 900,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
+  tableCell: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
 }));
-
 function TablePaginationActions(props) {
   const classes = useStyles();
   const theme = useTheme();
@@ -177,11 +200,12 @@ export default function Escala(props) {
   return (
     <>
       <Container component="main" >
-      <Grid item xs={12}>
-            <Typography component="h1" variant="h5" className={classes.center}>
-              Lista De Escalas
-            </Typography>
-          </Grid>
+
+          <Grid item xs={12}>
+          <Typography component="h1" variant="h5" className={classes.center}>
+          Lista De Escalas
+          </Typography>
+        </Grid>
         <Grid container spacing={3}>
         
           <Grid item xs={12} style={{ marginBottom: 10 }}>
@@ -207,18 +231,18 @@ export default function Escala(props) {
                 : rows
               ).map((row) => (
                 <TableRow key={row.id}>
-                  <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row" className={classes.tableCell}>
                     {row.nombre}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" className={classes.tableCell}>
                     {row.descripcion}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell align="center" className={classes.tableCell}>
                     {row.valor}
                   </TableCell>
                 
                
-                  <TableCell align="center">
+                  <TableCell align="center" className={classes.tableCell}>
                     <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/escalas/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>

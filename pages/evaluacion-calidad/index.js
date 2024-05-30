@@ -45,12 +45,8 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -60,16 +56,49 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
+ tableContainer: {
+    marginTop: theme.spacing(3),
+  }, 
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center'
+    textAlign: 'center',
+    fontSize: 40,
   },
   right: {
-    float: 'right'
-  }
+    textAlign: 'right',
+  },
+  addButton: {
+    textAlign: 'right',
+    backgroundColor: '#146677f5'
+  },
+  headerStyle: {
+    fontWeight: 900,
+  },
+  buttonContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '100%',
+    maxWidth: '100%',
+  },
+  tableCell: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellDescription: {
+    width: 200,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
+  tableCellActions: {
+    width: 100,
+    border: '1px solid #ddd',
+    textAlign: 'center',
+  },
 }));
+
 
 
 function TablePaginationActions(props) {
@@ -170,7 +199,7 @@ export default function EvauacionCalidad(props) {
   return (
     <Container component="main">
       <Grid item xs={12}>
-        <Typography component="h1" variant="h5" className={classes.center}>
+        <Typography component="h1" variant="h4" className={classes.center}>
           Lista de Proyectos
         </Typography>
       </Grid>
@@ -188,7 +217,7 @@ export default function EvauacionCalidad(props) {
             <TableRow>
               <StyledTableCell align="center" className={classes.headerStyle}>Nombre</StyledTableCell>
               <StyledTableCell align="center" className={classes.headerStyle}>Descripción</StyledTableCell>
-              <StyledTableCell className={classes.tableCellActions} align="center"></StyledTableCell>
+              <StyledTableCell  align="center"></StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -200,10 +229,10 @@ export default function EvauacionCalidad(props) {
                 <TableCell className={classes.tableCell} component="th" scope="row" align="center">
                   {row.nombre}
                 </TableCell>
-                <TableCell className={classes.tableCellDescription} align="center">
+                <TableCell className={classes.tableCell} align="center">
                   {row.descripcion}
                 </TableCell>
-                <TableCell className={classes.tableCellActions} align="center">
+                <TableCell className={classes.tableCell} align="center">
 
                   <Button variant="contained" color="secondary" href={'/evaluacion-calidad/proceso/' + row.id}>
 

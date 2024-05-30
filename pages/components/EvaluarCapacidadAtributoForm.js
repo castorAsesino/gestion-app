@@ -180,17 +180,8 @@ export default function EvaluarCapacidadAtributoForm(props) {
         setProyecto(data)
       });
   };
-  const handlePonderacionChange = (event, id) => {
-    const { value } = event.target;
-    setRows((prevRows) =>
-      prevRows.map((row) =>
-        row.id === id ? { ...row, ponderacion: +value } : row
-      )
-    );
-    calcularTotal(id);
-    /*   validar(); */
-    console.log(rows)
-  };
+
+
   const handleChange = (event, id) => {
     const { value } = event.target;
     setRows((prevRows) =>
@@ -199,8 +190,9 @@ export default function EvaluarCapacidadAtributoForm(props) {
       )
     );
     const updatedRows = rows.map(row => {
+      debugger
       if (row.id === id) {
-        const selectedcalificacion= calificaciones.find(calificacion => calificacion.id === value);
+        const selectedcalificacion = calificaciones.find(calificacion => calificacion.id === value);
         return { ...row, calificacion: value, nivel: selectedcalificacion ? selectedcalificacion.nombre : '' };
       }
       return row;
@@ -249,7 +241,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
       setResultados(resultado);
       let intervalo = niveles.find(intervalo => resultado >= intervalo.valorMin && resultado <= intervalo.valorMax);
       // Calcular el promedio
-     let promedioPonderacionTotal = (rows.reduce((acc, curr) => acc + curr.totalPonderacion, 0)) / rows.length;
+      let promedioPonderacionTotal = (rows.reduce((acc, curr) => acc + curr.totalPonderacion, 0)) / rows.length;
 
 
       // Encontrar los elementos cuyo total es mayor o igual al promedio
@@ -299,7 +291,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
 
                     <Select
 
-                      value={row.ponderacion}
+                      value={row.calificacion}
                       onChange={(e) => handleChange(e, row.id)}
                     >
                       {calificaciones.map((nivel) => (
@@ -320,7 +312,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
       </TableContainer>
       <Grid item xs={12} sm={12} lg={12} style={{ marginTop: 30 }}>
         <div style={{ float: 'right' }}>
-          <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/evaluacion-calidad">
+          <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px',marginTop: '8px' }} component={Link} href="/evaluacion-calidad">
             Cancelar
           </Button>
           <Button variant="contained" color="primary" size="large" className={classes.buttonColor} onClick={validar}>
@@ -357,7 +349,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
               <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Nivel de calidad del proceso:</li>
               <span>{intervalo.nombre}</span>
             </Typography>
-            
+
             <TableContainer component={Paper}>
               <Table className={classes.table} size="small" aria-label="a dense table">
                 <TableHead>
@@ -400,7 +392,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
             <Button onClick={handleClose} color="primary">
               Aceptar
             </Button>
-            
+
           </DialogActions>
         </Dialog>
       </div>

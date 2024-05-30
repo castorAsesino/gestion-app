@@ -14,21 +14,10 @@ export default function Home() {
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.grid} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+  
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/proceso">
-              <a>
-                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
-                  <NotesIcon style={{ fontSize: 100 }} />
-                  <CardContent>
-                    <Typography variant="h5">Procesos</Typography>
-                  </CardContent>
-                </Card>
-              </a>
-            </Link>
-          </div>
-          <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/menu-proyecto">
-              <a>
+            <Link href="/proyecto">
+              <a className={styles.customLink}>
                 <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <WebIcon style={{ fontSize: 100 }} />
                   <CardContent>
@@ -40,21 +29,20 @@ export default function Home() {
           </div>
 
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/menu-scrum">
-              <a>
+            <Link href="/proceso">
+              <a className={styles.customLink}>
                 <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
-                  <CachedIcon style={{ fontSize: 100 }} />
+                  <NotesIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h5">Scrum</Typography>
+                    <Typography variant="h5">Procesos</Typography>
                   </CardContent>
                 </Card>
               </a>
             </Link>
           </div>
-
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/menu-evaluacion">
-              <a>
+              <a className={styles.customLink}>
                 <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <BuildIcon style={{ fontSize: 100 }} />
                   <CardContent>
@@ -67,7 +55,7 @@ export default function Home() {
 
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/atributos">
-              <a>
+              <a className={styles.customLink}>
                 <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <MenuIcon style={{ fontSize: 100 }} />
                   <CardContent>
