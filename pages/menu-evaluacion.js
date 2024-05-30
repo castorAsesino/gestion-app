@@ -15,32 +15,32 @@ export default function MenuEvaluacion() {
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.grid} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/backlog">
-              <a>
+          <div className="custom-card" style={{  margin: '8px' }}>
+            <Link href="/evaluacion-calidad">
+              <a className={styles.customLink}>
                 <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <NotesIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h5">Backlog</Typography>
+                    <Typography variant="h6">Evaluar Calidad</Typography>
                   </CardContent>
                 </Card>
               </a>
             </Link>
           </div>
-          <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/sprint">
-              <a>
+          <div className="custom-card" style={{  margin: '8px' }}>
+            <Link href="/evaluacion-capacidad">
+              <a className={styles.customLink}>
                 <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <ListAltIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h5">Sprint</Typography>
+                    <Typography variant="h6">Evaluar Capacidad</Typography>
                   </CardContent>
                 </Card>
               </a>
             </Link>
           </div>
 
-          <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
+{/*           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/user-storie">
               <a>
                 <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
@@ -64,7 +64,7 @@ export default function MenuEvaluacion() {
                 </Card>
               </a>
             </Link>
-          </div>
+          </div> */}
         </div>
       </main>
     </div>
