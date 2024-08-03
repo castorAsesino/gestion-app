@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Card, CardContent, ListItem, Typography } from '@material-ui/core';
+import { Card, CardContent, Typography } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import styles from '../styles/Home.module.css';
 import NotesIcon from '@material-ui/icons/Notes';
@@ -7,7 +7,6 @@ import WebIcon from '@material-ui/icons/Web';
 import CachedIcon from '@material-ui/icons/Cached';
 import BuildIcon from '@material-ui/icons/Build';
 import Link from 'next/link';
-import MenuIcon from '@material-ui/icons/Menu';
 
 export default function Home() {
   return (

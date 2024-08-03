@@ -154,18 +154,7 @@ export default function PersistentDrawerLeft(props) {
       path: '/niveles',
       icon: EqualizerIcon
     }, 
-    /* {
-      id: 4,
-      label: 'SCRUM',
-      path: '/menu-scrum',
-      icon: Loop
-    }, */
-   /*  {
-      id: 5,
-      label: 'Evaluación',
-      path: '/menu-evaluacion',
-      icon: Build
-    }, */
+
     {
       id: 5,
       label: 'Escalas',

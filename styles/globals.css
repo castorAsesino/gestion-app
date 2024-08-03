@@ -7,10 +7,11 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.customLink {
+  color: white !important;
+  text-decoration: none !important;
 }
+
 
 * {
   box-sizing: border-box;

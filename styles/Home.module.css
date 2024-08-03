@@ -1,6 +1,10 @@
 .container {
   padding: 0 2rem;
 }
+.customLink  {
+  color: white !important;
+  text-decoration: none !important;
+}
 
 .main {
   min-height: 70vh;
