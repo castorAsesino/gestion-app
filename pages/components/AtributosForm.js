@@ -138,7 +138,7 @@ export default function AtributosForm(props) {
   }
 
   const createAtributo = async (data) => {
-    data.valor = parseInt(data.valor);
+    //data.valor = parseInt(data.valor);
     const response = await axios.post("/api/atributo", data);
   }
   const getProcesos = async () => {
@@ -179,7 +179,7 @@ export default function AtributosForm(props) {
                 />
               </Grid>
               <Grid item xs={12} sm={12} lg={12}>
-                <TextField  type="number" label="Valor" variant="standard" fullWidth margin="normal" {...register('valor', { required: true })}
+                <TextField  type="text" label="Valor" variant="standard" fullWidth margin="normal" {...register('valor', { required: true })}
                   error={errors.valor}
                   placeholder="Valor"
                   helperText={errors.valor ? 'Campo obligatorio' : ''}

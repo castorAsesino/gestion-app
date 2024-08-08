@@ -278,6 +278,29 @@ export default function EvaluarCapacidadAtributoForm(props) {
       handleClickOpen();
     }
     console.log(proceso)
+//todooooo
+    /* atributoProcesoId
+: 
+21
+calificacion
+: 
+0
+id
+: 
+22
+ponderacion
+: 
+""
+proceso
+: 
+{id: 5, nombre: 'Revisión del Sprint (Scrum)', descripcion: 'Evaluación del trabajo realizado durante el sprint.', fecha_creacion: '2024-08-07T03:05:07.786Z'}
+procesoId
+: 
+5
+totalPonderacion
+: 
+0
+ */
   };
   return (
     <Container component="main">

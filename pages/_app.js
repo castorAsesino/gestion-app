@@ -23,6 +23,7 @@ export default function MyApp(props) {
         <title>Sistema de Gestión</title>
         <link rel="shortcut icon" href="/static/favicon.ico" />
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
       </Head>
       <ThemeProvider theme={theme}>
         

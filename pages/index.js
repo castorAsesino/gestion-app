@@ -7,7 +7,8 @@ import WebIcon from '@material-ui/icons/Web';
 import CachedIcon from '@material-ui/icons/Cached';
 import BuildIcon from '@material-ui/icons/Build';
 import Link from 'next/link';
-
+import MenuIcon from '@material-ui/icons/Menu';
+import BarChartIcon from '@material-ui/icons/BarChart';
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -59,6 +60,19 @@ export default function Home() {
                   <MenuIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Atributo de Proceso</Typography>
+                  </CardContent>
+                </Card>
+              </a>
+            </Link>
+          </div>
+
+          <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
+            <Link href="/reportes">
+              <a className={styles.customLink}>
+                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                  <BarChartIcon style={{ fontSize: 100 }} />
+                  <CardContent>
+                    <Typography variant="h5">Reportes</Typography>
                   </CardContent>
                 </Card>
               </a>

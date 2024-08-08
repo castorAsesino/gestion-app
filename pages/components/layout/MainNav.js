@@ -1,6 +1,6 @@
 import React from 'react';
 import clsx from 'clsx';
-import { makeStyles, useTheme, createTheme } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,23 +14,14 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox'
-import Person from '@material-ui/icons/Person';
-import LoginIcon from '@material-ui/icons/VpnKey';
+import ListItemText from '@material-ui/core/ListItemText';;
 import HomeIcon from '@material-ui/icons/Home';
-import RegisterIcon from '@material-ui/icons/ContactMail';
 import MenuItem from '@material-ui/core/MenuItem';
-import MailIcon from '@material-ui/icons/Mail';
-import Button from '@material-ui/core/Button';
 import Link from '../../../src/Link';
 import { useRouter } from 'next/router';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
-import ListAlt from '@material-ui/icons/ListAlt';
-import Loop from '@material-ui/icons/Loop';
-import Build from '@material-ui/icons/Build';
 import AllInboxIcon from '@material-ui/icons/AllInbox';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import BarChartIcon from '@material-ui/icons/BarChart';
 import Container from '@material-ui/core/Container';
 const drawerWidth = 270;
 import EqualizerIcon from '@material-ui/icons/Equalizer';
@@ -172,6 +163,12 @@ export default function PersistentDrawerLeft(props) {
       label: 'Evaluar Capacidad',
       path: '/evaluacion-capacidad',
       icon: LibraryBooks
+    },
+    {
+      id: 6,
+      label: 'Reportes',
+      path: '/reportes',
+      icon: BarChartIcon
     }
 
   ]

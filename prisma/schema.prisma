@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -10,99 +7,90 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-//aca se crean los modelos
 model Proyecto {
-  id Int @id @default(autoincrement())
-  nombre String
-  descripcion String
-  presupuesto Int
-  fecha_creacion DateTime @default(now())
-  evaluacion Evaluacion[]
-  procesos ProyectoProceso[]
-  
+  id                Int                 @id @default(autoincrement())
+  nombre            String
+  descripcion       String
+  presupuesto       Int
+  fecha_creacion    DateTime            @default(now())
+  evaluacion        Evaluacion[]
+  Matriz_Evaluacion Matriz_Evaluacion[]
+  procesos          ProyectoProceso[]
 }
 
 model Proceso {
-  id Int @id @default(autoincrement())
-  nombre String
-  descripcion String
-  fecha_creacion DateTime @default(now())
-
-  atributos ProcesoAtributo[]
-  evaluacion Evaluacion[]
-  proyectos ProyectoProceso[]
+  id                Int                 @id @default(autoincrement())
+  nombre            String
+  descripcion       String
+  fecha_creacion    DateTime            @default(now())
+  evaluacion        Evaluacion[]
+  Matriz_Evaluacion Matriz_Evaluacion[]
+  atributos         ProcesoAtributo[]
+  proyectos         ProyectoProceso[]
 }
+
 model ProyectoProceso {
-  id Int @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   proyectoId Int
-  procesoId Int
-  proyecto Proyecto @relation(fields: [proyectoId], references: [id])
-  proceso Proceso @relation(fields: [procesoId], references: [id])
-}
-model Atributo_De_Proceso {
-  id Int @id @default(autoincrement())
-  nombre String
-  descripcion String
-  valor Int
-  fecha_creacion DateTime @default(now())
-  atributos ProcesoAtributo[]
-  detalle_matriz_evaluacion Detalle_Matriz_Evaluacion[]
+  procesoId  Int
+  proceso    Proceso  @relation(fields: [procesoId], references: [id])
+  proyecto   Proyecto @relation(fields: [proyectoId], references: [id])
 }
 
+model Atributo_De_Proceso {
+  id             Int               @id @default(autoincrement())
+  nombre         String
+  descripcion    String
+  valor          String
+  fecha_creacion DateTime          @default(now())
+  atributos      ProcesoAtributo[]
+}
 
 model Evaluacion {
-  id Int @id @default(autoincrement())
-  nombre String
-  descripcion String
-  estado String
-  proceso  Proceso   @relation(fields: [procesoId], references: [id])
-  procesoId Int // relation scalar field (used in the `@relation` attribute above)
-  proyecto Proyecto @relation(fields: [proyectoId], references: [id])
-  proyectoId Int // relation scalar field (used in the `@relation` attribute above)
+  id             Int      @id @default(autoincrement())
+  nombre         String
+  descripcion    String
+  estado         String
+  procesoId      Int
+  proyectoId     Int
   fecha_creacion DateTime @default(now())
+  proceso        Proceso  @relation(fields: [procesoId], references: [id])
+  proyecto       Proyecto @relation(fields: [proyectoId], references: [id])
 }
 
 model Escala_Calificacion {
-  id Int @id @default(autoincrement())
-  nombre String
-  descripcion String
-  valor Int
+  id             Int      @id @default(autoincrement())
+  nombre         String
+  descripcion    String
+  valor          Int
   fecha_creacion DateTime @default(now())
-  detalle_matriz_evaluacion Detalle_Matriz_Evaluacion[]
 }
 
 model Niveles {
-  id Int @id @default(autoincrement())
-  nombre String
-  valorMax Int
-  valorMin Int
-  fecha_creacion DateTime @default(now())
- 
+  id                Int                 @id @default(autoincrement())
+  nombre            String
+  valorMax          Int
+  valorMin          Int
+  fecha_creacion    DateTime            @default(now())
+  Matriz_Evaluacion Matriz_Evaluacion[]
 }
 
 model Matriz_Evaluacion {
-  id Int @id @default(autoincrement())
-  nombre String
-  descripcion String
+  id             Int      @id @default(autoincrement())
   fecha_creacion DateTime @default(now())
-  detalle_matriz_evaluacion Detalle_Matriz_Evaluacion @relation(fields: [detalle_matriz_evaluacionId], references: [id])
-  detalle_matriz_evaluacionId Int 
-}
-
-model Detalle_Matriz_Evaluacion {
-  id Int @id @default(autoincrement())
-  atributo Atributo_De_Proceso @relation(fields: [atributoProcesoId], references: [id])
-  atributoProcesoId Int 
-  calificacion Escala_Calificacion @relation(fields: [calificacionId], references: [id])
-  calificacionId Int 
-  porcentaje Float?
-  matriz_evaluacion Matriz_Evaluacion[]
+  calificacion   Float
+  nivelId        Int
+  procesoId      Int
+  proyectoId     Int
+  Niveles        Niveles  @relation(fields: [nivelId], references: [id])
+  Proceso        Proceso  @relation(fields: [procesoId], references: [id])
+  Proyecto       Proyecto @relation(fields: [proyectoId], references: [id])
 }
 
 model ProcesoAtributo {
-  id Int @id @default(autoincrement())
-  procesoId Int
+  id                Int                 @id @default(autoincrement())
+  procesoId         Int
   atributoProcesoId Int
-  proceso Proceso @relation(fields: [procesoId], references: [id])
-  atributo Atributo_De_Proceso @relation(fields: [atributoProcesoId], references: [id])
+  atributo          Atributo_De_Proceso @relation(fields: [atributoProcesoId], references: [id])
+  proceso           Proceso             @relation(fields: [procesoId], references: [id])
 }

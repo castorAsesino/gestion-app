@@ -388,7 +388,7 @@ export default function EvaluarAtributoForm(props) {
             </Typography>
             <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
               <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Nivel de calidad del proceso:</li>
-              <span>{intervalo.nombre}</span>
+              <span>{intervalo?.nombre}</span>
             </Typography>
             
             <TableContainer component={Paper}>
