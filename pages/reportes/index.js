@@ -163,17 +163,17 @@ const MenuProps = {
   getContentAnchorEl: null,
 };
 
-const getRandomColor  = () => {
+const getRandomColor = () => {
   const r = Math.floor((Math.random() * 127) + 127);
   const g = Math.floor((Math.random() * 127) + 127);
   const b = Math.floor((Math.random() * 127) + 127);
   return `rgb(${r}, ${g}, ${b})`;
 };
 
-const generateColors  = (numColors) => {
+const generateColors = (numColors) => {
   const colors = [];
   for (let i = 0; i < numColors; i++) {
-    colors.push(getRandomColor ());
+    colors.push(getRandomColor());
   }
   return colors;
 };
@@ -212,19 +212,31 @@ const prepareChartData = (data) => {
     ],
   };
 
+  /*   const barData = data.reduce((acc, curr) => {
+      const proceso = curr.atributos.nombre;
+      if (acc[proceso]) {
+        acc[proceso].push(curr.calificacion);
+      } else {
+        acc[proceso] = [curr.calificacion];
+      }
+      return acc;
+    }, {}); */
+  debugger
   const barData = data.reduce((acc, curr) => {
-    const proceso = curr.Proceso.nombre;
-    if (acc[proceso]) {
-      acc[proceso].push(curr.calificacion);
-    } else {
-      acc[proceso] = [curr.calificacion];
-    }
+    curr.atributos.forEach((atributo) => {
+      const proceso = atributo.Atributo_De_Proceso.nombre;
+      if (acc[proceso]) {
+        acc[proceso].push(curr.calificacion);
+      } else {
+        acc[proceso] = [curr.calificacion];
+      }
+    });
     return acc;
   }, {});
-
   const barColors = generateColors(Object.keys(barData).length);
-
+  debugger
   const barChartData = {
+
     labels: Object.keys(barData),
     datasets: Object.keys(barData).map((proceso, index) => ({
       label: proceso,
@@ -307,10 +319,10 @@ export default function Reportes(props) {
 
   const buscar = async () => {
     let data = {
-      
+
     };
     if (proyectoId !== null && proyectoId !== "") {
-      data['idProyecto'] = idProyecto
+      data['proyectoId'] = proyectoId
     }
     if (procesoId !== null && procesoId !== "") {
       data['idProceso'] = procesoId
@@ -422,8 +434,8 @@ export default function Reportes(props) {
                     onClick={buscar}
                     fullWidth
                     variant="contained"
-                    color="primary"
-                    size="small"
+                    style={{ backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }}
+
                     className={classes.margin}
                   >
                     Generar Reporte
@@ -445,25 +457,35 @@ export default function Reportes(props) {
 
 
         <Grid container spacing={2} justifyContent="center">
-          <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' }}>
+          <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
 
             <TableContainer component={Paper}>
               <Table className={classes.table} size="small" aria-label="simple table">
                 <TableHead>
                   <TableRow>
+                    <TableCell align="rigth">Proyecto</TableCell>
                     <TableCell align="rigth">Proceso</TableCell>
                     <TableCell align="rigth">Nivel</TableCell>
                     <TableCell align="center">Calificación</TableCell>
+                    <TableCell align="center">Los atributos de proceso con una calificación ponderada baja son:</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {resultado.map((row) => (
                     <TableRow key={row.id}>
+                      <TableCell align="rigth">{row.Proyecto.nombre}</TableCell>
                       <TableCell align="rigth">{row.Proceso.nombre}</TableCell>
                       <TableCell align="rigth"><span className={`${classes.badge} ${getBadgeClass(row.Niveles.nombre)}`}>
                         {row.Niveles.nombre}
                       </span></TableCell>
-                      <TableCell align="center">{row.calificacion}%</TableCell>
+                      <TableCell align="center" style={{ fontWeight: 'bold' }}>{row.calificacion}%</TableCell>
+                      <TableCell align="center">
+                        <div>
+                          {row.atributos?.map((atributo, index) => (
+                            <span key={index}>{atributo.Atributo_De_Proceso.nombre}</span>
+                          ))}
+                        </div>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -471,9 +493,24 @@ export default function Reportes(props) {
             </TableContainer>
 
           </Grid>
-          <Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' }}>
+           {/*<Grid item xs={6} style={{ display: 'flex', justifyContent: 'center' }}>
 
-          </Grid>
+            <Grid item xs={12}>
+
+              <p style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>Escala para clasificar el Nivel de calidad del proceso
+              </p>
+              <ul style={{justifyContent: 'center' }}>
+
+                <li key={'1'}>Nivel Deficiente: Desempeño insuficiente con calificación inferior al 50%.</li>
+                <li key={'2'}>Nivel Aceptable: Desempeño básico con calificación entre 50% y 69%.</li>
+                <li key={'3'}>Nivel Satisfactorio: Buen desempeño con calificación entre 70% y 84%.</li>
+                <li key={'4'}>Nivel Excelente: Desempeño sobresaliente con calificación del 85% o superior.</li>
+
+              </ul>
+            </Grid> 
+          </Grid>*/}
+
+
         </Grid>
 
 
