@@ -200,8 +200,8 @@ export default function EvauacionCapacidad(props) {
   return (
     <Container component="main">
       <Grid item xs={12}>
-        <Typography component="h1" variant="h5" className={classes.center}>
-          Lista de Proyectos
+      <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
+      Lista de Proyectos
         </Typography>
       </Grid>
       <Grid container spacing={3}>

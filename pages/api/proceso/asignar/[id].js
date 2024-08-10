@@ -4,16 +4,14 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { method } = req;
-  debugger
+  
   switch (method) {
     case "GET":
       try {
         const {
           query: { id },
-          method,
         } = req;
-      
-
+        
         const response = await prisma.procesoAtributo.findMany({
           where: {
             procesoId: +id,
@@ -21,12 +19,14 @@ export default async function handler(req, res) {
           include: {
             proceso: true,
             atributo: true,
-            
           },
-        })
+        });
         return res.status(200).json(response);
       } catch (error) {
         return res.status(400).json({ error });
+      }finally {
+        // Cerrar la conexión de Prisma
+        await prisma.$disconnect();
       }
 
     case "POST":
@@ -71,19 +71,20 @@ export default async function handler(req, res) {
 
         const updatedRelations = [...existingRelations, ...newRelations];
 
-        res.status(200).json(updatedRelations);
+        return res.status(200).json(updatedRelations);
       } catch (error) {
         console.error(error);
-        res.status(500).json({ error: "Error al actualizar las relaciones." });
+        return res.status(500).json({ error: "Error al actualizar las relaciones." });
+      } finally {
+        // Cerrar la conexión de Prisma
+        await prisma.$disconnect();
       }
 
     default:
-      res.setHeaders("Allow", ["GET", "POST"]);
+      res.setHeader("Allow", ["GET", "POST"]); // Corregido a res.setHeader
       return res
         .status(405)
         .json({ success: false })
         .end(`Method ${method} Not Allowed`);
   }
 }
-
-

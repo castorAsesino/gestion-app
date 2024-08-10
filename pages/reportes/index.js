@@ -307,16 +307,18 @@ export default function Reportes(props) {
 
   const buscar = async () => {
     let data = {
-      idProyecto: +proyectoId,
+      
     };
-
+    if (proyectoId !== null && proyectoId !== "") {
+      data['idProyecto'] = idProyecto
+    }
     if (procesoId !== null && procesoId !== "") {
       data['idProceso'] = procesoId
     }
     if (nivelId !== null && nivelId !== "") {
       data['nivelId'] = nivelId
     }
-    const response = await axios.get(`/api/reporte`, {
+    const response = await axios.get(`/api/evaluar`, {
       params: data
     });
     setResultado(response.data);

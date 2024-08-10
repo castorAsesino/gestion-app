@@ -199,8 +199,8 @@ export default function Proceso(props) {
   return (
     <Container component="main">
       
-        <Typography component="h1" variant="h5" className={classes.center}>
-          Lista De Procesos
+      <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
+      Lista De Procesos
         </Typography>
         <Grid item xs={12}  style={{ marginBottom: 50 }}>
           <Button

@@ -33,42 +33,43 @@ export default async function handler(req, res) {
         }
 
       case 'GET':
-        try {
-          const { proyectoId, nivelId, procesoId } = req.query;
+      try {
+        const { proyectoId, nivelId, procesoId } = req.query;
 
-          const filters = {};
-          if (proyectoId) {
-            filters.proyectoId = parseInt(proyectoId, 10);
-          }
-          if (nivelId) {
-            filters.nivelId = parseInt(nivelId, 10);
-          }
-          if (procesoId) {
-            filters.procesoId = parseInt(procesoId, 10);
-          }
+        const filters = {};
+        if (proyectoId) {
+          filters.proyectoId = parseInt(proyectoId, 10);
+        }
+        if (nivelId) {
+          filters.nivelId = parseInt(nivelId, 10);
+        }
+        if (procesoId) {
+          filters.procesoId = parseInt(procesoId, 10);
+        }
 
-          const matrizEvaluacion = await prisma.matriz_Evaluacion.findMany({
-            where: filters,
-            include: {
-              Niveles: true,
-              Proceso: true,
-              Proyecto: true,
-              atributos: {
-                include: {
-                  Atributo_De_Proceso: true,
-                },
+        // Realizar la consulta con o sin filtros
+        const matrizEvaluacion = await prisma.matriz_Evaluacion.findMany({
+          where: Object.keys(filters).length ? filters : undefined,
+          include: {
+            Niveles: true,
+            Proceso: true,
+            Proyecto: true,
+            atributos: {
+              include: {
+                Atributo_De_Proceso: true,
               },
             },
-          });
+          },
+        });
 
-          if (matrizEvaluacion.length === 0) {
-            return res.status(404).json({ message: 'No se encontraron datos para los filtros proporcionados' });
-          }
-
-          return res.status(200).json(matrizEvaluacion);
-        } catch (error) {
-          return res.status(500).json({ message: error.message });
+        if (matrizEvaluacion.length === 0) {
+          return res.status(404).json({ message: 'No se encontraron datos para los filtros proporcionados' });
         }
+
+        return res.status(200).json(matrizEvaluacion);
+      } catch (error) {
+        return res.status(500).json({ message: error.message });
+      }
 
       default:
         res.setHeader('Allow', ['POST', 'GET']);
