@@ -198,10 +198,9 @@ export default function ProcesoForm(props) {
                 <div style={{ float: 'right' }}>
                   <Button
                     variant="contained"
-                    color="secondary"
                     size="large"
                     className={classes.margin}
-                    style={{ marginRight: '10px' }}
+                    style={{ marginRight: '10px', backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }}
                     component={Link}
                     href="/proceso"
                   >

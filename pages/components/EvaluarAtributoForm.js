@@ -41,6 +41,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+
+
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: '#146677f5',
@@ -68,9 +72,9 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
- tableContainer: {
+  tableContainer: {
     marginTop: theme.spacing(3),
-  }, 
+  },
   table: {
     minWidth: 500,
   },
@@ -111,7 +115,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 const StyledTableRow = withStyles((theme) => ({
   root: {
     '&:nth-of-type(odd)': {
@@ -119,8 +122,6 @@ const StyledTableRow = withStyles((theme) => ({
     },
   },
 }))(TableRow);
-
-
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -140,11 +141,12 @@ export default function EvaluarAtributoForm(props) {
   const [niveles, setNiveles] = useState([]);
 
   const [open, setOpen] = React.useState(false);
-  const [proyecto, setProyecto] = React.useState(false);
+  const [proyecto, setProyecto] = React.useState(null);
   const [proceso, setProceso] = React.useState(null);
-  const [resultados, setResultados] = React.useState(false);
-  const [intervalo, setIntervalo] = React.useState(false);
+  const [resultados, setResultados] = React.useState(null);
+  const [intervalo, setIntervalo] = React.useState(null);
   const [promedios, setPromedios] = React.useState([]);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -154,55 +156,50 @@ export default function EvaluarAtributoForm(props) {
   };
 
   useEffect(() => {
-   
     getListNivel();
     getCalificacion();
     getProyectoId();
-    if(idProyecto!== undefined){
-      debugger
+    if (idProyecto) {
       getListData();
     }
   }, [idProyecto]);
 
   useEffect(() => {
     if (deleteItem) {
-      axios.delete('/api/proceso/' + id).then((response) => {
+      axios.delete('/api/proceso/' + id).then(() => {
         window.location.reload();
       });
     }
   }, [deleteItem, id]);
 
-
   const getCalificacion = async () => {
     const response = await axios.get('/api/escala');
     setCalificaciones(response.data);
   };
+
   const getListNivel = async () => {
     const response = await axios.get('/api/nivel');
     setNiveles(response.data);
   };
+
   const getListData = async () => {
-    debugger
-    if (idProyecto !== undefined && idProyecto !== null) {
+    if (idProyecto) {
       const response = await axios.get("/api/proceso/asignar/" + idProyecto);
       const newList = response.data.map(item => ({ ...item, calificacion: 0, ponderacion: "", totalPonderacion: 0 }));
       setRows(newList);
-      /* setRows(response.data); */
-      console.log(response.data)
       if (newList.length > 0) {
         setProceso(newList[0]);
       }
-
     }
-  }
-  const getProyectoId = async () => {
-    let id = localStorage.getItem('idProyecto');
-    fetch("/api/proyecto/" + id)
-      .then((response) => response.json())
-      .then((data) => {
-        setProyecto(data)
-      });
   };
+
+  const getProyectoId = async () => {
+    const id = localStorage.getItem('idProyecto');
+    const response = await fetch("/api/proyecto/" + id);
+    const data = await response.json();
+    setProyecto(data);
+  };
+
   const handlePonderacionChange = (event, id) => {
     const { value } = event.target;
     setRows((prevRows) =>
@@ -211,9 +208,8 @@ export default function EvaluarAtributoForm(props) {
       )
     );
     calcularTotal(id);
-    /*   validar(); */
-    console.log(rows)
   };
+
   const handleChange = (event, id) => {
     const { value } = event.target;
     setRows((prevRows) =>
@@ -222,64 +218,103 @@ export default function EvaluarAtributoForm(props) {
       )
     );
     calcularTotal(id);
-    /*  validar(); */
-    console.log(rows)
   };
+
   const calcularTotal = (id) => {
-    const { value } = event.target;
     setRows((prevRows) =>
       prevRows.map((row) =>
         row.id === id ? { ...row, totalPonderacion: row.calificacion * row.ponderacion } : row
       )
     );
-    console.log(rows)
   };
-  const validar = () => {
-    debugger
-    let totalPonderacionTotal = 0;
-    const valorMasAlto = calificaciones.reduce((max, valor) => max.valor > valor.valor ? max : valor);
 
-    console.log(valorMasAlto);
-    rows.forEach(element => {
-      totalPonderacionTotal += element.calificacion;
+  const validar = () => {
+    let totalPonderacionTotal = 0;
+    let calificacionPonderada = 0;
+
+    const valorMasAlto = calificaciones.reduce(
+      (max, valor) => (max.valor > valor.valor ? max : valor),
+      { valor: 0 }
+    );
+
+    rows.forEach((element) => {
+      totalPonderacionTotal += element.calificacion || 0;
+      calificacionPonderada += element.totalPonderacion || 0;
     });
 
-
     if (totalPonderacionTotal > 100) {
-      alert('Ponderación supera el limite permitido.')
-    } else {
-      let calificacionPonderada = 0;
-      let totalPonderacionTotal = 0;
-      let prom = 0;
-      rows.forEach(element => {
-        totalPonderacionTotal += element.calificacion;
-        calificacionPonderada += element.totalPonderacion;
-
-      });
-
-      let resultadoDiv = calificacionPonderada / totalPonderacionTotal;
-      let resultado = (resultadoDiv / valorMasAlto.valor) * 100;
-      resultado = resultado.toFixed(2);
-      console.log(resultado);
-      setResultados(resultado);
-      let intervalo = niveles.find(intervalo => resultado >= intervalo.valorMin && resultado <= intervalo.valorMax);
-      // Calcular el promedio
-     let promedioPonderacionTotal = (rows.reduce((acc, curr) => acc + curr.totalPonderacion, 0)) / rows.length;
-
-
-      // Encontrar los elementos cuyo total es mayor o igual al promedio
-      prom = rows.filter(item => item.totalPonderacion <= promedioPonderacionTotal);
-      setPromedios(prom)
-      setIntervalo(intervalo);
-      if (intervalo) {
-        console.log(`El resultado está en el intervalo: ${intervalo.nombre}`);
-      } else {
-        console.log("El resultado no está en ningún intervalo definido");
-      }
-      handleClickOpen();
+      alert('Ponderación supera el límite permitido.');
+      return;
     }
-    console.log(proceso)
+
+    let resultado = 0;
+    if (totalPonderacionTotal > 0 && valorMasAlto.valor > 0) {
+      let resultadoDiv = calificacionPonderada / totalPonderacionTotal;
+      resultado = (resultadoDiv / valorMasAlto.valor) * 100;
+      resultado = parseFloat(resultado.toFixed(2));
+    }
+
+    setResultados(resultado);
+
+    const intervalo = niveles.find(
+      (intervalo) => resultado >= intervalo.valorMin && resultado <= intervalo.valorMax
+    );
+
+    const promedioPonderacionTotal =
+      rows.reduce((acc, curr) => acc + (curr.totalPonderacion || 0), 0) / rows.length;
+
+    const prom = rows.filter(
+      (item) => item.totalPonderacion <= promedioPonderacionTotal
+    );
+
+    setPromedios(prom);
+    setIntervalo(intervalo);
+
+    handleClickOpen();
+
+    
   };
+
+  const enviar = async () => {
+   
+    console.log(promedios);
+
+    let aux = [];
+
+    for (const element of promedios) {
+      if (element && element.atributo) {
+        aux.push(element.atributo);
+      }
+    }
+
+    console.log(aux);
+    const payload = {
+      calificacion: resultados,
+      nivelId: intervalo ? intervalo.id : null,
+      procesoId: proceso ? proceso.procesoId : null,
+      proyectoId: proyecto ? proyecto.id : null,
+      atributos: aux
+    };
+
+    try {
+      const response = await axios.post("/api/evaluar", payload);
+      console.log("Respuesta del servidor:", response.data);
+  
+    } catch (error) {
+      console.error("Error al enviar los datos:", error.message);
+    
+    }
+  };
+  useEffect(() => {
+    if(promedios !== null && resultados !== null && intervalo !==null){
+      enviar();
+    }
+    
+  }, [promedios, resultados, intervalo]);
+
+
+
+
   return (
     <Container component="main">
       <Grid item xs={12}>
@@ -288,7 +323,6 @@ export default function EvaluarAtributoForm(props) {
         </Typography>
       </Grid>
       <Grid container spacing={3}>
-
         <Grid item xs={12} style={{ marginBottom: 10 }}>
         </Grid>
       </Grid>
@@ -305,16 +339,14 @@ export default function EvaluarAtributoForm(props) {
           </TableHead>
           <TableBody>
             {rows.length > 0 ? rows.map((row) => (
-              <StyledTableRow key={row.name}>
-                <StyledTableCell  className={classes.tableCell} component="th" scope="row">
+              <StyledTableRow key={row.id}>
+                <StyledTableCell className={classes.tableCell} component="th" scope="row">
                   {row.atributo.nombre}
                 </StyledTableCell>
-                <StyledTableCell  className={classes.tableCell} align="center">{row.atributo.descripcion}</StyledTableCell>
-                <StyledTableCell  className={classes.tableCell} align="center">
+                <StyledTableCell className={classes.tableCell} align="center">{row.atributo.descripcion}</StyledTableCell>
+                <StyledTableCell className={classes.tableCell} align="center">
                   <FormControl className={classes.formControl}>
-
                     <Select
-
                       value={row.ponderacion}
                       onChange={(e) => handlePonderacionChange(e, row.id)}
                     >
@@ -326,117 +358,123 @@ export default function EvaluarAtributoForm(props) {
                     </Select>
                   </FormControl>
                 </StyledTableCell>
-                <StyledTableCell  className={classes.tableCell} align="center">
-                  <TextField label="" variant="standard"
-                    fullWidth margin="normal"
-
+                <StyledTableCell className={classes.tableCell} align="center">
+                  <TextField
+                    label=""
+                    variant="standard"
+                    fullWidth
+                    margin="normal"
                     value={row.calificacion}
                     onChange={(e) => handleChange(e, row.id)}
                     InputLabelProps={{
                       shrink: true,
                     }}
-
                   />
                 </StyledTableCell>
-                <StyledTableCell  className={classes.tableCell} align="center" style={{ fontWeight: 500, fontSize: 18 }}>{row.totalPonderacion}</StyledTableCell>
+                <StyledTableCell className={classes.tableCell} align="center" style={{ fontWeight: 500, fontSize: 18 }}>
+                  {row.totalPonderacion}
+                </StyledTableCell>
               </StyledTableRow>
-            )): <TableRow>
-            <TableCell colSpan={5} align="center">
-              No se encontraron registros.
-            </TableCell>
-          </TableRow> }
+            )) : (
+              <TableRow>
+                <TableCell colSpan={5} align="center">
+                  No se encontraron registros.
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
-      {rows.length > 0 && 
+      {rows.length > 0 && (
         <Grid item xs={12} sm={12} lg={12} style={{ marginTop: 20 }}>
-        <div style={{ float: 'right' }}>
-          <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px',marginTop: '8px' }} component={Link} href="/evaluacion-calidad">
-            Cancelar
-          </Button>
-          <Button variant="contained" color="primary" size="large" className={classes.buttonColor} onClick={validar}>
-            Guardar
-          </Button>
-        </div>
-      </Grid>
-      }
-      
+          <div style={{ float: 'right', display: 'flex', alignItems: 'center' }}>
+            <Button
+              variant="contained"
+              /* color="secondary" */
+              size="large"
+              className={classes.margin}
+              style={{ marginRight: '10px', backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }}
+              component={Link}
+              href="/evaluacion-calidad"
 
-
-
-      <div>
-        {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Slide in alert dialog
-      </Button> */}
-        <Dialog
-          fullWidth={"md"}
-          maxWidth={"md"}
-          open={open}
-          TransitionComponent={Transition}
-          keepMounted
-          onClose={handleClose}
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
-        >
-          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-            Análisis de Resultados
-          </DialogTitle>
-          <DialogContent dividers>
-            <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
-              <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Calificación total del proceso:</li>
-              <span>{resultados} %</span>
-            </Typography>
-            <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
-              <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Nivel de calidad del proceso:</li>
-              <span>{intervalo?.nombre}</span>
-            </Typography>
-            
-            <TableContainer component={Paper}>
-              <Table className={classes.table} size="small" aria-label="a dense table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }}>Proyecto</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Proceso evaluado</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-
-                  <TableRow key={'1w'}>
-                    <TableCell component="th" scope="row">
-                      {proyecto.nombre}
-                    </TableCell>
-                    <TableCell align="center">{proceso?.proceso.nombre}</TableCell>
-                    <TableCell align="center">{resultados}%</TableCell>
-                    <TableCell align="center">{intervalo.nombre}</TableCell>
-
-                  </TableRow>
-
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
-              <h3 style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Mejoras a aplicar sobre:</h3>
-
-            </Typography>
-            {promedios.map((promedio, index) => (
-              <Typography key={index} gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
-                <li style={{ fontSize: 18, fontWeight: 400, marginRight: '1rem' }}>{promedio.atributo.nombre}</li>
-
-              </Typography>
-            ))}
-
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Aceptar
+            >
+              Cancelar
             </Button>
-            
-          </DialogActions>
-        </Dialog>
-      </div>
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              className={classes.buttonColor}
+              onClick={validar}
+
+            >
+              Guardar
+            </Button>
+          </div>
+        </Grid>
+
+      )}
+
+      <Dialog
+        fullWidth={"md"}
+        maxWidth={"md"}
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          Análisis de Resultados
+        </DialogTitle>
+        <DialogContent dividers>
+          <TableContainer component={Paper}>
+            <Table className={classes.table} size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }}>Proyecto</TableCell>
+                  <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Proceso evaluado</TableCell>
+                  <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
+                  <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                <TableRow key={'1w'}>
+                  <TableCell component="th" scope="row">
+                    {proyecto ? proyecto.nombre : 'No definido'}
+                  </TableCell>
+                  <TableCell align="center">{proceso?.proceso.nombre}</TableCell>
+                  <TableCell align="center" style={{ fontWeight: 'bold' }}>{resultados}%</TableCell>
+                  <TableCell align="center">{intervalo ? intervalo.nombre : 'No definido'}</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <br /><br />
+          <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
+            <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Calificación total del proceso:</li>
+            <span>{resultados} %</span>
+          </Typography>
+          <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
+            <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Nivel de calidad del proceso:</li>
+            <span>{intervalo ? intervalo.nombre : 'No definido'}</span>
+          </Typography>
+          <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
+            <h3 style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Se recomienda aplicar mejoras sobre los siguientes (AP):</h3>
+          </Typography>
+          {promedios.map((promedio, index) => (
+            <Typography key={index} gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
+              <li style={{ fontSize: 18, fontWeight: 400, marginRight: '1rem' }}>{promedio.atributo.nombre}</li>
+            </Typography>
+          ))}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

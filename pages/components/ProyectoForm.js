@@ -200,7 +200,7 @@ export default function ProyectoForm(props) {
               </Grid> */}
               <Grid item xs={12} sm={12} lg={6}>
                 <div style={{ float: 'left' }}>
-                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/proyecto">
+                  <Button variant="contained" style={{ marginRight: '10px', backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }}  size="large" className={classes.margin} component={Link} href="/proyecto">
                     Cancelar
                   </Button>
                   <Button type="submit" variant="contained" color="primary" size="large" className={classes.buttonColor}>

@@ -185,7 +185,7 @@ export default function NivelesForm(props) {
               </Grid>
               <Grid item xs={12} sm={12} lg={12}>
                 <div style={{ float: 'left' }}>
-                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/niveles">
+                  <Button variant="contained"  size="large" className={classes.margin}  style={{ marginRight: '10px', backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }} component={Link} href="/niveles">
                     Cancelar
                   </Button>
                   <Button type="submit" variant="contained" color="primary" size="large" className={classes.buttonColor}>

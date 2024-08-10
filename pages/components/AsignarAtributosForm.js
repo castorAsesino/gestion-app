@@ -377,7 +377,7 @@ export default function AsignarAtributosForm(props) {
 
         <Grid item xs={12} sm={12} lg={12} style={{ marginTop: 10, marginBottom: 20 }}>
             <div style={{ float: 'right' }}>
-              <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/proceso">
+              <Button variant="contained"  size="large" className={classes.margin}  style={{ marginRight: '10px', backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }} component={Link} href="/proceso">
                 Cancelar
               </Button>
               <Button variant="contained" color="primary" size="large" className={classes.margin} onClick={onSubmit}>

@@ -20,3 +20,7 @@ body {
   color: white;
   text-decoration: none;
 }
+.MuiButton-containedSecondary {
+  color: #fff;
+  background-color: rgb(135 138 157) !important;
+}

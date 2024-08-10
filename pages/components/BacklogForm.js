@@ -171,7 +171,7 @@ export default function BacklogForm(props) {
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
                 <div style={{ float: 'right' }}>
-                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/backlog">
+                  <Button variant="contained"   size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/backlog">
                     Cancelar
                   </Button>
                   <Button type="submit" variant="contained" color="primary" size="large" className={classes.buttonColor}>

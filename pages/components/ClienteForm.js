@@ -255,10 +255,10 @@ export default function ClienteForm(props) {
                 <div style={{ float: 'right' }}>
                   <Button
                     variant="contained"
-                    color="secondary"
+                    style={{ marginRight: '10px', backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }}
                     size="large"
                     className={classes.margin}
-                    style={{ marginRight: '10px' }}
+                    
                     component={Link}
                     href="/cliente"
                   >

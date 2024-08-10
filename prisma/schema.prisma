@@ -44,6 +44,7 @@ model Atributo_De_Proceso {
   valor          String
   fecha_creacion DateTime          @default(now())
   atributos      ProcesoAtributo[]
+  matrizEvaluacion MatrizEvaluacionAtributo[] // Relación inversa
 }
 
 model Evaluacion {
@@ -85,6 +86,7 @@ model Matriz_Evaluacion {
   Niveles        Niveles  @relation(fields: [nivelId], references: [id])
   Proceso        Proceso  @relation(fields: [procesoId], references: [id])
   Proyecto       Proyecto @relation(fields: [proyectoId], references: [id])
+  atributos      MatrizEvaluacionAtributo[] // Relación inversa
 }
 
 model ProcesoAtributo {
@@ -93,4 +95,15 @@ model ProcesoAtributo {
   atributoProcesoId Int
   atributo          Atributo_De_Proceso @relation(fields: [atributoProcesoId], references: [id])
   proceso           Proceso             @relation(fields: [procesoId], references: [id])
+}
+
+// Modelo intermedio para la relación muchos a muchos
+model MatrizEvaluacionAtributo {
+  id                   Int               @id @default(autoincrement())
+  matrizEvaluacionId   Int
+  atributoDeProcesoId  Int
+  Matriz_Evaluacion    Matriz_Evaluacion @relation(fields: [matrizEvaluacionId], references: [id], onDelete: Cascade)
+  Atributo_De_Proceso  Atributo_De_Proceso @relation(fields: [atributoDeProcesoId], references: [id], onDelete: Cascade)
+
+  @@unique([matrizEvaluacionId, atributoDeProcesoId]) // Hace que la combinación de los dos campos sea única
 }

@@ -361,7 +361,7 @@ totalPonderacion
       </TableContainer>
       <Grid item xs={12} sm={12} lg={12} style={{ marginTop: 30 }}>
         <div style={{ float: 'right' }}>
-          <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px',marginTop: '8px' }} component={Link} href="/evaluacion-calidad">
+          <Button variant="contained" size="large" className={classes.margin}  style={{ marginRight: '10px', backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }} component={Link} href="/evaluacion-calidad">
             Cancelar
           </Button>
           <Button variant="contained" color="primary" size="large" className={classes.buttonColor} onClick={validar}>

@@ -27,7 +27,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteModal from '../components/layout/DeleteModal';
 import CheckIcon from '@material-ui/icons/Check';
 import { withStyles } from '@material-ui/core/styles';
-
+import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -234,9 +234,9 @@ export default function EvauacionCalidad(props) {
                 </TableCell>
                 <TableCell className={classes.tableCell} align="center">
 
-                  <Button variant="contained" color="secondary" href={'/evaluacion-calidad/proceso/' + row.id}>
+                  <Button variant="contained" href={'/evaluacion-calidad/proceso/' + row.id} style={{backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }}>
 
-                    Evaluar
+                    {'Evaluar  '} <CheckCircleOutlineIcon style={{ fontSize: 20, paddingLeft:5 }}  />
                   </Button>
 
                 </TableCell>

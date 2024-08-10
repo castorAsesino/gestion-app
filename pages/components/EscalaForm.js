@@ -100,7 +100,7 @@ export default function EscalaForm(props) {
     fetch("/api/escala/" + id)
       .then((response) => response.json())
       .then((data) => {
-      
+
         setValue('nombre', data.nombre);
         setValue('descripcion', data.descripcion);
         setValue('valor', data.valor);
@@ -118,7 +118,7 @@ export default function EscalaForm(props) {
   const onSubmit = async (data) => {
     try {
       data.valor = parseInt(data.valor);
-    
+
       if (isAddMode) {
         await createEscalas(data);
       } else {
@@ -180,12 +180,12 @@ export default function EscalaForm(props) {
                   }}
                 />
               </Grid>
-              
+
 
 
               <Grid item xs={12} sm={12} lg={12}>
                 <div style={{ float: 'left' }}>
-                  <Button variant="contained" color="secondary" size="large" className={classes.margin} style={{ marginRight: '10px' }} component={Link} href="/escalas">
+                  <Button variant="contained"  size="large" className={classes.margin}  style={{ marginRight: '10px', backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }} component={Link} href="/escalas">
                     Cancelar
                   </Button>
                   <Button type="submit" variant="contained" color="primary" size="large" className={classes.buttonColor}>

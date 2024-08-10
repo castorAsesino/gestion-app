@@ -28,7 +28,7 @@ import DeleteModal from './layout/DeleteModal';
 import CheckIcon from '@material-ui/icons/Check';
 import { useRouter } from "next/router";
 import { withStyles } from '@material-ui/core/styles';
-
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -243,9 +243,9 @@ export default function EvaluarProcesoForm(props) {
                 </TableCell>
                 <TableCell className={classes.tableCellActions} align="center">
 
-                  <Button variant="contained" color="secondary" href={"/evaluacion-calidad/atributo/" + row.procesoId}>
-
-                    Elegir Proceso
+                  <Button variant="contained"  style={{ backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }} href={"/evaluacion-calidad/atributo/" + row.procesoId}>
+                  Elegir Proceso <ArrowForwardIcon style={{ fontSize: 20 }} />
+                   
                   </Button>
 
                 </TableCell>
