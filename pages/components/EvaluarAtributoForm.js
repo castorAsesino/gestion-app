@@ -146,6 +146,7 @@ export default function EvaluarAtributoForm(props) {
   const [resultados, setResultados] = React.useState(null);
   const [intervalo, setIntervalo] = React.useState(null);
   const [promedios, setPromedios] = React.useState([]);
+  const [isGuardarEnabled, setIsGuardarEnabled] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -208,7 +209,14 @@ export default function EvaluarAtributoForm(props) {
       )
     );
     calcularTotal(id);
+   
   };
+  
+  useEffect(() => {
+    const totalPonderacion = rows.reduce((sum, row) => sum + (row.calificacion || 0), 0);
+    setIsGuardarEnabled(totalPonderacion === 100);
+  }, [rows]);
+
 
   const handleChange = (event, id) => {
     const { value } = event.target;
@@ -351,7 +359,7 @@ export default function EvaluarAtributoForm(props) {
                       onChange={(e) => handlePonderacionChange(e, row.id)}
                     >
                       {calificaciones.map((nivel) => (
-                        <MenuItem key={nivel.id} value={nivel.id}>
+                        <MenuItem key={nivel.id} value={nivel.valor}>
                           {nivel.descripcion}
                         </MenuItem>
                       ))}
@@ -406,6 +414,7 @@ export default function EvaluarAtributoForm(props) {
               size="large"
               className={classes.buttonColor}
               onClick={validar}
+              disabled={!isGuardarEnabled} 
 
             >
               Guardar

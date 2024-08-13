@@ -244,7 +244,7 @@ export default function EvaluarProcesoForm(props) {
                 <TableCell className={classes.tableCellActions} align="center">
 
                   <Button variant="contained"  style={{ backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }} href={"/evaluacion-calidad/atributo/" + row.procesoId}>
-                  Elegir Proceso <ArrowForwardIcon style={{ fontSize: 20 }} />
+                  Evaluar <ArrowForwardIcon style={{ fontSize: 20 }} />
                    
                   </Button>
 

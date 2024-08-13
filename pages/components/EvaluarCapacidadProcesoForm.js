@@ -243,7 +243,7 @@ export default function EvaluarCapacidadProcesoForm(props) {
                 <TableCell className={classes.tableCell} align="center">
 
                   <Button variant="contained"  style={{ marginRight: '10px', backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }} href={"/evaluacion-capacidad/atributo/" + row.procesoId}>
-                  Elegir Proceso <ArrowForwardIcon style={{ fontSize: 20 }} />
+                  Evaluar <ArrowForwardIcon style={{ fontSize: 20 }} />
                    
                   </Button>
 
