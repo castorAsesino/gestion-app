@@ -44,7 +44,7 @@ import Slide from '@material-ui/core/Slide';
 import { json } from 'react-router-dom';
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#4576e0',
+    backgroundColor: '#146677f5',
     color: '#fff',
   },
   body: {
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     textAlign: 'right',
-    backgroundColor: '#4576e0'
+    backgroundColor: '#146677f5'
   },
   headerStyle: {
     fontWeight: 900,
@@ -110,11 +110,6 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #ddd',
     textAlign: 'center',
   },
-  main: {
-    background: '#fff',
-    borderRadius: '5px',
-    padding: '3rem',
-  }
 }));
 
 
@@ -153,6 +148,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
   const [resultados, setResultados] = React.useState(false);
   const [intervalo, setIntervalo] = React.useState(false);
   const [promedios, setPromedios] = React.useState([]);
+  const [mediana, setMediana] = React.useState([]);
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -182,11 +178,10 @@ export default function EvaluarCapacidadAtributoForm(props) {
     setCalificaciones(response.data);
   };
   const getListNivel = async () => {
-    const response = await axios.get('/api/nivel');
+    const response = await axios.get('/api/nivel-capacidad');
     setNiveles(response.data);
   };
   const getListData = async () => {
-    debugger
     if (idProyecto !== undefined && idProyecto !== null) {
       const response = await axios.get("/api/proceso/asignar/" + idProyecto);
       const newList = response.data.map(item => ({ ...item, calificacion: 0, ponderacion: "", totalPonderacion: 0 }));
@@ -217,10 +212,9 @@ export default function EvaluarCapacidadAtributoForm(props) {
       )
     );
     const updatedRows = rows.map(row => {
-      debugger
       if (row.id === id) {
         const selectedcalificacion = calificaciones.find(calificacion => calificacion.id === value);
-        return { ...row, calificacion: value, nivel: selectedcalificacion ? selectedcalificacion.nombre : '' };
+        return { ...row, calificacion: value, nivel: selectedcalificacion ? selectedcalificacion.nombre : '', valor: selectedcalificacion ? selectedcalificacion.valor : '' };
       }
       return row;
     });
@@ -239,76 +233,49 @@ export default function EvaluarCapacidadAtributoForm(props) {
     console.log(rows)
   };
   const validar = () => {
-    debugger
-    let totalPonderacionTotal = 0;
+    let totalSumaValores = 0;
     const valorMasAlto = calificaciones.reduce((max, valor) => max.valor > valor.valor ? max : valor);
 
-    console.log(valorMasAlto);
     rows.forEach(element => {
-      totalPonderacionTotal += element.calificacion;
+      totalSumaValores += element.valor;
     });
 
+    console.log('totalPonderacionTotal ', totalSumaValores);
+    
+    let prom = 0;
 
-    if (totalPonderacionTotal > 100) {
-      alert('Ponderación supera el limite permitido.')
+    const valores = rows.map(row => row.valor).sort((a, b) => a - b);
+    const mitad = Math.floor(valores.length / 2);
+    const mediana = 0;
+    if (valores.length % 2 === 0) {
+      mediana = (valores[mitad - 1] + valores[mitad]) / 2;
     } else {
-      let calificacionPonderada = 0;
-      let totalPonderacionTotal = 0;
-      let prom = 0;
-      rows.forEach(element => {
-        totalPonderacionTotal += element.calificacion;
-        calificacionPonderada += element.totalPonderacion;
-
-      });
-
-      let resultadoDiv = calificacionPonderada / totalPonderacionTotal;
-      let resultado = (resultadoDiv / valorMasAlto.valor) * 100;
-      resultado = resultado.toFixed(2);
-      console.log(resultado);
-      setResultados(resultado);
-      let intervalo = niveles.find(intervalo => resultado >= intervalo.valorMin && resultado <= intervalo.valorMax);
-      // Calcular el promedio
-      let promedioPonderacionTotal = (rows.reduce((acc, curr) => acc + curr.totalPonderacion, 0)) / rows.length;
-
-
-      // Encontrar los elementos cuyo total es mayor o igual al promedio
-      prom = rows.filter(item => item.totalPonderacion <= promedioPonderacionTotal);
-      setPromedios(prom)
-      setIntervalo(intervalo);
-      if (intervalo) {
-        console.log(`El resultado está en el intervalo: ${intervalo.nombre}`);
-      } else {
-        console.log("El resultado no está en ningún intervalo definido");
-      }
-      handleClickOpen();
+      mediana = valores[mitad];
     }
+
+    setMediana(mediana);
+
+
+    prom = Math.round(totalSumaValores / rows.length);
+    let resultado = prom;
+    setResultados(resultado);
+    let intervalo = niveles.find(intervalo => resultado == intervalo.valor);
+
+    // // Encontrar los elementos cuyo total es mayor o igual al promedio
+    // prom = rows.filter(item => item.totalPonderacion <= promedioPonderacionTotal);
+    // setPromedios(prom)
+    setIntervalo(intervalo);
+    if (intervalo) {
+      console.log(`El resultado está en el intervalo: ${intervalo.nombre}`);
+    } else {
+      console.log("El resultado no está en ningún intervalo definido");
+    }
+    handleClickOpen();
+    
     console.log(proceso)
-//todooooo
-    /* atributoProcesoId
-: 
-21
-calificacion
-: 
-0
-id
-: 
-22
-ponderacion
-: 
-""
-proceso
-: 
-{id: 5, nombre: 'Revisión del Sprint (Scrum)', descripcion: 'Evaluación del trabajo realizado durante el sprint.', fecha_creacion: '2024-08-07T03:05:07.786Z'}
-procesoId
-: 
-5
-totalPonderacion
-: 
-0
- */
   };
   return (
-    <Container component="main" className={classes.main}>
+    <Container component="main">
       <Grid item xs={12}>
         <Typography component="h1" variant="h5" className={classes.center}>
           Matriz de Evaluación
@@ -327,6 +294,7 @@ totalPonderacion
               <StyledTableCell className={classes.headerStyle} align="center">Descripción</StyledTableCell>
               <StyledTableCell className={classes.headerStyle} align="center">Calificación de Logro</StyledTableCell>
               <StyledTableCell align="center">Nivel De Logro</StyledTableCell>
+              <StyledTableCell align="center">Valor</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -354,6 +322,9 @@ totalPonderacion
                 </StyledTableCell>
                 <StyledTableCell  className={classes.tableCell} align="center">
                   {row.nivel}
+                </StyledTableCell>
+                <StyledTableCell  className={classes.tableCell} align="center">
+                  {row.valor}
                 </StyledTableCell>
               </StyledTableRow>
             )): <TableRow>
@@ -395,9 +366,12 @@ totalPonderacion
             Análisis de Resultados
           </DialogTitle>
           <DialogContent dividers>
+            <Typography variant="h6" gutterBottom>
+              Agregación Unidimensional Vertical
+            </Typography>
             <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
               <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Calificación total del proceso:</li>
-              <span>{resultados} %</span>
+              <span>{resultados}</span>
             </Typography>
             <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
               <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Nivel de calidad del proceso:</li>
@@ -408,10 +382,10 @@ totalPonderacion
               <Table className={classes.table} size="small" aria-label="a dense table">
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }}>Proyecto</TableCell>
-                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Proceso evaluado</TableCell>
-                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
-                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }}>Proyecto</TableCell>
+                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Proceso evaluado</TableCell>
+                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -421,7 +395,45 @@ totalPonderacion
                       {proyecto.nombre}
                     </TableCell>
                     <TableCell  className={classes.tableCell} align="center">{proceso?.proceso.nombre}</TableCell>
-                    <TableCell  className={classes.tableCell} align="center">{resultados}%</TableCell>
+                    <TableCell  className={classes.tableCell} align="center">{resultados}</TableCell>
+                    <TableCell  className={classes.tableCell} align="center">{intervalo.nombre}</TableCell>
+
+                  </TableRow>
+
+                </TableBody>
+              </Table>
+            </TableContainer>
+
+            <Typography variant="h6" gutterBottom style={{ paddingTop: '20px'}} >
+              Agregación Unidimensional Utilizando La Mediana
+            </Typography>
+            <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
+              <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Calificación total del proceso:</li>
+              <span>{mediana}</span>
+            </Typography>
+            <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
+              <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Nivel de calidad del proceso:</li>
+              <span>{intervalo.nombre}</span>
+            </Typography>
+
+            <TableContainer component={Paper}>
+              <Table className={classes.table} size="small" aria-label="a dense table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }}>Proyecto</TableCell>
+                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Proceso evaluado</TableCell>
+                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+
+                  <TableRow key={'1w'}>
+                    <TableCell   className={classes.tableCell} component="th" scope="row">
+                      {proyecto.nombre}
+                    </TableCell>
+                    <TableCell  className={classes.tableCell} align="center">{proceso?.proceso.nombre}</TableCell>
+                    <TableCell  className={classes.tableCell} align="center">{mediana}</TableCell>
                     <TableCell  className={classes.tableCell} align="center">{intervalo.nombre}</TableCell>
 
                   </TableRow>

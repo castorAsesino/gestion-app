@@ -31,7 +31,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#4576e0',
+    backgroundColor: '#146677f5',
     color: '#fff',
   },
   body: {
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     textAlign: 'right',
-    backgroundColor: '#4576e0'
+    backgroundColor: '#146677f5'
   },
   headerStyle: {
     fontWeight: 900,
@@ -97,11 +97,6 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #ddd',
     textAlign: 'center',
   },
-  main: {
-    background: '#fff',
-    borderRadius: '5px',
-    padding: '3rem',
-  }
 }));
 
 function TablePaginationActions(props) {
@@ -209,11 +204,11 @@ export default function EvaluarCapacidadProcesoForm(props) {
     }
   }
   return (
-    <Container component="main" className={classes.main}>
+    <Container component="main">
       <Grid item xs={12}>
       <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
 
-          Procesos
+          Lista de Procesos
         </Typography>
       </Grid>
       <Grid container spacing={3}>
