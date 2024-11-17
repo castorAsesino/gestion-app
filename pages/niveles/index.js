@@ -30,7 +30,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#146677f5',
+    backgroundColor: '#4576e0',
     color: '#fff',
   },
   body: {
@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     textAlign: 'right',
-    backgroundColor: '#146677f5'
+    backgroundColor: '#4576e0'
   },
   headerStyle: {
     fontWeight: 900,
@@ -96,6 +96,11 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #ddd',
     textAlign: 'center',
   },
+  main: {
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '3rem',
+  }
 }));
 
 
@@ -203,10 +208,11 @@ export default function Niveles(props) {
 
   return (
     <>
-      <Container component="main" >
+      <Container component="main" className={classes.main}>
         <Grid item xs={12}>
-          <Typography component="h1" variant="h5" className={classes.center}>
-            Lista De Niveles
+        <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' , margin:' 15px',
+    fontWeight: 'bold',    textAlign: 'center',    fontFamily: 'Roboto',    color: '#626262',    fontSize: '2.5rem'}}>
+            Niveles
           </Typography>
         </Grid>
         <Grid container spacing={3}>

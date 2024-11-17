@@ -31,7 +31,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#146677f5',
+    backgroundColor: '#4576e0',
     color: '#fff',
   },
   body: {
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     textAlign: 'right',
-    backgroundColor: '#146677f5'
+    backgroundColor: '#4576e0'
   },
   headerStyle: {
     fontWeight: 900,
@@ -97,6 +97,11 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #ddd',
     textAlign: 'center',
   },
+  main: {
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '3rem',
+  }
 }));
 
 function TablePaginationActions(props) {
@@ -197,10 +202,11 @@ export default function Proceso(props) {
   };
 
   return (
-    <Container component="main">
+    <Container component="main" className={classes.main}>
       
-      <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
-      Lista De Procesos
+      <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' , margin:' 15px',
+    fontWeight: 'bold',    textAlign: 'center',    fontFamily: 'Roboto',    color: '#626262',    fontSize: '2.5rem'}}>
+      Procesos
         </Typography>
         <Grid item xs={12}  style={{ marginBottom: 50 }}>
           <Button
@@ -249,7 +255,7 @@ export default function Proceso(props) {
                     title={'Asignar Atributo de Proceso'}
                     component={Link}
                     href={'/proceso/asignar/' + row.id}
-                    style={{ color: '#146677f5' }}
+                    style={{ color: '#4576e0' }}
                   >
                     <CheckIcon />
                   </IconButton>

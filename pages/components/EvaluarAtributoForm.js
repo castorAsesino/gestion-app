@@ -47,7 +47,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#146677f5',
+    backgroundColor: '#4576e0',
     color: '#fff',
   },
   body: {
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     textAlign: 'right',
-    backgroundColor: '#146677f5'
+    backgroundColor: '#4576e0'
   },
   headerStyle: {
     fontWeight: 900,
@@ -113,6 +113,11 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #ddd',
     textAlign: 'center',
   },
+  main: {
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '4rem',
+  }
 }));
 
 const StyledTableRow = withStyles((theme) => ({
@@ -324,10 +329,10 @@ export default function EvaluarAtributoForm(props) {
 
 
   return (
-    <Container component="main">
+    <Container component="main"  className={classes.main}>
       <Grid item xs={12}>
-        <Typography component="h1" variant="h5" className={classes.center}>
-          Matriz de Evaluación
+      <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' , margin:' 15px',
+    fontWeight: 'bold',    textAlign: 'center',    fontFamily: 'Roboto',    fontSize: '2.5rem'}}>          Matriz de Evaluación
         </Typography>
       </Grid>
       <Grid container spacing={3}>
@@ -442,10 +447,10 @@ export default function EvaluarAtributoForm(props) {
             <Table className={classes.table} size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
-                  <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }}>Proyecto</TableCell>
-                  <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Proceso evaluado</TableCell>
-                  <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
-                  <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
+                  <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }}>Proyecto</TableCell>
+                  <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Proceso evaluado</TableCell>
+                  <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
+                  <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

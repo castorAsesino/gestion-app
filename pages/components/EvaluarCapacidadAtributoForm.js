@@ -44,7 +44,7 @@ import Slide from '@material-ui/core/Slide';
 import { json } from 'react-router-dom';
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#146677f5',
+    backgroundColor: '#4576e0',
     color: '#fff',
   },
   body: {
@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     textAlign: 'right',
-    backgroundColor: '#146677f5'
+    backgroundColor: '#4576e0'
   },
   headerStyle: {
     fontWeight: 900,
@@ -110,6 +110,11 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #ddd',
     textAlign: 'center',
   },
+  main: {
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '3rem',
+  }
 }));
 
 
@@ -303,7 +308,7 @@ totalPonderacion
  */
   };
   return (
-    <Container component="main">
+    <Container component="main" className={classes.main}>
       <Grid item xs={12}>
         <Typography component="h1" variant="h5" className={classes.center}>
           Matriz de Evaluación
@@ -403,10 +408,10 @@ totalPonderacion
               <Table className={classes.table} size="small" aria-label="a dense table">
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }}>Proyecto</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Proceso evaluado</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }}>Proyecto</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Proceso evaluado</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

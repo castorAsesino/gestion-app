@@ -32,7 +32,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#146677f5',
+    backgroundColor: '#4576e0',
     color: '#fff',
   },
   body: {
@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     textAlign: 'right',
-    backgroundColor: '#146677f5'
+    backgroundColor: '#4576e0'
   },
   headerStyle: {
     fontWeight: 900,
@@ -98,6 +98,11 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #ddd',
     textAlign: 'center',
   },
+  main: {
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '3rem',
+  }
 }));
 
 
@@ -206,10 +211,10 @@ export default function EvaluarProcesoForm(props) {
     }
   }
   return (
-    <Container component="main">
+    <Container component="main" className={classes.main}>
       <Grid item xs={12}>
       <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
-      Lista de Procesos
+       Seleccionar Proceso
         </Typography>
       </Grid>
       <Grid container spacing={3}>

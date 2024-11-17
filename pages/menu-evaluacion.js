@@ -15,13 +15,13 @@ export default function MenuEvaluacion() {
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.grid} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <div className="custom-card" style={{  margin: '8px' }}>
+          <div className="custom-card" style={{  margin: '50px' }}>
             <Link href="/evaluacion-calidad">
               <a className={styles.customLink}>
-                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 50 }}>
                   <NotesIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h6">Evaluar Calidad</Typography>
+                    <Typography variant="h6">Evaluar Calidad de Procesos</Typography>
                   </CardContent>
                 </Card>
               </a>
@@ -30,10 +30,10 @@ export default function MenuEvaluacion() {
           <div className="custom-card" style={{  margin: '8px' }}>
             <Link href="/evaluacion-capacidad">
               <a className={styles.customLink}>
-                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 50 }}>
                   <ListAltIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h6">Evaluar Capacidad</Typography>
+                    <Typography variant="h6">Evaluar Capacidad de Procesos</Typography>
                   </CardContent>
                 </Card>
               </a>
@@ -43,7 +43,7 @@ export default function MenuEvaluacion() {
 {/*           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/user-storie">
               <a>
-                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <AssignmentIndIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">....</Typography>
@@ -56,7 +56,7 @@ export default function MenuEvaluacion() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/review">
               <a>
-                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <TrendingUpIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Review</Typography>

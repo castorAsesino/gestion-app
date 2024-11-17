@@ -18,10 +18,10 @@ export default function Home() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/proyecto">
               <a className={styles.customLink}>
-                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <WebIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h5">Proyectos</Typography>
+                    <Typography variant="h5">Administración</Typography>
                   </CardContent>
                 </Card>
               </a>
@@ -29,12 +29,12 @@ export default function Home() {
           </div>
 
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/proceso">
+            <Link href="/menu-evaluacion">
               <a className={styles.customLink}>
-                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <NotesIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h5">Procesos</Typography>
+                    <Typography variant="h5">Evaluación</Typography>
                   </CardContent>
                 </Card>
               </a>
@@ -43,23 +43,10 @@ export default function Home() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/menu-evaluacion">
               <a className={styles.customLink}>
-                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <BuildIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h5">Evaluación</Typography>
-                  </CardContent>
-                </Card>
-              </a>
-            </Link>
-          </div>
-
-          <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/atributos">
-              <a className={styles.customLink}>
-                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
-                  <MenuIcon style={{ fontSize: 100 }} />
-                  <CardContent>
-                    <Typography variant="h5">Atributo de Proceso</Typography>
+                    <Typography variant="h5">Configuración</Typography>
                   </CardContent>
                 </Card>
               </a>
@@ -69,7 +56,7 @@ export default function Home() {
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
             <Link href="/reportes">
               <a className={styles.customLink}>
-                <Card style={{ background: '#146677f5', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
+                <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <BarChartIcon style={{ fontSize: 100 }} />
                   <CardContent>
                     <Typography variant="h5">Reportes</Typography>

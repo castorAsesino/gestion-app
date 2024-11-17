@@ -133,3 +133,12 @@
   color: white !important;
   text-decoration: none !important;
 }
+
+
+
+
+#main{
+  background: #fff;
+  border-radius: 5px;
+  padding: 3rem;
+}

@@ -31,7 +31,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#146677f5',
+    backgroundColor: '#4576e0',
     color: '#fff',
   },
   body: {
@@ -71,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
   addButton: {
     textAlign: 'right',
-    backgroundColor: '#146677f5'
+    backgroundColor: '#4576e0'
   },
   headerStyle: {
     fontWeight: 900,
@@ -261,7 +261,7 @@ export default function Proyecto(props) {
                     title={'Asociar Procesos'}
                     component={Link}
                     href={'/proyecto/asociar/' + row.id}
-                    style={{ color: '#146677f5' }}
+                    style={{ color: '#4576e0' }}
                   >
                     <CheckIcon />
                   </IconButton>

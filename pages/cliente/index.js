@@ -29,7 +29,7 @@ import { withStyles } from '@material-ui/core/styles';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#146677f5',
+    backgroundColor: '#4576e0',
     color: '#fff',
   },
   body: {
@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
   addButton: {
     margin: theme.spacing(2, 0),
     textAlign: 'right',
-    backgroundColor: '#146677f5'
+    backgroundColor: '#4576e0'
   },
   headerStyle: {
     color: '#556cd6',

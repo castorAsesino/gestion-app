@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonColor: {
     margin: theme.spacing(3, 0, 2),
-    backgroundColor: '#146677f5',
+    backgroundColor: '#4576e0',
   },
   root: {
     marginTop: 20,
@@ -197,7 +197,6 @@ const prepareChartData = (data) => {
     return acc;
   }, {});
 
-  //const pieColors = generateColors(Object.keys(pieData).length);
   const pieColors = Object.keys(pieData).map(getLevelColor);
   const pieChartData = {
     labels: Object.keys(pieData),
@@ -212,16 +211,6 @@ const prepareChartData = (data) => {
     ],
   };
 
-  /*   const barData = data.reduce((acc, curr) => {
-      const proceso = curr.atributos.nombre;
-      if (acc[proceso]) {
-        acc[proceso].push(curr.calificacion);
-      } else {
-        acc[proceso] = [curr.calificacion];
-      }
-      return acc;
-    }, {}); */
-  debugger
   const barData = data.reduce((acc, curr) => {
     curr.atributos.forEach((atributo) => {
       const proceso = atributo.Atributo_De_Proceso.nombre;
@@ -234,9 +223,8 @@ const prepareChartData = (data) => {
     return acc;
   }, {});
   const barColors = generateColors(Object.keys(barData).length);
-  debugger
-  const barChartData = {
 
+  const barChartData = {
     labels: Object.keys(barData),
     datasets: Object.keys(barData).map((proceso, index) => ({
       label: proceso,
@@ -247,7 +235,30 @@ const prepareChartData = (data) => {
     })),
   };
 
-  return { pieChartData, barChartData };
+  const barChartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true,
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          callback: function (value) {
+            const label = this.getLabelForValue(value);
+            return null;
+          },
+        },
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+  
+  
+  return { pieChartData, barChartData, barChartOptions }; // Include barChartOptions here
 };
 
 export default function Reportes(props) {
@@ -263,7 +274,7 @@ export default function Reportes(props) {
   const [resultado, setResultado] = useState([]);
   const [pieChartData, setPieChartData] = useState({ datasets: [] });
   const [barChartData, setBarChartData] = useState({ datasets: [] });
-
+  const [barChartOptions, setBarChartOptions] = useState({});
   const { register, handleSubmit, formState: { errors }, setValue } = useForm({
     defaultValues: {
       proyectoId: '',
@@ -338,6 +349,7 @@ export default function Reportes(props) {
     console.log(chartData)
     setPieChartData(chartData.pieChartData);
     setBarChartData(chartData.barChartData);
+    setBarChartOptions(chartData.barChartOptions);
   };
   const getBadgeClass = (nivel) => {
     switch (nivel) {
@@ -479,11 +491,13 @@ export default function Reportes(props) {
                         {row.Niveles.nombre}
                       </span></TableCell>
                       <TableCell align="center" style={{ fontWeight: 'bold' }}>{row.calificacion}%</TableCell>
-                      <TableCell align="center">
+                      <TableCell align="left">
                         <div>
-                          {row.atributos?.map((atributo, index) => (
-                            <span key={index}>{atributo.Atributo_De_Proceso.nombre}</span>
+                         <ul>
+                         {row.atributos?.map((atributo, index) => (
+                            <li key={index}>{atributo.Atributo_De_Proceso.nombre}</li>
                           ))}
+                         </ul>
                         </div>
                       </TableCell>
                     </TableRow>
@@ -523,7 +537,13 @@ export default function Reportes(props) {
             </div>
           </Grid>
           <Grid item xs={6}>
-            {barChartData.datasets.length > 0 && <Bar data={barChartData} />}
+            {barChartData.datasets.length > 0 && <Bar
+  data={barChartData}
+  options={barChartOptions}
+  width={800} // Adjust as necessary
+  height={400} // Adjust as necessary
+/>
+}
           </Grid>
         </Grid>
 
