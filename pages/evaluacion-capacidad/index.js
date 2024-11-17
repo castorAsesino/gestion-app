@@ -32,7 +32,7 @@ import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#146677f5',
+    backgroundColor: '#4576e0',
     color: '#fff',
   },
   body: {
@@ -98,6 +98,11 @@ const useStyles = makeStyles((theme) => ({
     border: '1px solid #ddd',
     textAlign: 'center',
   },
+  main: {
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '3rem',
+  }
 }));
 
 
@@ -198,10 +203,10 @@ export default function EvauacionCapacidad(props) {
   };
 
   return (
-    <Container component="main">
+    <Container component="main" className={classes.main}>
       <Grid item xs={12}>
       <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
-      Lista de Proyectos
+      Seleccionar Proyecto
         </Typography>
       </Grid>
       <Grid container spacing={3}>
@@ -237,7 +242,7 @@ export default function EvauacionCapacidad(props) {
 
                   <Button variant="contained" style={{backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }} href={'/evaluacion-capacidad/proceso/' + row.id}>
 
-                  {'Evaluar  '} <CheckCircleOutlineIcon style={{ fontSize: 20, paddingLeft:5 }} />
+                  {'Elegir  '} <CheckCircleOutlineIcon style={{ fontSize: 20, paddingLeft:5 }} />
                   </Button>
 
                 </TableCell>
