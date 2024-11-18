@@ -371,7 +371,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
             Análisis de Resultados
           </DialogTitle>
           <DialogContent dividers>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom style={{justifyContent: 'center',  alignItems: 'center'}}>
               Agregación Unidimensional Vertical
             </Typography>
             <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
@@ -387,10 +387,10 @@ export default function EvaluarCapacidadAtributoForm(props) {
               <Table className={classes.table} size="small" aria-label="a dense table">
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }}>Proyecto</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Proceso evaluado</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }}>Proyecto</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Proceso evaluado</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Nivel de Capacidad del proceso</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -425,10 +425,10 @@ export default function EvaluarCapacidadAtributoForm(props) {
               <Table className={classes.table} size="small" aria-label="a dense table">
                 <TableHead>
                   <TableRow>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }}>Proyecto</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Proceso evaluado</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
-                    <TableCell style={{ backgroundColor: '#146677f5', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }}>Proyecto</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Proceso evaluado</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>

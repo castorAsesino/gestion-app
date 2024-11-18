@@ -76,19 +76,6 @@ model Niveles {
   Matriz_Evaluacion Matriz_Evaluacion[]
 }
 
-model Matriz_Evaluacion {
-  id             Int      @id @default(autoincrement())
-  fecha_creacion DateTime @default(now())
-  calificacion   Float
-  nivelId        Int
-  procesoId      Int
-  proyectoId     Int
-  Niveles        Niveles  @relation(fields: [nivelId], references: [id])
-  Proceso        Proceso  @relation(fields: [procesoId], references: [id])
-  Proyecto       Proyecto @relation(fields: [proyectoId], references: [id])
-  atributos      MatrizEvaluacionAtributo[] // Relación inversa
-}
-
 model ProcesoAtributo {
   id                Int                 @id @default(autoincrement())
   procesoId         Int
@@ -106,4 +93,29 @@ model MatrizEvaluacionAtributo {
   Atributo_De_Proceso  Atributo_De_Proceso @relation(fields: [atributoDeProcesoId], references: [id], onDelete: Cascade)
 
   @@unique([matrizEvaluacionId, atributoDeProcesoId]) // Hace que la combinación de los dos campos sea única
+}
+
+
+model Niveles_Capacidad {
+  id            	Int             	@id @default(autoincrement())
+  nombre        	String
+  valor      	Int
+  fecha_creacion	DateTime        	@default(now())
+  Matriz_Evaluacion Matriz_Evaluacion[]
+}
+
+
+model Matriz_Evaluacion {
+  id         	Int  	@id @default(autoincrement())
+  fecha_creacion DateTime @default(now())
+  calificacion   Float
+  nivelId    	Int
+  nivelCapacidadId    	Int
+  procesoId  	Int
+  proyectoId 	Int
+  Niveles    	Niveles  @relation(fields: [nivelId], references: [id])
+  Niveles_Capacidad    	Niveles_Capacidad  @relation(fields: [nivelCapacidadId], references: [id])
+  Proceso    	Proceso  @relation(fields: [procesoId], references: [id])
+  Proyecto   	Proyecto @relation(fields: [proyectoId], references: [id])
+  atributos  	MatrizEvaluacionAtributo[] // Relación inversa
 }
