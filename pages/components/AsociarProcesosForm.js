@@ -64,6 +64,11 @@ const MenuProps = {
   getContentAnchorEl: null
 };
 const useStyles = makeStyles((theme) => ({
+  main: {
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '3rem',
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -256,7 +261,7 @@ export default function AsociarProcesosForm(props) {
 
 
   const createAtributo = async () => {
-    debugger
+    
     const selectedItems = rows.filter(item => item.seleccionado === true);
     const procesoIds = selectedItems.map(item => item.id);
 
@@ -297,11 +302,11 @@ export default function AsociarProcesosForm(props) {
   };
 
   return (
-    <Container component="main" >
+    <Container component="main" className={classes.main} >
       <CssBaseline />
       <div className={classes.paper}>
           <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
-            Seleccionar Procesos
+            Asignar Procesos a Proyectos
           </Typography>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="custom pagination table">

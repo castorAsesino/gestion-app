@@ -3,13 +3,13 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-  debugger
+  
   const { method } = req;
   let buscar = false;
   switch (method) {
 
     case 'GET':
-      debugger
+      
       try {
         const {
           query: { idProyecto, idProceso, nivelId },

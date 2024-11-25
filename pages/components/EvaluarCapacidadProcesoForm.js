@@ -212,8 +212,7 @@ export default function EvaluarCapacidadProcesoForm(props) {
     <Container component="main"  className={classes.main}>
       <Grid item xs={12}>
       <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
-
-          Lista de Procesos
+        Procesos
         </Typography>
       </Grid>
       <Grid container spacing={3}>

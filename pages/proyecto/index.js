@@ -28,7 +28,7 @@ import DeleteModal from '../components/layout/DeleteModal';
 import CheckIcon from '@material-ui/icons/Check';
 import { withStyles } from '@material-ui/core/styles';
 
-
+import { Chip } from "@material-ui/core";
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: '#4576e0',
@@ -39,6 +39,21 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 const useStyles = makeStyles((theme) => ({
+  main: {
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '2rem',
+  },
+  badgeGreen: {
+    backgroundColor: "#4caf50", // Verde
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  badgeYellow: {
+    backgroundColor: "#ffeb3b", // Amarillo
+    color: "#000",
+    fontWeight: "bold",
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -56,9 +71,9 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
- tableContainer: {
+  tableContainer: {
     marginTop: theme.spacing(3),
-  }, 
+  },
   table: {
     minWidth: 500,
   },
@@ -83,17 +98,17 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
   },
   tableCell: {
-    width: 100,
+    width: 250,
     border: '1px solid #ddd',
     textAlign: 'center',
   },
   tableCellDescription: {
-    width: 200,
+    width: 300,
     border: '1px solid #ddd',
     textAlign: 'center',
   },
   tableCellActions: {
-    width: 100,
+    width: 250,
     border: '1px solid #ddd',
     textAlign: 'center',
   },
@@ -167,7 +182,34 @@ export default function Proyecto(props) {
   const [id, setId] = useState('');
 
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
+  const getBadge = (estado) => {
+    switch (estado) {
+      case "Finalizado":
+        return (
+          <Chip
+            label="Finalizado"
+            className={classes.badgeGreen}
+            size="small"
+          />
+        );
+      case "En progreso":
+        return (
+          <Chip
+            label="En progreso"
+            className={classes.badgeYellow}
+            size="small"
+          />
+        );
+      default:
+        return (
+          <Chip
+            label={estado || "Sin estado"}
+            size="small"
+            variant="outlined"
+          />
+        );
+    }
+  };
   useEffect(() => {
     getListData();
   }, []);
@@ -195,39 +237,41 @@ export default function Proyecto(props) {
   };
 
   return (
-    <Container component="main">
-     <Grid item xs={12}>
-     <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
-
-          Lista de Proyectos
+    <Container component="main" className={classes.main}>
+      <Grid item xs={12}>
+        <Typography component="h1" variant="h4" style={{ margin: 10, fontWeight: 500, textAlign: 'center' }}>
+          Proyectos
         </Typography>
-        </Grid>
-        
-       
-        <Grid item xs={12}  style={{ marginBottom: 50 }}>
-          <Button
-            variant="contained"
-            color="primary"
-            className={classes.addButton}
-            href="/proyecto/agregar"
-          >
-            <Add /> Agregar
-          </Button>
-        </Grid>
-     
+      </Grid>
+
+
+      <Grid item xs={12} style={{ marginBottom: 20 }}>
+        <Button
+          variant="contained"
+          color="primary"
+          className={classes.addButton}
+          href="/proyecto/agregar"
+        >
+          <Add /> Agregar
+        </Button>
+      </Grid>
+
       <TableContainer component={Paper} className={classes.tableContainer}>
         <Table aria-label="custom pagination table" className={classes.table}>
           <TableHead>
             <TableRow>
-              <StyledTableCell  align="center" className={classes.headerStyle}>
+              <StyledTableCell align="center" className={classes.headerStyle}>
                 Nombre
               </StyledTableCell>
-              <StyledTableCell  align="center" className={classes.headerStyle}>
+              <StyledTableCell align="center" className={classes.headerStyle}>
                 Descripción
               </StyledTableCell>
-              {/* <StyledTableCell  align="center" className={classes.headerStyle}>
-                Presupuesto
-              </StyledTableCell> */}
+               <StyledTableCell  align="center" className={classes.headerStyle}>
+                Duración
+              </StyledTableCell>
+              <StyledTableCell  align="center" className={classes.headerStyle}>
+                Estado
+              </StyledTableCell>
               <StyledTableCell align="center"></StyledTableCell>
             </TableRow>
           </TableHead>
@@ -243,16 +287,19 @@ export default function Proyecto(props) {
                 <TableCell className={classes.tableCellDescription} align="center">
                   {row.descripcion}
                 </TableCell>
-                {/* <TableCell className={classes.tableCellDescription} align="center">
-                  {row.presupuesto}
-                </TableCell> */}
+                 <TableCell className={classes.tableCell} align="center">
+                  {row.duracion}
+                </TableCell>
+                <TableCell className={classes.tableCell} align="center">
+                  {getBadge(row.estado)}
+                </TableCell>
                 <TableCell className={classes.tableCellActions} align="center">
                   <IconButton
                     aria-label="delete"
                     title={'Editar'}
                     component={Link}
                     href={'/proyecto/editar/' + row.id}
-                    style={{ color: '#54bca4' }}
+                    style={{ color: '#4576e0' }}
                   >
                     <EditIcon />
                   </IconButton>
@@ -278,28 +325,28 @@ export default function Proyecto(props) {
             )}
           </TableBody>
           <TableFooter>
-              <TableRow>
-                <TablePagination
-                  rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                  colSpan={4}
-                  count={rows.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: { 'aria-label': 'Registros por páginas' },
-                    native: true,
-                  }}
-                  labelRowsPerPage={"Registros por páginas"}
-                  labelDisplayedRows={
-                    ({ from, to, count }) => {
-                      return '' + from + '-' + to + ' de ' + count
-                    }
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
+                colSpan={4}
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: { 'aria-label': 'Registros por páginas' },
+                  native: true,
+                }}
+                labelRowsPerPage={"Registros por páginas"}
+                labelDisplayedRows={
+                  ({ from, to, count }) => {
+                    return '' + from + '-' + to + ' de ' + count
                   }
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions} />
-              </TableRow>
-            </TableFooter>
+                }
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions} />
+            </TableRow>
+          </TableFooter>
         </Table>
       </TableContainer>
     </Container>

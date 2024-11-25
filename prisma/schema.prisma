@@ -16,6 +16,12 @@ model Proyecto {
   evaluacion        Evaluacion[]
   Matriz_Evaluacion Matriz_Evaluacion[]
   procesos          ProyectoProceso[]
+
+  duracion           String?                 // Duración en días o meses
+  recursos            String?                // Cantidad de recursos asignados
+  estado             String             @default("En progreso") // Estado del proyecto
+  responsable         String?             // Responsable principal
+
 }
 
 model Proceso {

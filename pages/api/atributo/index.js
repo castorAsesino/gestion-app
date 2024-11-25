@@ -3,15 +3,15 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-  debugger
+  
   const { method } = req;
   switch (method) {
     case "GET":
       try {
         const response = await prisma.atributo_De_Proceso.findMany({
-          /* include: {
-            proceso: true
-          } */
+          orderBy: {
+            id: 'asc', // Ordena por el id del atributo
+          },
         });
         return res.status(200).json(response);
       } catch (error) {

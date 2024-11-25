@@ -203,7 +203,7 @@ export default function Atributos(props) {
       <Container component="main" >
       <Grid item xs={12}>
             <Typography component="h1" variant="h5" className={classes.center}>
-              Lista De Atributos de Procesos
+              Atributos de Procesos
             </Typography>
           </Grid>
         <Grid container spacing={3}>

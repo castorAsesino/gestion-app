@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Proyecto" ALTER COLUMN "duracion" SET DATA TYPE TEXT,
+ALTER COLUMN "recursos" SET DATA TYPE TEXT;

@@ -20,6 +20,9 @@ export default async function handler(req, res) {
             proceso: true,
             atributo: true,
           },
+          orderBy: {
+            atributoProcesoId: 'asc', // Ordena por el id del atributo
+          },
         });
         return res.status(200).json(response);
       } catch (error) {

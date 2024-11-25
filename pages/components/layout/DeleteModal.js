@@ -33,7 +33,7 @@ export default function DeleteModal(props) {
     return (
         <>
             <IconButton aria-label="delete" title={'Eliminar'} onClick={handleClickOpen}>
-                <DeleteIcon style={{color:'#bd251a'}} />
+                <DeleteIcon style={{color:'#4576e0'}} />
             </IconButton>
             <Dialog
                 open={open}

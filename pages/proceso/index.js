@@ -204,8 +204,7 @@ export default function Proceso(props) {
   return (
     <Container component="main" className={classes.main}>
       
-      <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' , margin:' 15px',
-    fontWeight: 'bold',    textAlign: 'center',    fontFamily: 'Roboto',    color: '#626262',    fontSize: '2.5rem'}}>
+      <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
       Procesos
         </Typography>
         <Grid item xs={12}  style={{ marginBottom: 50 }}>
@@ -246,7 +245,7 @@ export default function Proceso(props) {
                     title={'Editar'}
                     component={Link}
                     href={'/proceso/editar/' + row.id}
-                    style={{ color: '#54bca4' }}
+                    style={{ color: '#4576e0' }}
                   >
                     <EditIcon />
                   </IconButton>

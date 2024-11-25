@@ -42,7 +42,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-
+import { Chip } from "@material-ui/core";
+import { Badge } from '@material-ui/core';
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -55,6 +56,21 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 const useStyles = makeStyles((theme) => ({
+  badgeGreen: {
+    backgroundColor: "#4caf50", // Verde
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  badgeYellow: {
+    backgroundColor: "#ffeb3b", // Amarillo
+    color: "#000",
+    fontWeight: "bold",
+  },
+  badgeRed: {
+    backgroundColor: "#c10003", // Verde
+    color: "#fff",
+    fontWeight: "bold",
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -214,9 +230,9 @@ export default function EvaluarAtributoForm(props) {
       )
     );
     calcularTotal(id);
-   
+
   };
-  
+
   useEffect(() => {
     const totalPonderacion = rows.reduce((sum, row) => sum + (row.calificacion || 0), 0);
     setIsGuardarEnabled(totalPonderacion === 100);
@@ -242,14 +258,20 @@ export default function EvaluarAtributoForm(props) {
   };
 
   const validar = () => {
+    
     let totalPonderacionTotal = 0;
     let calificacionPonderada = 0;
 
-    const valorMasAlto = calificaciones.reduce(
+    /* const valorMasAlto = calificaciones.reduce(
       (max, valor) => (max.valor > valor.valor ? max : valor),
       { valor: 0 }
-    );
-
+    );  */
+    const valorMasAlto = calificaciones
+      .filter((valor) => valor.valor === 3) // Filtra por las calificaciones con valor 3
+      .reduce(
+        (max, valor) => (max.valor > valor.valor ? max : valor),
+        { valor: 0 }
+      );
     rows.forEach((element) => {
       totalPonderacionTotal += element.calificacion || 0;
       calificacionPonderada += element.totalPonderacion || 0;
@@ -268,7 +290,7 @@ export default function EvaluarAtributoForm(props) {
     }
 
     setResultados(resultado);
-
+    
     const intervalo = niveles.find(
       (intervalo) => resultado >= intervalo.valorMin && resultado <= intervalo.valorMax
     );
@@ -277,7 +299,7 @@ export default function EvaluarAtributoForm(props) {
       rows.reduce((acc, curr) => acc + (curr.totalPonderacion || 0), 0) / rows.length;
 
     const prom = rows.filter(
-      (item) => item.totalPonderacion <= promedioPonderacionTotal
+      (item) => item.ponderacion <= 1,5
     );
 
     setPromedios(prom);
@@ -285,11 +307,11 @@ export default function EvaluarAtributoForm(props) {
 
     handleClickOpen();
 
-    
+
   };
 
   const enviar = async () => {
-   
+
     console.log(promedios);
 
     let aux = [];
@@ -304,6 +326,7 @@ export default function EvaluarAtributoForm(props) {
     const payload = {
       calificacion: resultados,
       nivelId: intervalo ? intervalo.id : null,
+      nivelCapacidadId: intervalo ? intervalo.id : null,
       procesoId: proceso ? proceso.procesoId : null,
       proyectoId: proyecto ? proyecto.id : null,
       atributos: aux
@@ -312,27 +335,28 @@ export default function EvaluarAtributoForm(props) {
     try {
       const response = await axios.post("/api/evaluar", payload);
       console.log("Respuesta del servidor:", response.data);
-  
+
     } catch (error) {
       console.error("Error al enviar los datos:", error.message);
-    
+
     }
   };
   useEffect(() => {
-    if(promedios !== null && resultados !== null && intervalo !==null){
+    if (promedios !== null && resultados !== null && intervalo !== null) {
       enviar();
     }
-    
+
   }, [promedios, resultados, intervalo]);
 
 
 
-
   return (
-    <Container component="main"  className={classes.main}>
+    <Container component="main" className={classes.main}>
       <Grid item xs={12}>
-      <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' , margin:' 15px',
-    fontWeight: 'bold',    textAlign: 'center',    fontFamily: 'Roboto',    fontSize: '2.5rem'}}>          Matriz de Evaluación
+        <Typography component="h1" variant="h4" style={{
+          margin: 15, fontWeight: 500, textAlign: 'center', margin: ' 15px',
+          fontWeight: 'bold', textAlign: 'center', fontFamily: 'Roboto', fontSize: '2.5rem'
+        }}> Evaluar Calidad de Procesos
         </Typography>
       </Grid>
       <Grid container spacing={3}>
@@ -365,7 +389,7 @@ export default function EvaluarAtributoForm(props) {
                     >
                       {calificaciones.map((nivel) => (
                         <MenuItem key={nivel.id} value={nivel.valor}>
-                          {nivel.descripcion}
+                          {nivel.valor}
                         </MenuItem>
                       ))}
                     </Select>
@@ -419,10 +443,10 @@ export default function EvaluarAtributoForm(props) {
               size="large"
               className={classes.buttonColor}
               onClick={validar}
-              disabled={!isGuardarEnabled} 
+              disabled={!isGuardarEnabled}
 
             >
-              Guardar
+              Finalizar
             </Button>
           </div>
         </Grid>
@@ -478,10 +502,30 @@ export default function EvaluarAtributoForm(props) {
             <h3 style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Se recomienda aplicar mejoras sobre los siguientes (AP):</h3>
           </Typography>
           {promedios.map((promedio, index) => (
-            <Typography key={index} gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
-              <li style={{ fontSize: 18, fontWeight: 400, marginRight: '1rem' }}>{promedio.atributo.nombre}</li>
+            <Typography
+              key={index}
+              gutterBottom
+              style={{
+                display: 'flex',
+                alignItems: 'center', // Alineación vertical
+              }}
+            >
+              <Badge
+                badgeContent="!"
+                color="secondary" // Usamos "secondary" para el rojo en Material-UI v4
+                style={{
+                  marginRight: '0.5rem', // Espaciado entre el badge y el texto
+                  display: 'flex',
+                  alignItems: 'center',
+                  
+                }}
+              />
+              <li style={{ fontSize: 18, fontWeight: 400, listStyle: 'none' , paddingLeft:' 10px'}}>
+                {promedio.atributo.nombre}
+              </li>
             </Typography>
           ))}
+
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">

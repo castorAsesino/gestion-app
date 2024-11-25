@@ -202,8 +202,8 @@ export default function Escala(props) {
       <Container component="main" >
 
           <Grid item xs={12}>
-          <Typography component="h1" variant="h5" className={classes.center}>
-          Lista De Escalas
+          <Typography component="h1" variant="h5" className={classes.center} style={{ fontWeight: 500, }}>
+          Escalas
           </Typography>
         </Grid>
         <Grid container spacing={3}>
@@ -234,7 +234,7 @@ export default function Escala(props) {
                   <TableCell component="th" scope="row" className={classes.tableCell}>
                     {row.nombre}
                   </TableCell>
-                  <TableCell align="center" className={classes.tableCell}>
+                  <TableCell align="center" className={classes.tableCell} style={{ fontWeight: 900, }}>
                     {row.descripcion}
                   </TableCell>
                   <TableCell align="center" className={classes.tableCell}>
@@ -243,7 +243,7 @@ export default function Escala(props) {
                 
                
                   <TableCell align="center" className={classes.tableCell}>
-                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/escalas/editar/' + row.id}>
+                    <IconButton style={{ color: '#4576e0' }} aria-label="delete" title={'Editar'} component={Link} href={'/escalas/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>
                     <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>

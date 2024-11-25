@@ -8,13 +8,17 @@ export default async function handler(req, res) {
     switch (method) {
       case 'POST':
         try {
-          const { calificacion, nivelId, procesoId, proyectoId, atributos } = req.body;
-
+          //const { calificacion, nivelId, procesoId, proyectoId, atributos } = req.body;
+          const { calificacion, nivelId, nivelCapacidadId, procesoId, proyectoId, atributos } = req.body;
+          if (!nivelCapacidadId) {
+            return res.status(400).json({ message: "El campo 'nivelCapacidadId' es requerido." });
+          }
           // Crear la entrada de Matriz_Evaluacion
           const matrizEvaluacion = await prisma.matriz_Evaluacion.create({
             data: {
               calificacion,
               nivelId,
+              nivelCapacidadId,
               procesoId,
               proyectoId,
               atributos: {

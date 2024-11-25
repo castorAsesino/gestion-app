@@ -15,7 +15,7 @@ export default function MenuEvaluacion() {
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.grid} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-          <div className="custom-card" style={{  margin: '50px' }}>
+          <div className="custom-card" style={{  margin: '20px' }}>
             <Link href="/evaluacion-calidad">
               <a className={styles.customLink}>
                 <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 50 }}>

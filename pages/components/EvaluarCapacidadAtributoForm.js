@@ -42,6 +42,8 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import { json } from 'react-router-dom';
+import { Chip } from "@material-ui/core";
+import { Badge } from '@material-ui/core';
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: '#4576e0',
@@ -52,6 +54,21 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 const useStyles = makeStyles((theme) => ({
+  badgeGreen: {
+    backgroundColor: "#4caf50", // Verde
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  badgeYellow: {
+    backgroundColor: "#ffeb3b", // Amarillo
+    color: "#000",
+    fontWeight: "bold",
+  },
+  badgeRed: {
+    backgroundColor: "#c10003", // Verde
+    color: "#fff",
+    fontWeight: "bold",
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -146,7 +163,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
   const [calificaciones, setCalificaciones] = useState([]);
   const [niveles, setNiveles] = useState([]);
   const [selectedCalificacionId, setSelectedCalificacionId] = useState('');
-
+  const [isGuardarEnabled, setIsGuardarEnabled] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [proyecto, setProyecto] = React.useState(false);
   const [proceso, setProceso] = React.useState(null);
@@ -226,7 +243,22 @@ export default function EvaluarCapacidadAtributoForm(props) {
     setRows(updatedRows);
     setSelectedCalificacionId(value);
     calcularTotal(id);
+
   };
+
+useEffect(() => {
+  if(resultados > 0 ){
+    const filtrados = rows.filter(row => row.valor < resultados);
+  setPromedios(filtrados);
+  }
+}, [resultados]);
+
+  useEffect(() => {
+    const allCalificacionesAsignadas = rows.every(row => row.calificacion > 0); // Verifica que todas las calificaciones sean mayores a 0
+    setIsGuardarEnabled(allCalificacionesAsignadas);
+  }, [rows]);
+
+
 
   const calcularTotal = (id) => {
     const { value } = event.target;
@@ -253,7 +285,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
     const mitad = Math.floor(valores.length / 2);
     const mediana = 0;
     if (valores.length % 2 === 0) {
-      mediana = (valores[mitad - 1] + valores[mitad]) / 2;
+      mediana = Math.round((valores[mitad - 1] + valores[mitad]) / 2);
     } else {
       mediana = valores[mitad];
     }
@@ -283,7 +315,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
     <Container component="main"  className={classes.main}>
       <Grid item xs={12}>
         <Typography component="h1" variant="h5" className={classes.center}>
-          Matriz de Evaluación
+        Evaluar Capacidad de Procesos
         </Typography>
       </Grid>
       <Grid container spacing={3}>
@@ -298,7 +330,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
               <StyledTableCell className={classes.headerStyle}>Atributo de Proceso</StyledTableCell>
               <StyledTableCell className={classes.headerStyle} align="center">Descripción</StyledTableCell>
               <StyledTableCell className={classes.headerStyle} align="center">Calificación de Logro</StyledTableCell>
-              <StyledTableCell align="center">Nivel De Logro</StyledTableCell>
+              <StyledTableCell align="center">Nivel de Logro</StyledTableCell>
               <StyledTableCell align="center">Valor</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -325,7 +357,7 @@ export default function EvaluarCapacidadAtributoForm(props) {
                     </Select>
                   </FormControl>
                 </StyledTableCell>
-                <StyledTableCell  className={classes.tableCell} align="center">
+                <StyledTableCell  className={classes.tableCell} align="center" style={{fontWeight:900}}>
                   {row.nivel}
                 </StyledTableCell>
                 <StyledTableCell  className={classes.tableCell} align="center">
@@ -345,8 +377,9 @@ export default function EvaluarCapacidadAtributoForm(props) {
           <Button variant="contained" size="large" className={classes.margin}  style={{ marginRight: '10px', backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }} component={Link} href="/evaluacion-calidad">
             Cancelar
           </Button>
-          <Button variant="contained" color="primary" size="large" className={classes.buttonColor} onClick={validar}>
-            Guardar
+          <Button variant="contained" color="primary" size="large" className={classes.buttonColor} onClick={validar}
+           disabled={!isGuardarEnabled}>
+            Finalizar
           </Button>
         </div>
       </Grid>
@@ -372,14 +405,14 @@ export default function EvaluarCapacidadAtributoForm(props) {
           </DialogTitle>
           <DialogContent dividers>
             <Typography variant="h6" gutterBottom style={{justifyContent: 'center',  alignItems: 'center'}}>
-              Agregación Unidimensional Vertical
+              Agregación Unidimensional utilizando la Media
             </Typography>
             <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
-              <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Calificación total del proceso:</li>
+              <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Calificación total del Proceso:</li>
               <span>{resultados}</span>
             </Typography>
             <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
-              <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Nivel de calidad del proceso:</li>
+              <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Nivel de Capacidad del Proceso:</li>
               <span>{intervalo.nombre}</span>
             </Typography>
 
@@ -389,8 +422,8 @@ export default function EvaluarCapacidadAtributoForm(props) {
                   <TableRow>
                     <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }}>Proyecto</TableCell>
                     <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Proceso evaluado</TableCell>
-                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
-                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Nivel de Capacidad del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Calificación total del Proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Nivel de Capacidad del Proceso</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -410,14 +443,14 @@ export default function EvaluarCapacidadAtributoForm(props) {
             </TableContainer>
 
             <Typography variant="h6" gutterBottom style={{ paddingTop: '20px'}} >
-              Agregación Unidimensional Utilizando La Mediana
+              Agregación Unidimensional utilizando la Mediana
             </Typography>
             <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
               <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Calificación total del proceso:</li>
               <span>{mediana}</span>
             </Typography>
             <Typography gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
-              <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Nivel de calidad del proceso:</li>
+              <li style={{ fontSize: 18, fontWeight: 800, marginRight: '1rem' }}>Nivel de Capacidad del proceso:</li>
               <span>{intervalo.nombre}</span>
             </Typography>
 
@@ -426,9 +459,9 @@ export default function EvaluarCapacidadAtributoForm(props) {
                 <TableHead>
                   <TableRow>
                     <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }}>Proyecto</TableCell>
-                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Proceso evaluado</TableCell>
-                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Calificación total del proceso</TableCell>
-                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Nivel de calidad del proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Proceso Evaluado</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Calificación total del Proceso</TableCell>
+                    <TableCell style={{ backgroundColor: '#4576e0', color: '#fff' }} align="center">Nivel de Capacidad del Proceso</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -452,11 +485,29 @@ export default function EvaluarCapacidadAtributoForm(props) {
 
             </Typography>
             {promedios.map((promedio, index) => (
-              <Typography key={index} gutterBottom style={{ display: 'flex', alignItems: 'center' }}>
-                <li style={{ fontSize: 18, fontWeight: 400, marginRight: '1rem' }}>{promedio.atributo.nombre}</li>
-
-              </Typography>
-            ))}
+            <Typography
+              key={index}
+              gutterBottom
+              style={{
+                display: 'flex',
+                alignItems: 'center', // Alineación vertical
+              }}
+            >
+              <Badge
+                badgeContent="!"
+                color="secondary" // Usamos "secondary" para el rojo en Material-UI v4
+                style={{
+                  marginRight: '0.5rem', // Espaciado entre el badge y el texto
+                  display: 'flex',
+                  alignItems: 'center',
+                  
+                }}
+              />
+              <li style={{ fontSize: 18, fontWeight: 400, listStyle: 'none' , paddingLeft:' 10px'}}>
+                {promedio.atributo.nombre}
+              </li>
+            </Typography>
+          ))}
 
           </DialogContent>
           <DialogActions>

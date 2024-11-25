@@ -198,7 +198,7 @@ export default function Cliente(props) {
     <Container component="main">
       <div className={classes.paper}>
         <Typography component="h1" variant="h5" className={classes.center}>
-          Lista De Clientes
+          Clientes
         </Typography>
         <Grid item xs={12} md={6} className={classes.buttonContainer}>
           <Button
@@ -250,7 +250,7 @@ export default function Cliente(props) {
                     title={'Editar'}
                     component={Link}
                     href={'/cliente/editar/' + row.id}
-                    style={{ color: '#54bca4' }}
+                    style={{ color: '#4576e0' }}
                   >
                     <EditIcon />
                   </IconButton>

@@ -314,7 +314,7 @@ export default function Reportes(props) {
   };
 
   const getListDataProceso = async (value) => {
-    debugger
+    
     const response = await axios.get(`/api/proceso-proyecto`, {
       params: {
         id: +value,

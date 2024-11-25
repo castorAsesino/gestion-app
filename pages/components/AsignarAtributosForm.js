@@ -255,7 +255,7 @@ export default function AsignarAtributosForm(props) {
 
 
   const createAtributo = async () => {
-    debugger
+    
     const selectedItems = rows.filter(item => item.seleccionado === true);
     const atributoProcesoIds = selectedItems.map(item => item.id);
 
