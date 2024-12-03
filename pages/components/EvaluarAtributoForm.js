@@ -4,27 +4,45 @@ import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import { makeStyles } from "@material-ui/core/styles";
+import PropTypes from "prop-types";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
+import TableFooter from "@material-ui/core/TableFooter";
+import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import IconButton from "@material-ui/core/IconButton";
+import FirstPageIcon from "@material-ui/icons/FirstPage";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import LastPageIcon from "@material-ui/icons/LastPage";
 import TableHead from "@material-ui/core/TableHead";
 import Add from "@material-ui/icons/Add";
 import axios from "axios";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteModal from "./layout/DeleteModal";
+import CheckIcon from "@material-ui/icons/Check";
 import { useRouter } from "next/router";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-
+import { json } from "react-router-dom";
+import { Chip } from "@material-ui/core";
+import { Badge } from "@material-ui/core";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -283,11 +301,12 @@ export default function EvaluarAtributoForm(props) {
         resultado >= intervalo.valorMin && resultado <= intervalo.valorMax
     );
 
+    debugger
     const promedioPonderacionTotal =
-      rows.reduce((acc, curr) => acc + (curr.totalPonderacion || 0), 0) /
+      rows.reduce((acc, curr) => acc + (curr.ponderacion || 0), 0) /
       rows.length;
 
-    const prom = rows.filter((item) => item.ponderacion <= 1, 5);
+    const prom = rows.filter((item) => item.ponderacion <= promedioPonderacionTotal);
 
     setPromedios(prom);
     setIntervalo(intervalo);

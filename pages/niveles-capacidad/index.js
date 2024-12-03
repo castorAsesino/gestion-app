@@ -229,8 +229,7 @@ export default function Niveles(props) {
             <TableHead>
               <TableRow>
               <StyledTableCell  align="center" className={classes.headerStyle}>Nombre</StyledTableCell>
-                <StyledTableCell align="center" className={classes.headerStyle}>Valor Mínimo</StyledTableCell>
-                <StyledTableCell align="center" className={classes.headerStyle}>Valor Máximo</StyledTableCell>
+                <StyledTableCell align="center" className={classes.headerStyle}>Valor</StyledTableCell>
                 <StyledTableCell className={classes.headerStyle}></StyledTableCell>
               </TableRow>
             </TableHead>
@@ -244,10 +243,7 @@ export default function Niveles(props) {
                     {row.nombre}
                   </TableCell>
                   <TableCell align="center" className={classes.tableCell}>
-                    {row.valorMin}
-                  </TableCell>
-                  <TableCell align="center" className={classes.tableCell}> 
-                    {row.valorMax}
+                    {row.valor}
                   </TableCell>
                   <TableCell align="center" className={classes.tableCell}>
                     <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/niveles-capacidad/editar/' + row.id}>

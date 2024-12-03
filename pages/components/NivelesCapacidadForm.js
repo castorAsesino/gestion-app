@@ -86,7 +86,7 @@ export default function NivelesCapacidadForm(props) {
 
   const { register, handleSubmit, watch, formState: { errors }, setValue, getValues, getValue, reset, } = useForm({
     defaultValues: {
-      nombre: "", valorMax: 0, valorMin: 0
+      nombre: "", valor: 0
     }
   });
 
@@ -102,9 +102,7 @@ export default function NivelesCapacidadForm(props) {
       .then((data) => {
         console.log('sad', data)
         setValue('nombre', data.nombre);
-        setValue('valorMax', data.valorMax);
-        setValue('valorMin', data.valorMin);
-
+        setValue('valor', data.valor);
       });
   };
   const handleOpenDialog = (message) => {
@@ -118,8 +116,8 @@ export default function NivelesCapacidadForm(props) {
   };
   const onSubmit = async (data) => {
     try {
-      data.valorMax = parseInt(data.valorMax);
-      data.valorMin = parseInt(data.valorMin);
+      data.valor = parseInt(data.valor);
+     // data.valorMin = parseInt(data.valorMin);
       if (isAddMode) {
         await createNiveles(data);
       } else {
@@ -162,22 +160,12 @@ export default function NivelesCapacidadForm(props) {
               </Grid>
 
              
-              <Grid item xs={12} sm={12} lg={12}>
-                <TextField type="number" label="Valor Mínimo" variant="standard" fullWidth margin="normal" {...register('valorMin', { required: true })}
-                  error={errors.valorMin}
-                  placeholder="Valor Mínimo"
-                  helperText={errors.valorMin ? 'Campo obligatorio' : ''}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </Grid>
 
               <Grid item xs={12} sm={12} lg={12}>
-                <TextField type="number" label="Valor Máximo" variant="standard" fullWidth margin="normal" {...register('valorMax', { required: true })}
-                  error={errors.valorMax}
-                  placeholder="Valor Máximo"
-                  helperText={errors.valorMax ? 'Campo obligatorio' : ''}
+                <TextField type="number" label="Valor" variant="standard" fullWidth margin="normal" {...register('valor', { required: true })}
+                  error={errors.valor}
+                  placeholder="Valor"
+                  helperText={errors.valor ? 'Campo obligatorio' : ''}
                   InputLabelProps={{
                     shrink: true,
                   }}
