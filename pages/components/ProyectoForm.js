@@ -108,7 +108,7 @@ export default function ProyectoForm(props) {
   const [clientes, setClientes] = useState([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [dialogMessage, setDialogMessage] = useState("");
-
+  const [estado, setEstado] = useState("");
   useEffect(() => {
     if (!isAddMode) getProyectoId();
 
@@ -131,10 +131,11 @@ export default function ProyectoForm(props) {
       .then((data) => {
         setValue("nombre", data.nombre);
         setValue("descripcion", data.descripcion);
-        setValue('presupuesto', data.presupuesto)
-        setValue('duracion', data.duracion)
-        setValue('estado', data.estado)
-        setValue('recursos', data.recursos)
+        setValue("presupuesto", data.presupuesto);
+        setValue("duracion", data.duracion);
+        setValue("estado", data.estado);
+        setValue("recursos", data.recursos);
+        setEstado(data.estado);
       });
   };
 
@@ -143,6 +144,12 @@ export default function ProyectoForm(props) {
     setOpenDialog(true);
     /* reset(); */
   };
+
+  const handleChangeestado = (event) => {
+    setValue('estado', event.target.value);
+    setEstado(event.target.value);
+  };
+
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
@@ -227,7 +234,7 @@ export default function ProyectoForm(props) {
               <Grid item xs={12} sm={12} lg={6}>
                 <TextField
                   id="standard-basic"
-                  type="number"
+                  type="text"
                   label="Duración"
                   variant="standard"
                   fullWidth
@@ -238,23 +245,27 @@ export default function ProyectoForm(props) {
                 />
               </Grid>
               <Grid item xs={12} sm={12} lg={6}>
-              <FormControl fullWidth margin="normal">
-                <InputLabel id="estado-label">Estado</InputLabel>
-                <Select
-                  labelId="estado-label"
-                  id="estado"
-                  {...register("estado", { required: true })}
-                  defaultValue=""
-                  error={errors.estado}
-                >
-                  <MenuItem value="A">A</MenuItem>
-                  <MenuItem value="B">B</MenuItem>
-                  <MenuItem value="C">C</MenuItem>
-                </Select>
-                {errors.estado && <Typography color="error">Campo obligatorio</Typography>}
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={12} lg={6}>
+                <FormControl fullWidth margin="normal">
+                  <InputLabel id="estado-label">Estado</InputLabel>
+                  <Select
+                    labelId="estado-label"
+                    id="estado"
+                    {...register("estado", { required: true })}
+                    value={estado} // Sincroniza con react-hook-form
+                    onChange={handleChangeestado} // Actualiza el valor al cambiar
+                    error={!!errors.estado}
+                    inputProps={register('estado')}
+                  >
+                    <MenuItem value="FINALIZADO">FINALIZADO</MenuItem>
+                    <MenuItem value="EN PROGRESO">EN PROGRESO</MenuItem>
+                  </Select>
+                  {errors.estado && (
+                    <Typography color="error">Campo obligatorio</Typography>
+                  )}
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12} sm={12} lg={6}>
                 <TextField
                   label="Recursos"
                   fullWidth
@@ -296,7 +307,6 @@ export default function ProyectoForm(props) {
                 </div>
               </Grid>
             </Grid>
-   
           </form>
         </div>
       </Card>

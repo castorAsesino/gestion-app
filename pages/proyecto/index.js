@@ -184,7 +184,7 @@ export default function Proyecto(props) {
   const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
   const getBadge = (estado) => {
     switch (estado) {
-      case "Finalizado":
+      case "FINALIZADO":
         return (
           <Chip
             label="Finalizado"
@@ -192,7 +192,7 @@ export default function Proyecto(props) {
             size="small"
           />
         );
-      case "En progreso":
+      case "EN PROGRESO":
         return (
           <Chip
             label="En progreso"

@@ -382,7 +382,7 @@ export default function Reportes(props) {
                     fullWidth
                     onChange={handleChangerecurso}
                     error={errors.proyectoId}
-                    helperText={errors.proyectoId ? 'Empty field' : ''}
+           
                     inputProps={register('proyectoId')}
                     value={proyectoId}
                   >
@@ -401,7 +401,7 @@ export default function Reportes(props) {
                     fullWidth
                     onChange={handleProceso}
                     error={errors.procesoId}
-                    helperText={errors.procesoId ? 'Empty field' : ''}
+                
                     inputProps={register('procesoId')}
                     value={procesoId}
                     input={<Input />}
@@ -427,7 +427,7 @@ export default function Reportes(props) {
                     fullWidth
                     onChange={handleNivel}
                     error={errors.nivelId}
-                    helperText={errors.nivelId ? 'Empty field' : ''}
+              
                     inputProps={register('nivelId')}
                     value={nivelId}
                   >

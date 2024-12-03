@@ -1,39 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableFooter from '@material-ui/core/TableFooter';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
-import FirstPageIcon from '@material-ui/icons/FirstPage';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import LastPageIcon from '@material-ui/icons/LastPage';
-import TableHead from '@material-ui/core/TableHead';
-import Add from '@material-ui/icons/Add';
-import axios from 'axios';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteModal from './layout/DeleteModal';
-import CheckIcon from '@material-ui/icons/Check';
+import React, { useState, useEffect } from "react";
+import Button from "@material-ui/core/Button";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import Container from "@material-ui/core/Container";
+import PropTypes from "prop-types";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableFooter from "@material-ui/core/TableFooter";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import IconButton from "@material-ui/core/IconButton";
+import FirstPageIcon from "@material-ui/icons/FirstPage";
+import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import LastPageIcon from "@material-ui/icons/LastPage";
+import TableHead from "@material-ui/core/TableHead";
+import Add from "@material-ui/icons/Add";
+import axios from "axios";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteModal from "./layout/DeleteModal";
+import CheckIcon from "@material-ui/icons/Check";
 import { useRouter } from "next/router";
-import { withStyles } from '@material-ui/core/styles';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import { withStyles } from "@material-ui/core/styles";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: '#4576e0',
-    color: '#fff',
+    backgroundColor: "#4576e0",
+    color: "#fff",
   },
   body: {
     fontSize: 14,
@@ -42,12 +42,12 @@ const StyledTableCell = withStyles((theme) => ({
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   form: {
-    width: '100%',
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -57,54 +57,53 @@ const useStyles = makeStyles((theme) => ({
     flexShrink: 0,
     marginLeft: theme.spacing(2.5),
   },
- tableContainer: {
+  tableContainer: {
     marginTop: theme.spacing(3),
-  }, 
+  },
   table: {
     minWidth: 500,
   },
   center: {
-    textAlign: 'center',
+    textAlign: "center",
     fontSize: 40,
   },
   right: {
-    textAlign: 'right',
+    textAlign: "right",
   },
   addButton: {
-    textAlign: 'right',
-    backgroundColor: '#4576e0'
+    textAlign: "right",
+    backgroundColor: "#4576e0",
   },
   headerStyle: {
     fontWeight: 900,
   },
   buttonContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    width: '100%',
-    maxWidth: '100%',
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "100%",
+    maxWidth: "100%",
   },
   tableCell: {
     width: 100,
-    border: '1px solid #ddd',
-    textAlign: 'center',
+    border: "1px solid #ddd",
+    textAlign: "center",
   },
   tableCellDescription: {
     width: 200,
-    border: '1px solid #ddd',
-    textAlign: 'center',
+    border: "1px solid #ddd",
+    textAlign: "center",
   },
   tableCellActions: {
     width: 100,
-    border: '1px solid #ddd',
-    textAlign: 'center',
+    border: "1px solid #ddd",
+    textAlign: "center",
   },
   main: {
-    background: '#fff',
-    borderRadius: '5px',
-    padding: '3rem',
-  }
+    background: "#fff",
+    borderRadius: "5px",
+    padding: "3rem",
+  },
 }));
-
 
 function TablePaginationActions(props) {
   const classes = useStyles();
@@ -134,24 +133,36 @@ function TablePaginationActions(props) {
         disabled={page === 0}
         aria-label="first page"
       >
-        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
       </IconButton>
-      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page">
-        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label="previous page"
+      >
+        {theme.direction === "rtl" ? (
+          <KeyboardArrowRight />
+        ) : (
+          <KeyboardArrowLeft />
+        )}
       </IconButton>
       <IconButton
         onClick={handleNextButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="next page"
       >
-        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+        {theme.direction === "rtl" ? (
+          <KeyboardArrowLeft />
+        ) : (
+          <KeyboardArrowRight />
+        )}
       </IconButton>
       <IconButton
         onClick={handleLastPageButtonClick}
         disabled={page >= Math.ceil(count / rowsPerPage) - 1}
         aria-label="last page"
       >
-        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
       </IconButton>
     </div>
   );
@@ -164,26 +175,26 @@ TablePaginationActions.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
 };
 
-
 export default function EvaluarProcesoForm(props) {
   const classes = useStyles();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [rows, setRows] = useState([]);
   const [deleteItem, setDeleteItem] = useState(false);
-  const [id, setId] = useState('');
+  const [id, setId] = useState("");
   const router = useRouter();
-  const idProyecto = router.query['id'];
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+  const idProyecto = router.query["id"];
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
 
   useEffect(() => {
     getListData();
-    localStorage.setItem('idProyecto',idProyecto);
+    localStorage.setItem("idProyecto", idProyecto);
   }, [idProyecto]);
 
   useEffect(() => {
     if (deleteItem) {
-      axios.delete('/api/proceso/' + id).then((response) => {
+      axios.delete("/api/proceso/" + id).then((response) => {
         window.location.reload();
       });
     }
@@ -198,39 +209,38 @@ export default function EvaluarProcesoForm(props) {
     setPage(0);
   };
 
- /*  const getListData = async () => {
-    const response = await axios.get('/api/proceso/' + idProyecto);
-    setRows(response.data);
-  }; */
   const getListData = async () => {
     if (idProyecto !== undefined && idProyecto !== null) {
       const response = await axios.get("/api/proyecto/asociado/" + idProyecto);
       setRows(response.data);
-      console.log(response.data)
-
+      console.log(response.data);
     }
-  }
+  };
   return (
     <Container component="main" className={classes.main}>
       <Grid item xs={12}>
-      <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' }}>
-       Seleccionar Proceso
+        <Typography
+          component="h1"
+          variant="h4"
+          style={{ margin: 15, fontWeight: 500, textAlign: "center" }}
+        >
+          Seleccionar Proceso
         </Typography>
       </Grid>
       <Grid container spacing={3}>
-
         <Grid item xs={12} style={{ marginBottom: 10 }}>
-          {/* <Button variant="contained" color="primary" className={classes.right} href="/niveles/agregar">
-            <Add /> Agregar
-          </Button> */}
         </Grid>
       </Grid>
       <TableContainer component={Paper}>
         <Table aria-label="custom pagination table" className={classes.table}>
           <TableHead>
             <TableRow>
-              <StyledTableCell align="center" className={classes.headerStyle}>Nombre</StyledTableCell>
-              <StyledTableCell align="center" className={classes.headerStyle}>Descripción</StyledTableCell>
+              <StyledTableCell align="center" className={classes.headerStyle}>
+                Nombre
+              </StyledTableCell>
+              <StyledTableCell align="center" className={classes.headerStyle}>
+                Descripción
+              </StyledTableCell>
               <StyledTableCell align="center"></StyledTableCell>
             </TableRow>
           </TableHead>
@@ -240,19 +250,31 @@ export default function EvaluarProcesoForm(props) {
               : rows
             ).map((row) => (
               <TableRow key={row.id}>
-                <TableCell className={classes.tableCell} component="th" scope="row" align="center">
+                <TableCell
+                  className={classes.tableCell}
+                  component="th"
+                  scope="row"
+                  align="center"
+                >
                   {row.proceso.nombre}
                 </TableCell>
-                <TableCell className={classes.tableCellDescription} align="center">
+                <TableCell
+                  className={classes.tableCellDescription}
+                  align="center"
+                >
                   {row.proceso.descripcion}
                 </TableCell>
                 <TableCell className={classes.tableCellActions} align="center">
-
-                  <Button variant="contained"  style={{ backgroundColor: 'rgb(135 138 157)', color: '#FFFFFF' }} href={"/evaluacion-calidad/atributo/" + row.procesoId}>
-                  Evaluar <ArrowForwardIcon style={{ fontSize: 20 }} />
-                   
+                  <Button
+                    variant="contained"
+                    style={{
+                      backgroundColor: "rgb(135 138 157)",
+                      color: "#FFFFFF",
+                    }}
+                    href={"/evaluacion-calidad/atributo/" + row.procesoId}
+                  >
+                    Evaluar <ArrowForwardIcon style={{ fontSize: 20 }} />
                   </Button>
-
                 </TableCell>
               </TableRow>
             ))}
@@ -267,18 +289,18 @@ export default function EvaluarProcesoForm(props) {
           <TableFooter>
             <TableRow>
               <TablePagination
-                rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
+                rowsPerPageOptions={[5, 10, 25, { label: "Todos", value: -1 }]}
                 colSpan={3}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 SelectProps={{
-                  inputProps: { 'aria-label': 'Registros por páginas' },
+                  inputProps: { "aria-label": "Registros por páginas" },
                   native: true,
                 }}
-                labelRowsPerPage={'Registros por páginas'}
+                labelRowsPerPage={"Registros por páginas"}
                 labelDisplayedRows={({ from, to, count }) => {
-                  return '' + from + '-' + to + ' de ' + count;
+                  return "" + from + "-" + to + " de " + count;
                 }}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}

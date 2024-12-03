@@ -226,7 +226,7 @@ export default function Atributos(props) {
               <TableRow>
                 <StyledTableCell>Nombre</StyledTableCell>
                 <StyledTableCell align="center">Descripción</StyledTableCell>
-                <StyledTableCell align="center">Valor</StyledTableCell>
+               
               {/*   <StyledTableCell align="center">Proceso</StyledTableCell> */}
                 <StyledTableCell></StyledTableCell>
               </TableRow>
@@ -243,9 +243,7 @@ export default function Atributos(props) {
                   <TableCell className={classes.tableCell}  align="center">
                     {row.descripcion}
                   </TableCell>
-                  <TableCell className={classes.tableCell}  align="center">
-                    {row.valor}
-                  </TableCell>
+                 
                   {/* <TableCell align="center">
                     {row.proceso.nombre}
                   </TableCell> */}
