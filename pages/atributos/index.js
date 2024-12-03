@@ -39,6 +39,11 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 const useStyles = makeStyles((theme) => ({
+  main: {
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '3rem',
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -200,9 +205,9 @@ export default function Atributos(props) {
 
   return (
     <>
-      <Container component="main" >
+      <Container component="main" className={classes.main}>
       <Grid item xs={12}>
-            <Typography component="h1" variant="h5" className={classes.center}>
+            <Typography component="h1" variant="h5" className={classes.center} style={{ fontWeight: 500, }}>
               Atributos de Procesos
             </Typography>
           </Grid>

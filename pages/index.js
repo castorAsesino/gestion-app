@@ -16,7 +16,7 @@ export default function Home() {
         <div className={styles.grid} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
   
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/proyecto">
+            <Link href="/menu-admin">
               <a className={styles.customLink}>
                 <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <WebIcon style={{ fontSize: 100 }} />
@@ -41,7 +41,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/menu-evaluacion">
+            <Link href="/menu-configuracion">
               <a className={styles.customLink}>
                 <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <BuildIcon style={{ fontSize: 100 }} />

@@ -10,59 +10,43 @@ import Link from 'next/link';
 import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
 import ListAltIcon from '@material-ui/icons/ListAlt';
 
-export default function MenuProceso() {
+export default function MenuAdmin() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
         <div className={styles.grid} style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/backlog">
-              <a>
+            <Link href="/niveles">
                 <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <NotesIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h5">Backlog</Typography>
+                    <Typography variant="h5">Niveles de Calidad</Typography>
                   </CardContent>
                 </Card>
-              </a>
             </Link>
           </div>
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/sprint">
-              <a>
+            <Link href="/niveles-capacidad">
                 <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <ListAltIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h5">Sprint</Typography>
+                    <Typography variant="h5">Niveles de Capacidad</Typography>
                   </CardContent>
                 </Card>
-              </a>
             </Link>
           </div>
 
-          <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/user-storie">
-              <a>
-                <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
-                  <AssignmentIndIcon style={{ fontSize: 100 }} />
-                  <CardContent>
-                    <Typography variant="h5">User Storie</Typography>
-                  </CardContent>
-                </Card>
-              </a>
-            </Link>
-          </div>
 
           <div className="custom-card" style={{ flex: '0 0 calc(50% - 16px)', maxWidth: 'calc(50% - 16px)', margin: '8px' }}>
-            <Link href="/review">
-              <a>
+            <Link href="/escalas">
+              
                 <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30 }}>
                   <TrendingUpIcon style={{ fontSize: 100 }} />
                   <CardContent>
-                    <Typography variant="h5">Review</Typography>
+                    <Typography variant="h5">Escala de Calificación</Typography>
                   </CardContent>
                 </Card>
-              </a>
+              
             </Link>
           </div>
         </div>

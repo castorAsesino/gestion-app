@@ -182,7 +182,7 @@ export default function Niveles(props) {
   useEffect(() => {
     if (deleteItem) {
       axios
-        .delete(("/api/nivel/" + id))
+        .delete(("/api/nivel-capacidad/" + id))
         .then(response => {
           window.location.reload();
         })
@@ -200,7 +200,7 @@ export default function Niveles(props) {
   };
 
   const getListData = async () => {
-    const response = await axios.get("/api/nivel");
+    const response = await axios.get("/api/nivel-capacidad");
     setRows(response.data)
   }
 
@@ -212,13 +212,13 @@ export default function Niveles(props) {
         <Grid item xs={12}>
         <Typography component="h1" variant="h4" style={{ margin: 15, fontWeight: 500, textAlign: 'center' , margin:' 15px',
     fontWeight: 'bold',    textAlign: 'center',    fontFamily: 'Roboto',      fontSize: '2.5rem'}}>
-            Niveles
+            Niveles de Capacidad
           </Typography>
         </Grid>
         <Grid container spacing={3}>
 
           <Grid item xs={12} style={{ marginBottom: 10 }}>
-            <Button variant="contained" color="primary" className={classes.addButton} href="/niveles/agregar">
+            <Button variant="contained" color="primary" className={classes.addButton} href="/niveles-capacidad/agregar">
               <Add /> Agregar
             </Button>
           </Grid>
@@ -250,7 +250,7 @@ export default function Niveles(props) {
                     {row.valorMax}
                   </TableCell>
                   <TableCell align="center" className={classes.tableCell}>
-                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/niveles/editar/' + row.id}>
+                    <IconButton aria-label="delete" title={'Editar'} component={Link} href={'/niveles-capacidad/editar/' + row.id}>
                       <EditIcon />
                     </IconButton>
                     <DeleteModal setDeleteItem={setDeleteItem} id={row.id} setId={setId}></DeleteModal>

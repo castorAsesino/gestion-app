@@ -38,6 +38,11 @@ const StyledTableCell = withStyles((theme) => ({
   },
 }))(TableCell);
 const useStyles = makeStyles((theme) => ({
+  main: {
+    background: '#fff',
+    borderRadius: '5px',
+    padding: '3rem',
+  },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -199,11 +204,11 @@ export default function Escala(props) {
 
   return (
     <>
-      <Container component="main" >
+      <Container component="main" className={classes.main}>
 
           <Grid item xs={12}>
           <Typography component="h1" variant="h5" className={classes.center} style={{ fontWeight: 500, }}>
-          Escalas
+          Escalas de Calificación
           </Typography>
         </Grid>
         <Grid container spacing={3}>

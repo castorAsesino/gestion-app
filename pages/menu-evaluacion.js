@@ -27,7 +27,7 @@ export default function MenuEvaluacion() {
               </a>
             </Link>
           </div>
-          <div className="custom-card" style={{  margin: '8px' }}>
+          <div className="custom-card" style={{  margin: '20px' }}>
             <Link href="/evaluacion-capacidad">
               <a className={styles.customLink}>
                 <Card style={{ background: '#4576e0', color: 'white', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 50 }}>
