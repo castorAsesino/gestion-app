@@ -237,11 +237,12 @@ export default function EvaluarAtributoForm(props) {
   };
 
   useEffect(() => {
+    const allCalificacionesCargadas = rows.every(row => row.ponderacion !== undefined && row.ponderacion !== null && row.ponderacion !== "" );
     const totalPonderacion = rows.reduce(
       (sum, row) => sum + (row.calificacion || 0),
       0
     );
-    setIsGuardarEnabled(totalPonderacion === 100);
+    setIsGuardarEnabled(allCalificacionesCargadas && totalPonderacion === 100);
   }, [rows]);
 
   const handleChange = (event, id) => {
@@ -267,12 +268,13 @@ export default function EvaluarAtributoForm(props) {
   const validar = () => {
     let totalPonderacionTotal = 0;
     let calificacionPonderada = 0;
-
+    let promedioPonderacionTotal = 0;
+    let valorMasAlto = 0;
     /* const valorMasAlto = calificaciones.reduce(
       (max, valor) => (max.valor > valor.valor ? max : valor),
       { valor: 0 }
     );  */
-    const valorMasAlto = calificaciones
+    valorMasAlto = calificaciones
       .filter((valor) => valor.valor === 3) // Filtra por las calificaciones con valor 3
       .reduce((max, valor) => (max.valor > valor.valor ? max : valor), {
         valor: 0,
@@ -280,6 +282,7 @@ export default function EvaluarAtributoForm(props) {
     rows.forEach((element) => {
       totalPonderacionTotal += element.calificacion || 0;
       calificacionPonderada += element.totalPonderacion || 0;
+      promedioPonderacionTotal += element.ponderacion || 0;
     });
 
     if (totalPonderacionTotal > 100) {
@@ -290,6 +293,7 @@ export default function EvaluarAtributoForm(props) {
     let resultado = 0;
     if (totalPonderacionTotal > 0 && valorMasAlto.valor > 0) {
       let resultadoDiv = calificacionPonderada / totalPonderacionTotal;
+      promedioPonderacionTotal = promedioPonderacionTotal / rows.length;
       resultado = (resultadoDiv / valorMasAlto.valor) * 100;
       resultado = parseFloat(resultado.toFixed(2));
     }
@@ -301,14 +305,23 @@ export default function EvaluarAtributoForm(props) {
         resultado >= intervalo.valorMin && resultado <= intervalo.valorMax
     );
 
-    debugger
-    const promedioPonderacionTotal =
-      rows.reduce((acc, curr) => acc + (curr.ponderacion || 0), 0) /
-      rows.length;
+ 
+    
 
-    const prom = rows.filter((item) => item.ponderacion <= promedioPonderacionTotal);
+    if (promedioPonderacionTotal !== undefined && rows.length > 0) {
+     
+      if (promedioPonderacionTotal !== valorMasAlto?.valor) {
+        const prom = rows
+      .filter((item) => item.ponderacion <= promedioPonderacionTotal)
+      .sort((a, b) => b.calificacion - a.calificacion);
+        setPromedios(prom);
+      } else {
+        setPromedios([]);
+      }
+    }
 
-    setPromedios(prom);
+
+
     setIntervalo(intervalo);
 
     handleClickOpen();
@@ -570,9 +583,9 @@ export default function EvaluarAtributoForm(props) {
             gutterBottom
             style={{ display: "flex", alignItems: "center" }}
           >
-            <h3 style={{ fontSize: 18, fontWeight: 800, marginRight: "1rem" }}>
+            { promedios.length > 0 && <h3 style={{ fontSize: 18, fontWeight: 800, marginRight: "1rem" }}>
               Se recomienda aplicar mejoras sobre los siguientes (AP):
-            </h3>
+            </h3>}
           </Typography>
           {promedios.map((promedio, index) => (
             <Typography
